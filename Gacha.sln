@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gacha", "Gacha\Gacha.csproj", "{07751A0E-CA43-4563-8890-178B13E422F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyceLibrary", "SpyceLibrary\SpyceLibrary.csproj", "{4889A5FC-8338-4381-B543-03FED2BDB66F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07751A0E-CA43-4563-8890-178B13E422F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07751A0E-CA43-4563-8890-178B13E422F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07751A0E-CA43-4563-8890-178B13E422F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07751A0E-CA43-4563-8890-178B13E422F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4889A5FC-8338-4381-B543-03FED2BDB66F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4889A5FC-8338-4381-B543-03FED2BDB66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4889A5FC-8338-4381-B543-03FED2BDB66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4889A5FC-8338-4381-B543-03FED2BDB66F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EC0D972-9A64-4011-94D1-9D8F0D2F9F7E}
+	EndGlobalSection
+EndGlobal
