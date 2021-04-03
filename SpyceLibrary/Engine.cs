@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpyceLibrary
 {
-    public class Game1 : Game
+    public class Engine : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private SpriteBatch spriteBatch;
 
-        public Game1()
+        public Engine()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -18,16 +18,14 @@ namespace SpyceLibrary
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SceneManager.Instance.Initialize(Content, spriteBatch, GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,16 +33,13 @@ namespace SpyceLibrary
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            SceneManager.Instance.Draw();
 
             base.Draw(gameTime);
         }
