@@ -13,7 +13,7 @@ namespace SpyceLibrary
     public class GameObject
     {
         #region Events
-        public delegate void GameObjectEvent();
+        public delegate void GameObjectEvent(GameObject obj);
 
         /// <summary>
         /// When the object is enabled.
@@ -72,6 +72,7 @@ namespace SpyceLibrary
             updatedComponents = new List<IUpdateable>();
             components = new List<GameComponent>();
             children = new List<GameObject>();
+            relativeTransform = Transform.Identity;
         }
         #endregion
 
@@ -79,7 +80,7 @@ namespace SpyceLibrary
         /// <summary>
         /// Frees up the memory in the game object and its components.
         /// </summary>
-        public void Unload()
+        public void Destroy()
         {
             foreach (GameObject o in children)
             {
@@ -90,6 +91,8 @@ namespace SpyceLibrary
             {
                 c.Unload();
             }
+
+            OnDestroy?.Invoke(this);
         }
 
         /// <summary>
@@ -129,7 +132,11 @@ namespace SpyceLibrary
                 comp.Update(gameTime);
             }
         }
-         
+        
+        /// <summary>
+        /// Draws all the drawable components.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public virtual void Draw(GameTime gameTime)
         {
             foreach(IDrawable comp in drawnComponents)
@@ -163,6 +170,15 @@ namespace SpyceLibrary
         }
 
         /// <summary>
+        /// Sets the relative transform of the game object.
+        /// </summary>
+        /// <param name="transform"></param>
+        public void SetRelativeTransform(Transform transform)
+        {
+            relativeTransform = transform;
+        }
+
+        /// <summary>
         /// Gets the relative transform.
         /// </summary>
         /// <returns></returns>
@@ -177,11 +193,12 @@ namespace SpyceLibrary
         /// <returns></returns>
         public Transform GetTransform()
         {
+            Transform parentTransform = (parent == null) ? Transform.Identity : parent.relativeTransform;
             Transform tr = new Transform
             {
-                Position = relativeTransform.Position * parent.relativeTransform.Scale + relativeTransform.Position,
-                Scale = relativeTransform.Scale * parent.relativeTransform.Scale,
-                Rotation = relativeTransform.Rotation + parent.relativeTransform.Rotation
+                Position = relativeTransform.Position * parentTransform.Scale + relativeTransform.Position,
+                Scale = relativeTransform.Scale * parentTransform.Scale,
+                Rotation = relativeTransform.Rotation + parentTransform.Rotation
             };
             return tr;
         }
@@ -198,11 +215,11 @@ namespace SpyceLibrary
 
             if (isActive)
             {
-                OnEnable?.Invoke();
+                OnEnable?.Invoke(this);
             }
             else
             {
-                OnDisable?.Invoke();
+                OnDisable?.Invoke(this);
             }
         }
 
@@ -228,38 +245,40 @@ namespace SpyceLibrary
             }
         }
 
-        /// <summary>
-        /// Serializes the object and saves it as a json file
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="path"></param>
-        public static void SaveObject(GameObject obj, string path)
-        {
-            string file = JsonConvert.SerializeObject(obj);
-            File.WriteAllText(path, file);
-        }
+        #region Probably Delete
+        ///// <summary>
+        ///// Serializes the object and saves it as a json file
+        ///// </summary>
+        ///// <param name="obj"></param>
+        ///// <param name="path"></param>
+        //public static void SaveObject(GameObject obj, string path)
+        //{
+        //    string file = JsonConvert.SerializeObject(obj);
+        //    File.WriteAllText(path, file);
+        //}
 
-        /// <summary>
-        /// Initializes a 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="toClone"></param>
-        /// <returns></returns>
-        public static GameObject Initialize(GameObject toClone)
-        {
-            if (toClone == null)
-            {
-                return default;
-            }
+        ///// <summary>
+        ///// Initializes a 
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="toClone"></param>
+        ///// <returns></returns>
+        //public static GameObject Initialize(GameObject toClone)
+        //{
+        //    if (toClone == null)
+        //    {
+        //        return default;
+        //    }
 
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                ObjectCreationHandling = ObjectCreationHandling.Replace
-            };
-            GameObject cloned = JsonConvert.DeserializeObject<GameObject>(JsonConvert.SerializeObject(toClone), settings);
-            cloned.Load(toClone.initializer);
-            return cloned;
-        }
+        //    JsonSerializerSettings settings = new JsonSerializerSettings
+        //    {
+        //        ObjectCreationHandling = ObjectCreationHandling.Replace
+        //    };
+        //    GameObject cloned = JsonConvert.DeserializeObject<GameObject>(JsonConvert.SerializeObject(toClone), settings);
+        //    cloned.Load(toClone.initializer);
+        //    return cloned;
+        //}
+        #endregion
         #endregion
     }
 }

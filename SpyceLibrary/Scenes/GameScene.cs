@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,11 @@ namespace SpyceLibrary.Scenes
     public class GameScene : Scene
     {
         #region Fields
+        /// <summary>
+        /// The name of this scene.
+        /// </summary>
+        public const string NAME = "GameScene";
+        private GraphicsDevice graphics;
         #endregion
 
         #region Constructor
@@ -23,6 +29,14 @@ namespace SpyceLibrary.Scenes
         #endregion
 
         #region Methods
+        protected override void Load(Initializer initializer)
+        {
+            base.Load(initializer);
+
+            graphics = initializer.Graphics;
+            SceneManager.Instance.SetFrameDimension(854, 480);
+        }
+
         /// <summary>
         /// Updates the instance of the game scene.
         /// </summary>
@@ -38,6 +52,8 @@ namespace SpyceLibrary.Scenes
         public override void Draw()
         {
             base.Draw();
+
+            graphics.Clear(Color.CornflowerBlue);
         }
         #endregion
     }

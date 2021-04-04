@@ -36,11 +36,25 @@ namespace SpyceLibrary
         #region Events
         #endregion
 
+        #region Constructor
+        private SceneManager()
+        {
+            scenes = new Dictionary<string, Type>();
+        }
+        #endregion
+
         #region Fields
+        /// <summary>
+        /// The scene that is currently being drawn and updated.
+        /// </summary>
         public Scene CurrentScene
         {
             get { return currentScene; }
         }
+
+        /// <summary>
+        /// The type of the current scene.
+        /// </summary>
         public Type CurrentSceneType
         {
             get { return currentType; }
@@ -55,6 +69,16 @@ namespace SpyceLibrary
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Registers a scene with the scene manager.
+        /// </summary>
+        /// <param name="sceneType"></param>
+        /// <param name="sceneName"></param>
+        public void RegisterScene(Type sceneType, string sceneName)
+        {
+            scenes.Add(sceneName, sceneType);
+        }
+
         /// <summary>
         /// Called when the game is closing.
         /// </summary>
@@ -83,9 +107,9 @@ namespace SpyceLibrary
         /// <param name="spriteBatch"></param>
         /// <param name="device"></param>
         /// <param name="graphics"></param>
-        public void Initialize(ContentManager content, SpriteBatch spriteBatch, GraphicsDevice device, GraphicsDeviceManager graphics)
+        public void Initialize(ContentManager content, SpriteBatch spriteBatch,
+            GraphicsDevice device, GraphicsDeviceManager graphics)
         {
-            scenes = new Dictionary<string, Type>();
             this.content = content;
             this.spriteBatch = spriteBatch;
             this.device = device;
@@ -98,7 +122,7 @@ namespace SpyceLibrary
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-
+            currentScene?.Update(gameTime);
         }
 
         /// <summary>
@@ -106,7 +130,7 @@ namespace SpyceLibrary
         /// </summary>
         public void Draw()
         {
-
+            currentScene?.Draw();
         }
 
         /// <summary>
@@ -124,7 +148,7 @@ namespace SpyceLibrary
             return true;
         }
 
-        private Initializer getInitializer()
+        private Initializer GetInitializer()
         {
             Initializer init = new Initializer
             {
@@ -143,8 +167,9 @@ namespace SpyceLibrary
         public Scene LoadScene(string scene)
         {
             Scene loaded = (Scene)Activator.CreateInstance(scenes[scene]);
+
             // initialize the loaded scene
-            loaded.Initialize(getInitializer());
+            loaded.Initialize(GetInitializer());
             return loaded;
         }
         #endregion

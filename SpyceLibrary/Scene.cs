@@ -13,11 +13,6 @@ namespace SpyceLibrary
     {
         #region Fields
         private Dictionary<Guid, GameObject> objects;
-
-        /// <summary>
-        /// All game objects are parented to this.
-        /// </summary>
-        private GameObject sceneObject;
         #endregion
 
         #region Constructor
@@ -26,7 +21,7 @@ namespace SpyceLibrary
         /// </summary>
         public Scene()
         {
-            sceneObject = new GameObject(null);
+            objects = new Dictionary<Guid, GameObject>();
         }
         #endregion
 
@@ -38,7 +33,7 @@ namespace SpyceLibrary
         {
             foreach (GameObject obj in objects.Values)
             {
-                obj.Unload();
+                obj.Destroy();
             }
         }
 
@@ -54,6 +49,26 @@ namespace SpyceLibrary
             } while (objects.ContainsKey(obj.ID));
 
             objects.Add(obj.ID, obj);
+            obj.OnDestroy += OnObjectDestruction;
+        }
+
+        /// <summary>
+        /// When an object is destroyed, it is removed from the scene.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnObjectDestruction(GameObject obj)
+        {
+            obj.OnDestroy -= OnObjectDestruction;
+            RemoveObject(obj.ID);
+        }
+
+        /// <summary>
+        /// Removes an object from the game scene.
+        /// </summary>
+        /// <param name="id"></param>
+        public bool RemoveObject(Guid id)
+        {
+            return objects.Remove(id);
         }
 
         /// <summary>

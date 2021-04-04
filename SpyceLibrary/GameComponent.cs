@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,8 +11,7 @@ namespace SpyceLibrary
     public class GameComponent
     {
         #region Events
-
-        public delegate void ComponentEvent();
+        public delegate void ComponentEvent(GameComponent component);
 
         /// <summary>
         /// When the component is enabled.
@@ -38,6 +38,14 @@ namespace SpyceLibrary
         {
             get { return isEnabled; }
         }
+
+        /// <summary>
+        /// The game object that this component is attached to.
+        /// </summary>
+        public GameObject Holder
+        {
+            get { return holder; }
+        }
         private GameObject holder;
         private bool isEnabled;
         #endregion
@@ -58,7 +66,7 @@ namespace SpyceLibrary
         /// </summary>
         public virtual void Unload()
         {
-            OnDestroy?.Invoke();
+            OnDestroy?.Invoke(this);
         }
 
         /// <summary>
@@ -71,11 +79,11 @@ namespace SpyceLibrary
             isEnabled = active;
             if (isEnabled)
             {
-                OnEnable?.Invoke();
+                OnEnable?.Invoke(this);
             }
             else
             {
-                OnDisable?.Invoke();
+                OnDisable?.Invoke(this);
             }
         }
 
@@ -88,16 +96,32 @@ namespace SpyceLibrary
         {
             this.holder = holder;
         }
-
-        /// <summary>
-        /// The holder of this component.
-        /// </summary>
-        /// <returns></returns>
-        protected GameObject GetHolder()
-        {
-            return holder;
-        }
         #endregion
 
     }
+
+    #region Interfaces
+    public interface IUpdated
+    {
+        /// <summary>
+        /// Updates the state of the object.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void Update(GameTime gameTime);
+    }
+
+    public interface IDrawn
+    {
+        /// <summary>
+        /// The draw order of the game component.
+        /// </summary>
+        /// <returns></returns>
+        public int DrawOrder();
+
+        /// <summary>
+        /// Draws the object to the screen.
+        /// </summary>
+        public void Draw();
+    }
+    #endregion
 }
