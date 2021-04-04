@@ -73,16 +73,25 @@ namespace SpyceLibrary
             components = new List<GameComponent>();
             children = new List<GameObject>();
         }
-        ~GameObject()
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Frees up the memory in the game object and its components.
+        /// </summary>
+        public void Unload()
         {
             foreach (GameObject o in children)
             {
                 o.parent = null;
             }
-        }
-        #endregion
 
-        #region Methods
+            foreach(GameComponent c in components)
+            {
+                c.Unload();
+            }
+        }
+
         /// <summary>
         /// Generates a new unique id for this object.
         /// </summary>

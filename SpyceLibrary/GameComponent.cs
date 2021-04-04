@@ -50,11 +50,6 @@ namespace SpyceLibrary
         {
 
         }
-        ~GameComponent()
-        {
-            OnDestroy?.Invoke();
-            Unload();
-        }
         #endregion
 
         #region Methods
@@ -63,7 +58,7 @@ namespace SpyceLibrary
         /// </summary>
         public virtual void Unload()
         {
-
+            OnDestroy?.Invoke();
         }
 
         /// <summary>

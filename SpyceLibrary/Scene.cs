@@ -9,7 +9,7 @@ namespace SpyceLibrary
     /// A scene represents a set of various game objects interacting. Scenes are indepedent of each other and
     /// can be interchangebly loaded using the scene manager.
     /// </summary>
-    public class GameScene
+    public class Scene
     {
         #region Fields
         private Dictionary<Guid, GameObject> objects;
@@ -24,17 +24,24 @@ namespace SpyceLibrary
         /// <summary>
         /// Creates a new instance of the game scene.
         /// </summary>
-        public GameScene()
+        public Scene()
         {
             sceneObject = new GameObject(null);
-        }
-        ~GameScene()
-        {
-
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Performs any cleanup operations not done in regular garbage collection.
+        /// </summary>
+        public virtual void Unload()
+        {
+            foreach (GameObject obj in objects.Values)
+            {
+                obj.Unload();
+            }
+        }
+
         /// <summary>
         /// Adds an object to the game scene.
         /// </summary>
@@ -56,14 +63,6 @@ namespace SpyceLibrary
         public void Initialize(Initializer initializer)
         {
             Load(initializer);
-        }
-
-        /// <summary>
-        /// Performs any cleanup operations that wouldn't be done with a normal destructor.
-        /// </summary>
-        public virtual void Destroy()
-        {
-
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace SpyceLibrary
         #endregion
 
         #region Fields
-        public GameScene CurrentScene
+        public Scene CurrentScene
         {
             get { return currentScene; }
         }
@@ -46,25 +46,49 @@ namespace SpyceLibrary
             get { return currentType; }
         }
         private Dictionary<string, Type> scenes;
-        private GameScene currentScene;
+        private Scene currentScene;
         private Type currentType;
         private ContentManager content;
         private SpriteBatch spriteBatch;
-        private GraphicsDevice graphics;
+        private GraphicsDevice device;
+        private GraphicsDeviceManager graphics;
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Called when the game is closing.
+        /// </summary>
+        public void OnExiting()
+        {
+            currentScene?.Unload();
+            content.Dispose();
+        }
+
+        /// <summary>
+        /// Sets the dimension of the window
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void SetFrameDimension(int width, int height)
+        {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.ApplyChanges();
+        }
+
         /// <summary>
         /// Initializes the scene manager.
         /// </summary>
         /// <param name="content"></param>
         /// <param name="spriteBatch"></param>
+        /// <param name="device"></param>
         /// <param name="graphics"></param>
-        public void Initialize(ContentManager content, SpriteBatch spriteBatch, GraphicsDevice graphics)
+        public void Initialize(ContentManager content, SpriteBatch spriteBatch, GraphicsDevice device, GraphicsDeviceManager graphics)
         {
             scenes = new Dictionary<string, Type>();
             this.content = content;
             this.spriteBatch = spriteBatch;
+            this.device = device;
             this.graphics = graphics;
         }
 
@@ -94,7 +118,7 @@ namespace SpyceLibrary
             if (!scenes.ContainsKey(scene))
                 return false;
 
-            currentScene?.Destroy();
+            currentScene?.Unload();
             currentType = scenes[scene];
             currentScene = LoadScene(scene);
             return true;
@@ -106,7 +130,7 @@ namespace SpyceLibrary
             {
                 Content = content,
                 SpriteBatch = spriteBatch,
-                Graphics = graphics,
+                Graphics = device,
             };
             return init;
         }
@@ -116,9 +140,9 @@ namespace SpyceLibrary
         /// </summary>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public GameScene LoadScene(string scene)
+        public Scene LoadScene(string scene)
         {
-            GameScene loaded = (GameScene)Activator.CreateInstance(scenes[scene]);
+            Scene loaded = (Scene)Activator.CreateInstance(scenes[scene]);
             // initialize the loaded scene
             loaded.Initialize(getInitializer());
             return loaded;
