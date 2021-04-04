@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,16 +32,27 @@ namespace SpyceLibrary
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The unique ID of this game object.
+        /// </summary>
         public Guid ID
         {
             get { return id; }
         }
-        private List<GameComponent> drawnComponents;
-        private List<GameComponent> updatedComponents;
-        private List<GameComponent> components;
-        private SortedSet<string> tags;
+
+        /// <summary>
+        /// Whether this object currently has behavior.
+        /// </summary>
+        public bool IsActive
+        {
+            get { return isActive; }
+        }
+        private readonly List<IDrawable> drawnComponents;
+        private readonly List<IUpdateable> updatedComponents;
+        private readonly List<GameComponent> components;
+        private readonly SortedSet<string> tags;
+        private readonly List<GameObject> children;
         private bool isActive;
-        private List<GameObject> children;
         private GameObject parent;
         private Transform relativeTransform;
         private Initializer initializer;
@@ -56,14 +68,17 @@ namespace SpyceLibrary
         {
             this.parent = parent;
             tags = new SortedSet<string>();
-            drawnComponents = new List<GameComponent>();
-            updatedComponents = new List<GameComponent>();
+            drawnComponents = new List<IDrawable>();
+            updatedComponents = new List<IUpdateable>();
             components = new List<GameComponent>();
             children = new List<GameObject>();
         }
         ~GameObject()
         {
-            OnDestroy?.Invoke();
+            foreach (GameObject o in children)
+            {
+                o.parent = null;
+            }
         }
         #endregion
 
@@ -98,9 +113,20 @@ namespace SpyceLibrary
         /// Updates the state of the game object, components, and children.
         /// </summary>
         /// <param name="dt"></param>
-        public virtual void Update(float dt)
+        public virtual void Update(GameTime gameTime)
         {
-
+            foreach (IUpdateable comp in updatedComponents)
+            {
+                comp.Update(gameTime);
+            }
+        }
+         
+        public virtual void Draw(GameTime gameTime)
+        {
+            foreach(IDrawable comp in drawnComponents)
+            {
+                comp.Draw(gameTime);
+            }
         }
 
         /// <summary>
@@ -110,15 +136,45 @@ namespace SpyceLibrary
         public void AddComponent(GameComponent component)
         {
             components.Add(component);
+
+            if (component is IUpdateable updateable)
+            {
+                updatedComponents.Add(updateable);
+            }
+
+            if (component is IDrawable drawable)
+            {
+                drawnComponents.Add(drawable);
+            }
+        }
+
+        public T GetComponent<T>()
+        {
+            return (T)(object)components.Find(x => x is T);
         }
 
         /// <summary>
-        /// Gets the transform of the game object.
+        /// Gets the relative transform.
+        /// </summary>
+        /// <returns></returns>
+        public Transform GetRelativeTransform()
+        {
+            return relativeTransform;
+        }
+
+        /// <summary>
+        /// Gets the relative to world transform of the game object.
         /// </summary>
         /// <returns></returns>
         public Transform GetTransform()
         {
-            return relativeTransform;
+            Transform tr = new Transform
+            {
+                Position = relativeTransform.Position * parent.relativeTransform.Scale + relativeTransform.Position,
+                Scale = relativeTransform.Scale * parent.relativeTransform.Scale,
+                Rotation = relativeTransform.Rotation + parent.relativeTransform.Rotation
+            };
+            return tr;
         }
 
         /// <summary>

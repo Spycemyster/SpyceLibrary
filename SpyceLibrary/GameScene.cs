@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,12 +12,43 @@ namespace SpyceLibrary
     public class GameScene
     {
         #region Fields
+        private Dictionary<Guid, GameObject> objects;
+
+        /// <summary>
+        /// All game objects are parented to this.
+        /// </summary>
+        private GameObject sceneObject;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Creates a new instance of the game scene.
+        /// </summary>
+        public GameScene()
+        {
+            sceneObject = new GameObject(null);
+        }
+        ~GameScene()
+        {
+
+        }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Adds an object to the game scene.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void AddObject(GameObject obj)
+        {
+            do
+            {
+                obj.GenerateNewID();
+            } while (objects.ContainsKey(obj.ID));
+
+            objects.Add(obj.ID, obj);
+        }
+
         /// <summary>
         /// Initializes the game scene with the necessary resources.
         /// </summary>
@@ -46,10 +78,16 @@ namespace SpyceLibrary
         /// <summary>
         /// Updates all the game objects in this scene.
         /// </summary>
-        /// <param name="dt"></param>
-        public virtual void Update(float dt)
+        /// <param name="gameTime"></param>
+        public virtual void Update(GameTime gameTime)
         {
-
+            foreach (GameObject obj in objects.Values)
+            {
+                if (obj.IsActive)
+                {
+                    obj.Update(gameTime);
+                }
+            }
         }
 
         /// <summary>

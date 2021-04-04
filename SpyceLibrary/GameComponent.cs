@@ -9,9 +9,8 @@ namespace SpyceLibrary
     /// </summary>
     public class GameComponent
     {
-        #region Fields
-        private GameObject holder;
-        private bool isEnabled;
+        #region Events
+
         public delegate void ComponentEvent();
 
         /// <summary>
@@ -28,6 +27,19 @@ namespace SpyceLibrary
         /// When the component is being destroyed.
         /// </summary>
         public ComponentEvent OnDestroy;
+
+        #endregion
+
+        #region Fields
+        /// <summary>
+        /// Whether this component should be updated or drawn.
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+        }
+        private GameObject holder;
+        private bool isEnabled;
         #endregion
 
         #region Constructor
@@ -41,10 +53,19 @@ namespace SpyceLibrary
         ~GameComponent()
         {
             OnDestroy?.Invoke();
+            Unload();
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Performs any final cleanup operations that aren't handled through regular garbage collection.
+        /// </summary>
+        public virtual void Unload()
+        {
+
+        }
+
         /// <summary>
         /// Sets the activeness of the component.
         /// </summary>
@@ -81,35 +102,7 @@ namespace SpyceLibrary
         {
             return holder;
         }
-
-        /// <summary>
-        /// Updates the state of the game component
-        /// </summary>
-        /// <param name="dt"></param>
-        public virtual void Update(float dt)
-        {
-
-        }
-
-        /// <summary>
-        /// Renders the contents of the game component to the screen.
-        /// </summary>
-        public virtual void Draw()
-        {
-
-        }
         #endregion
 
-        #region Drawn/Updated Definitions
-        public virtual bool IsDrawn()
-        {
-            return false;
-        }
-
-        public virtual bool IsUpdated()
-        {
-            return false;
-        }
-        #endregion
     }
 }
