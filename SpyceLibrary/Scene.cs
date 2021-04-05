@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace SpyceLibrary
 {
@@ -12,7 +13,13 @@ namespace SpyceLibrary
     public class Scene
     {
         #region Fields
-        private Dictionary<Guid, GameObject> objects;
+        public Dictionary<Guid, GameObject> GameObjects
+        {
+            get { return objects; }
+        }
+        private readonly Dictionary<Guid, GameObject> objects;
+        private readonly List<FunctionCall> repeatFunctions;
+        private Initializer initializer;
         #endregion
 
         #region Constructor
@@ -22,10 +29,100 @@ namespace SpyceLibrary
         public Scene()
         {
             objects = new Dictionary<Guid, GameObject>();
+            repeatFunctions = new List<FunctionCall>();
+        }
+        #endregion
+
+        #region Function Call
+        private class FunctionCall
+        {
+            public Action Action;
+            public float Interval;
+            public float Timer;
+            public bool isRepeating;
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Prints the current tick speed and FPS to the debug console.
+        /// </summary>
+        public void PrintTickSpeed()
+        {
+            float fps = 1.0f / Time.Instance.RawDeltaTime;
+            long speed = Debug.Instance.TickSpeed;
+            ConsoleColor textColor = (speed > 16) ? ((speed > 32)
+                ? ConsoleColor.Red : ConsoleColor.Yellow) : ConsoleColor.Green;
+            Debug.Instance.WriteLine(GetDebugName(), $"Current Tick Speed: {speed} ms, FPS: {fps}", ConsoleColor.Green, textColor);
+        }
+
+        /// <summary>
+        /// The debug name of the current scene.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetDebugName()
+        {
+            return "SCENE";
+        }
+
+        /// <summary>
+        /// Saves the object to a specified path.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="path"></param>
+        public void SaveObject(GameObject obj, string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(GameObject));
+            using (TextWriter tw = new StreamWriter(path))
+            {
+                serializer.Serialize(tw, obj);
+            }
+        }
+
+        /// <summary>
+        /// Loads an object from a specified path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public GameObject LoadObject(string path)
+        {
+            XmlSerializer deserializer = new XmlSerializer(typeof(GameObject));
+            TextReader reader = new StreamReader(path);
+            GameObject obj = (GameObject)deserializer.Deserialize(reader);
+            obj.Load(initializer);
+
+            return obj;
+        }
+
+        /// <summary>
+        /// Removes an existing intervaled function.
+        /// </summary>
+        /// <param name="action"></param>
+        public void RemoveInterval(Action action)
+        {
+            FunctionCall c = repeatFunctions.Find(x => x.Action == action);
+            repeatFunctions.Remove(c);
+        }
+
+        /// <summary>
+        /// Runs a function on a fixed interval.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="interval"></param>
+        /// <param name="time"></param>
+        public void SetInterval(Action action, float interval = -1, float time = 0)
+        {
+            FunctionCall c = new FunctionCall
+            {
+                Action = action,
+                Timer = time,
+                Interval = interval,
+                isRepeating = interval != -1,
+            };
+
+            repeatFunctions.Add(c);
+        }
+
         /// <summary>
         /// Performs any cleanup operations not done in regular garbage collection.
         /// </summary>
@@ -35,13 +132,15 @@ namespace SpyceLibrary
             {
                 obj.Destroy();
             }
+
+            initializer.Content.Unload();
         }
 
         /// <summary>
         /// Adds an object to the game scene.
         /// </summary>
         /// <param name="obj"></param>
-        public void AddObject(GameObject obj)
+        public virtual void AddObject(GameObject obj)
         {
             do
             {
@@ -66,7 +165,7 @@ namespace SpyceLibrary
         /// Removes an object from the game scene.
         /// </summary>
         /// <param name="id"></param>
-        public bool RemoveObject(Guid id)
+        public virtual bool RemoveObject(Guid id)
         {
             return objects.Remove(id);
         }
@@ -77,6 +176,8 @@ namespace SpyceLibrary
         /// <param name="initializer"></param>
         public void Initialize(Initializer initializer)
         {
+            this.initializer = initializer;
+
             Load(initializer);
         }
 
@@ -95,6 +196,25 @@ namespace SpyceLibrary
         /// <param name="gameTime"></param>
         public virtual void Update(GameTime gameTime)
         {
+            for (int i = 0; i < repeatFunctions.Count; i++)
+            {
+                FunctionCall c = repeatFunctions[i];
+                c.Timer -= Time.Instance.DeltaTime;
+
+                if (c.Timer <= 0)
+                {
+                    c.Action.Invoke();
+                    if (c.isRepeating)
+                    {
+                        c.Timer = c.Interval;
+                    }
+                    else
+                    {
+                        repeatFunctions.RemoveAt(i--);
+                    }
+                }
+            }
+
             foreach (GameObject obj in objects.Values)
             {
                 if (obj.IsActive)

@@ -35,6 +35,14 @@ namespace SpyceLibrary
         }
 
         /// <summary>
+        /// The actual amount of elapsed time from the last update call.
+        /// </summary>
+        public float RawDeltaTime
+        {
+            get { return deltaTime; }
+        }
+
+        /// <summary>
         /// The gametime field from the update cycle.
         /// </summary>
         public GameTime GameTime

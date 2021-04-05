@@ -66,6 +66,7 @@ namespace SpyceLibrary
         private SpriteBatch spriteBatch;
         private GraphicsDevice device;
         private GraphicsDeviceManager graphics;
+        private GameWindow window;
         #endregion
 
         #region Methods
@@ -107,13 +108,15 @@ namespace SpyceLibrary
         /// <param name="spriteBatch"></param>
         /// <param name="device"></param>
         /// <param name="graphics"></param>
+        /// <param name="window"></param>
         public void Initialize(ContentManager content, SpriteBatch spriteBatch,
-            GraphicsDevice device, GraphicsDeviceManager graphics)
+            GraphicsDevice device, GraphicsDeviceManager graphics, GameWindow window)
         {
             this.content = content;
             this.spriteBatch = spriteBatch;
             this.device = device;
             this.graphics = graphics;
+            this.window = window;
         }
 
         /// <summary>
@@ -152,9 +155,11 @@ namespace SpyceLibrary
         {
             Initializer init = new Initializer
             {
-                Content = content,
+                Content = new ContentManager(content.ServiceProvider, "Content"),
                 SpriteBatch = spriteBatch,
                 Graphics = device,
+                Window = window,
+                Device = graphics,
             };
             return init;
         }

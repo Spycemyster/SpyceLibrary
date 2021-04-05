@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,7 @@ namespace SpyceLibrary
         public ContentManager Content;
         public GraphicsDevice Graphics;
         public SpriteBatch SpriteBatch;
+        public GraphicsDeviceManager Device;
+        public GameWindow Window;
     }
 }

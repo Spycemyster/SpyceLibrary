@@ -47,6 +47,22 @@ namespace SpyceLibrary
         {
             get { return isActive; }
         }
+
+        /// <summary>
+        /// The components attached to this game object.
+        /// </summary>
+        public List<GameComponent> Components
+        {
+            get { return components; }
+        }
+
+        /// <summary>
+        /// All game objects are childed to this game object.
+        /// </summary>
+        public List<GameObject> Children
+        {
+            get { return children; }
+        }
         private readonly List<IDrawable> drawnComponents;
         private readonly List<IUpdateable> updatedComponents;
         private readonly List<GameComponent> components;
@@ -55,7 +71,6 @@ namespace SpyceLibrary
         private bool isActive;
         private GameObject parent;
         private Transform relativeTransform;
-        private Initializer initializer;
         private Guid id;
         #endregion
 
@@ -64,9 +79,8 @@ namespace SpyceLibrary
         /// Creates a new instance of a game object.
         /// </summary>
         /// <param name="parent"></param>
-        public GameObject(GameObject parent)
+        public GameObject()
         {
-            this.parent = parent;
             tags = new SortedSet<string>();
             drawnComponents = new List<IDrawable>();
             updatedComponents = new List<IUpdateable>();
@@ -104,12 +118,12 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Clones this game object and returns it.
+        /// Sets the parent of the game object.
         /// </summary>
-        /// <returns></returns>
-        public GameObject Clone()
+        /// <param name="parent"></param>
+        public void SetParent(GameObject parent)
         {
-            return new GameObject(parent);
+            this.parent = parent;
         }
 
         /// <summary>
@@ -118,7 +132,11 @@ namespace SpyceLibrary
         /// <param name="init"></param>
         public void Load(Initializer init)
         {
-            initializer = init;
+
+            foreach (GameComponent c in components)
+            {
+                c.Load(init, this);
+            }
         }
 
         /// <summary>
@@ -243,6 +261,40 @@ namespace SpyceLibrary
             {
                 tags.Add(tag);
             }
+        }
+
+        public override string ToString()
+        {
+            string raw = "";
+            raw += $"[{id}]\n";
+            if (tags.Count > 0)
+            {
+                raw += $"Tags: ";
+                int count = 0;
+                foreach (string s in tags)
+                {
+                    count++;
+                    raw += s;
+                    if (count < tags.Count)
+                    {
+                        raw += $", ";
+                    }
+                    else
+                    {
+                        raw += "\n";
+                    }
+                }
+            }
+            raw += $"Position: ({relativeTransform.Position.X}, {relativeTransform.Position.Y}), Rotation: {relativeTransform.Rotation}, Scale: ({relativeTransform.Scale.X}, {relativeTransform.Scale.Y})\n";
+            if (parent != null)
+            {
+                raw += $"Parent: {parent.id}\n";
+            }
+            for (int i = 0; i < components.Count; i++)
+            {
+                raw += $"{components[i]}";
+            }
+            return raw;
         }
 
         #region Probably Delete

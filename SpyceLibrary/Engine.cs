@@ -11,34 +11,41 @@ namespace SpyceLibrary
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        /// <summary>
+        /// Creates a new instance of the engine.
+        /// </summary>
         public Engine()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            IsFixedTimeStep = false;
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            Debug.Instance.WriteLine("System", "Running through the SpyceLibrary. By Spencer Chang.", ConsoleColor.Green, ConsoleColor.Green);
-
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            SceneManager.Instance.Initialize(Content, spriteBatch, GraphicsDevice, graphics);
+            Debug.Instance.Initialize(this);
+            SceneManager.Instance.Initialize(Content, spriteBatch, GraphicsDevice, graphics, Window);
+            Debug.Instance.WriteLine("System", "Running through the SpyceLibrary. By Spencer Chang.",
+                ConsoleColor.Green, ConsoleColor.Green);
 
             // Register all scenes here
-            SceneManager.Instance.RegisterScene(typeof(GameScene), GameScene.NAME);
+            SceneManager.Instance.RegisterScene(typeof(TestScene), TestScene.NAME);
 
             // Initial scene loading
-            SceneManager.Instance.ChangeScene(GameScene.NAME);
+            SceneManager.Instance.ChangeScene(TestScene.NAME);
         }
 
         protected override void Update(GameTime gameTime)
         {
+            Debug.Instance.StartTick();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -54,6 +61,8 @@ namespace SpyceLibrary
             SceneManager.Instance.Draw();
 
             base.Draw(gameTime);
+
+            Debug.Instance.EndTick();
         }
 
         protected override void OnExiting(object sender, EventArgs args)

@@ -1,13 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using SpyceLibrary.Physics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace SpyceLibrary
 {
     /// <summary>
     /// An abstract component that is attached to a game object
     /// </summary>
+    [XmlInclude(typeof(PhysicsBody))]
+    [XmlInclude(typeof(GameObject))]
     public class GameComponent
     {
         #region Events
@@ -16,16 +20,19 @@ namespace SpyceLibrary
         /// <summary>
         /// When the component is enabled.
         /// </summary>
+        [XmlIgnore]
         public ComponentEvent OnEnable;
 
         /// <summary>
         /// When the component is disabled.
         /// </summary>
+        [XmlIgnore]
         public ComponentEvent OnDisable;
 
         /// <summary>
         /// When the component is being destroyed.
         /// </summary>
+        [XmlIgnore]
         public ComponentEvent OnDestroy;
 
         #endregion
@@ -46,6 +53,7 @@ namespace SpyceLibrary
         {
             get { return holder; }
         }
+
         private GameObject holder;
         private bool isEnabled;
         #endregion

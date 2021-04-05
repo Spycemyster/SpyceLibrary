@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -21,18 +22,25 @@ namespace SpyceLibrary
         /// </summary>
         public static Debug Instance
         {
-            get 
-            { 
+            get
+            {
                 if (inst == null)
                 {
                     inst = new Debug();
                 }
-                return inst; 
+                return inst;
             }
         }
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The measured time (milliseconds) between a draw and update function.
+        /// </summary>
+        public long TickSpeed
+        {
+            get { return tickSpeed; }
+        }
         /// <summary>
         /// The main folder where all the logs are saved to.
         /// </summary>
@@ -44,16 +52,29 @@ namespace SpyceLibrary
         public const string LOGS_FILE_EXTENSION = ".txt";
         private const string SENDER = "DEBUG";
         private readonly List<LogEntry> logs;
+        private Stopwatch tickMeasurer;
+        private long tickSpeed;
+        private Engine engine;
         #endregion
 
         #region Constructor
         private Debug()
         {
             logs = new List<LogEntry>();
+            tickMeasurer = new Stopwatch();
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Initializes the in-game debugger.
+        /// </summary>
+        /// <param name="engine"></param>
+        public void Initialize(Engine engine)
+        {
+            this.engine = engine;
+        }
+
         /// <summary>
         /// Clears all the logs.
         /// </summary>
@@ -71,8 +92,8 @@ namespace SpyceLibrary
         /// <param name="message"></param>
         /// <param name="senderColor"></param>
         /// <param name="messageColor"></param>
-        public void WriteLine(string sender, string message, 
-            ConsoleColor senderColor = ConsoleColor.White, 
+        public void WriteLine(string sender, string message,
+            ConsoleColor senderColor = ConsoleColor.White,
             ConsoleColor messageColor = ConsoleColor.White)
         {
             Console.ResetColor();
@@ -131,6 +152,61 @@ namespace SpyceLibrary
             };
 
             return l;
+        }
+        #endregion
+
+        #region Command Handling
+        public void ParseCommand(string sender, string toParse)
+        {
+            // separate the command into its arguments
+            string[] args = toParse.Split(' ');
+
+            // empty command, don't do anything
+            if (args.Length == 0)
+            {
+                return;
+            }
+            WriteLine(sender, $"Executing command '{toParse}'");
+            // command name
+            string command = args[0].ToLower();
+            // TEMPORARY
+            switch(command)
+            {
+                case "listobjects":
+                    listObjects(sender);
+                    break;
+                case "quit":
+                    engine.Exit();
+                    break;
+                default:
+                    WriteLine(sender, $"Command '{command}' not found...");
+                    break;
+            }
+        }
+        public void StartTick()
+        {
+            tickMeasurer.Start();
+        }
+
+        public void EndTick()
+        {
+            tickMeasurer.Stop();
+            tickSpeed = tickMeasurer.ElapsedMilliseconds;
+            tickMeasurer.Reset();
+        }
+        private void listObjects(string sender)
+        {
+            if (SceneManager.Instance.CurrentScene == null)
+            {
+                WriteLine(sender, "Cannot list the game objects of the current scene because there is no scene currently loaded...");
+                return;
+            }
+
+            Dictionary<Guid, GameObject> objects = SceneManager.Instance.CurrentScene.GameObjects;
+            foreach (GameObject b in objects.Values)
+            {
+                WriteLine(sender, $"{b}");
+            }
         }
         #endregion
     }
