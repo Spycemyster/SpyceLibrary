@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,8 +62,16 @@ namespace SpyceLibrary
         {
             get { return children; }
         }
-        private readonly List<IDrawable> drawnComponents;
-        private readonly List<IUpdateable> updatedComponents;
+
+        /// <summary>
+        /// The relative transformation (before applying parent transformations).
+        /// </summary>
+        public Transform RelativeTransform
+        {
+            get { return relativeTransform; }
+        }
+        private readonly List<IDrawn> drawnComponents;
+        private readonly List<IUpdated> updatedComponents;
         private readonly List<GameComponent> components;
         private readonly SortedSet<string> tags;
         private readonly List<GameObject> children;
@@ -82,11 +89,12 @@ namespace SpyceLibrary
         public GameObject()
         {
             tags = new SortedSet<string>();
-            drawnComponents = new List<IDrawable>();
-            updatedComponents = new List<IUpdateable>();
+            drawnComponents = new List<IDrawn>();
+            updatedComponents = new List<IUpdated>();
             components = new List<GameComponent>();
             children = new List<GameObject>();
             relativeTransform = Transform.Identity;
+            isActive = true;
         }
         #endregion
 
@@ -145,7 +153,7 @@ namespace SpyceLibrary
         /// <param name="dt"></param>
         public virtual void Update(GameTime gameTime)
         {
-            foreach (IUpdateable comp in updatedComponents)
+            foreach (IUpdated comp in updatedComponents)
             {
                 comp.Update(gameTime);
             }
@@ -154,12 +162,11 @@ namespace SpyceLibrary
         /// <summary>
         /// Draws all the drawable components.
         /// </summary>
-        /// <param name="gameTime"></param>
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
-            foreach(IDrawable comp in drawnComponents)
+            foreach(IDrawn comp in drawnComponents)
             {
-                comp.Draw(gameTime);
+                comp.Draw();
             }
         }
 
@@ -171,17 +178,22 @@ namespace SpyceLibrary
         {
             components.Add(component);
 
-            if (component is IUpdateable updateable)
+            if (component is IUpdated updateable)
             {
                 updatedComponents.Add(updateable);
             }
 
-            if (component is IDrawable drawable)
+            if (component is IDrawn drawable)
             {
                 drawnComponents.Add(drawable);
             }
         }
 
+        /// <summary>
+        /// Gets the component if it is attached to this game object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T GetComponent<T>()
         {
             return (T)(object)components.Find(x => x is T);
@@ -197,15 +209,6 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Gets the relative transform.
-        /// </summary>
-        /// <returns></returns>
-        public Transform GetRelativeTransform()
-        {
-            return relativeTransform;
-        }
-
-        /// <summary>
         /// Gets the relative to world transform of the game object.
         /// </summary>
         /// <returns></returns>
@@ -214,7 +217,7 @@ namespace SpyceLibrary
             Transform parentTransform = (parent == null) ? Transform.Identity : parent.relativeTransform;
             Transform tr = new Transform
             {
-                Position = relativeTransform.Position * parentTransform.Scale + relativeTransform.Position,
+                Position = relativeTransform.Position + parentTransform.Position,
                 Scale = relativeTransform.Scale * parentTransform.Scale,
                 Rotation = relativeTransform.Rotation + parentTransform.Rotation
             };

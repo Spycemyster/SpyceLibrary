@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpyceLibrary.Physics;
+using SpyceLibrary.Sprites;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,7 @@ namespace SpyceLibrary.Scenes
         private GameWindow Window;
         private ContentManager Content;
         private SpriteBatch spriteBatch;
+        private PhysicsEngine engine;
         #endregion
 
         #region Constructor
@@ -32,6 +34,7 @@ namespace SpyceLibrary.Scenes
         /// </summary>
         public TestScene()
         {
+            engine = new PhysicsEngine();
         }
         #endregion
 
@@ -48,6 +51,20 @@ namespace SpyceLibrary.Scenes
 
             SceneManager.Instance.SetFrameDimension(854, 480);
             SetInterval(PrintTickSpeed, 3, 3);
+            AddObject(CreateTestPlayer());
+        }
+
+        private GameObject CreateTestPlayer()
+        {
+            GameObject obj = new GameObject();
+            Sprite sp = new Sprite();
+            sp.SetTexturePath("System/blank");
+            obj.AddComponent(sp);
+            obj.RelativeTransform.SetScale(new Vector2(100, 100));
+            obj.AddComponent(new PhysicsBody());
+            obj.AddComponent(new PlayerController());
+
+            return obj;
         }
 
         /// <summary>
@@ -57,6 +74,7 @@ namespace SpyceLibrary.Scenes
         public override void AddObject(GameObject obj)
         {
             base.AddObject(obj);
+            engine.RegisterBody(obj.GetComponent<PhysicsBody>());
             Debug.Instance.WriteLine(NAME, $"Added object of ID: {obj.ID}");
         }
 
@@ -69,6 +87,7 @@ namespace SpyceLibrary.Scenes
             base.Update(gameTime);
             float fps = 1.0f / Time.Instance.RawDeltaTime;
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
+            engine.Update(gameTime);
         }
 
         /// <summary>
@@ -76,9 +95,11 @@ namespace SpyceLibrary.Scenes
         /// </summary>
         public override void Draw()
         {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin(SpriteSortMode.BackToFront);
             base.Draw();
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.End();
         }
         #endregion
     }

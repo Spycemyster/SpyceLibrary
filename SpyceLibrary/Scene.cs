@@ -149,6 +149,7 @@ namespace SpyceLibrary
 
             objects.Add(obj.ID, obj);
             obj.OnDestroy += OnObjectDestruction;
+            obj.Load(initializer);
         }
 
         /// <summary>
@@ -229,7 +230,13 @@ namespace SpyceLibrary
         /// </summary>
         public virtual void Draw()
         {
-
+            foreach (GameObject obj in objects.Values)
+            {
+                if (obj.IsActive)
+                {
+                    obj.Draw();
+                }
+            }
         }
         #endregion
     }
