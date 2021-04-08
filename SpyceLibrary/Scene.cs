@@ -49,11 +49,11 @@ namespace SpyceLibrary
         /// </summary>
         public void PrintTickSpeed()
         {
-            float fps = 1.0f / Time.Instance.RawDeltaTime;
+            double fps = Math.Round(1.0 / Time.Instance.RawDeltaTime, 3);
             long speed = Debug.Instance.TickSpeed;
             ConsoleColor textColor = (speed > 16) ? ((speed > 32)
                 ? ConsoleColor.Red : ConsoleColor.Yellow) : ConsoleColor.Green;
-            Debug.Instance.WriteLine(GetDebugName(), $"Current Tick Speed: {speed} ms, FPS: {fps}", ConsoleColor.Green, textColor);
+            Debug.Instance.WriteLine(GetDebugName(), $"Current Tick Speed: {speed} ms, FPS: {String.Format("{0:0.000}", fps)}", ConsoleColor.Green, textColor);
         }
 
         /// <summary>

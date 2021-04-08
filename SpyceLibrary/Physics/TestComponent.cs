@@ -6,14 +6,14 @@ using System.Text;
 
 namespace SpyceLibrary.Physics
 {
-    public class PlayerController : GameComponent, IUpdated
+    public class TestComponent : GameComponent, IUpdated
     {
         #region Fields
         private PhysicsBody body;
         #endregion
 
         #region Constructor
-        public PlayerController()
+        public TestComponent()
         {
         }
         #endregion

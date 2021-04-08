@@ -26,6 +26,7 @@ namespace SpyceLibrary.Scenes
         private ContentManager Content;
         private SpriteBatch spriteBatch;
         private PhysicsEngine engine;
+        private Camera mainCamera;
         #endregion
 
         #region Constructor
@@ -48,10 +49,11 @@ namespace SpyceLibrary.Scenes
             Content = initializer.Content;
             spriteBatch = initializer.SpriteBatch;
             graphics = initializer.Device;
-
             SceneManager.Instance.SetFrameDimension(854, 480);
             SetInterval(PrintTickSpeed, 3, 3);
-            AddObject(CreateTestPlayer());
+            GameObject player = CreateTestPlayer();
+            mainCamera = player.GetComponent<Camera>();
+            AddObject(player);
         }
 
         private GameObject CreateTestPlayer()
@@ -62,7 +64,8 @@ namespace SpyceLibrary.Scenes
             obj.AddComponent(sp);
             obj.RelativeTransform.SetScale(new Vector2(100, 100));
             obj.AddComponent(new PhysicsBody());
-            obj.AddComponent(new PlayerController());
+            obj.AddComponent(new TestComponent());
+            obj.AddComponent(new Camera());
 
             return obj;
         }
@@ -85,7 +88,7 @@ namespace SpyceLibrary.Scenes
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            float fps = 1.0f / Time.Instance.RawDeltaTime;
+            double fps = Math.Round(1.0 / Time.Instance.RawDeltaTime);
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
             engine.Update(gameTime);
         }
@@ -96,7 +99,7 @@ namespace SpyceLibrary.Scenes
         public override void Draw()
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(SpriteSortMode.BackToFront);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, transformMatrix: mainCamera.GetTransformedMatrix());
             base.Draw();
 
             spriteBatch.End();

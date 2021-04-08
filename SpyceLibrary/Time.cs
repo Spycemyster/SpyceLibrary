@@ -31,13 +31,13 @@ namespace SpyceLibrary
         /// </summary>
         public float DeltaTime
         {
-            get { return deltaTime * timestep; }
+            get { return (float)(RawDeltaTime * timestep); }
         }
 
         /// <summary>
         /// The actual amount of elapsed time from the last update call.
         /// </summary>
-        public float RawDeltaTime
+        public double RawDeltaTime
         {
             get { return deltaTime; }
         }
@@ -50,8 +50,8 @@ namespace SpyceLibrary
             get { return gameTime; }
         }
         private GameTime gameTime;
-        private float deltaTime;
         private float timestep;
+        private double deltaTime;
         #endregion
 
         #region Constructor
@@ -69,7 +69,7 @@ namespace SpyceLibrary
         public void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
         }
         #endregion
     }

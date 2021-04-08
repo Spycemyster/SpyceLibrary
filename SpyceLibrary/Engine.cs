@@ -19,7 +19,6 @@ namespace SpyceLibrary
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
             IsFixedTimeStep = false;
         }
 
