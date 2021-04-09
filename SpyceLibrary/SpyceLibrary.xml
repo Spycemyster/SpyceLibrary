@@ -1,0 +1,779 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpyceLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:SpyceLibrary.Camera">
+            <summary>
+            Handles matrix camera transformations.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Camera.Position">
+            <summary>
+            The position of the camera.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Camera.#ctor">
+            <summary>
+            Creates a new instance of the camera.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Camera.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the c
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
+        <member name="M:SpyceLibrary.Camera.GetTransformedMatrix">
+            <summary>
+            Gets the transformed viewport matrix.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Debug">
+            <summary>
+            Debugging and performance analysis tools. Singleton to be universally access throughout
+            the game project.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Debug.Instance">
+            <summary>
+            Accessor for the singleton.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Debug.TickSpeed">
+            <summary>
+            The measured time (milliseconds) between a draw and update function.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Debug.LOGS_FOLDER">
+            <summary>
+            The main folder where all the logs are saved to.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Debug.LOGS_FILE_EXTENSION">
+            <summary>
+            The file extension for the logs.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.Initialize(SpyceLibrary.Engine)">
+            <summary>
+            Initializes the in-game debugger.
+            </summary>
+            <param name="engine"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debug.ClearLogs">
+            <summary>
+            Clears all the logs.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Writes a new line to the debug log.
+            </summary>
+            <param name="sender"></param>
+            <param name="message"></param>
+            <param name="senderColor"></param>
+            <param name="messageColor"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debug.SaveLog">
+            <summary>
+            Saves the log to the logs folder as a timestamped file.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.SaveLog(System.String)">
+            <summary>
+            Saves the log to the specified path.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="F:SpyceLibrary.LogEntry.Sender">
+            <summary>
+            The name of the sender.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.LogEntry.Message">
+            <summary>
+            The content of the message.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.LogEntry.Time">
+            <summary>
+            The time the message was created.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Engine.#ctor">
+            <summary>
+            Creates a new instance of the engine.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.GameComponent">
+            <summary>
+            An abstract component that is attached to a game object
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.GameComponent.OnEnable">
+            <summary>
+            When the component is enabled.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.GameComponent.OnDisable">
+            <summary>
+            When the component is disabled.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.GameComponent.OnDestroy">
+            <summary>
+            When the component is being destroyed.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameComponent.IsEnabled">
+            <summary>
+            Whether this component should be updated or drawn.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameComponent.Holder">
+            <summary>
+            The game object that this component is attached to.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameComponent.#ctor">
+            <summary>
+            Creates a new instance of the game component.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameComponent.Unload">
+            <summary>
+            Performs any final cleanup operations that aren't handled through regular garbage collection.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameComponent.SetActive(System.Boolean)">
+            <summary>
+            Sets the activeness of the component.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameComponent.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Called before the first Update has been called and after the object is created
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
+        <member name="M:SpyceLibrary.IUpdated.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the object.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.IDrawn.DrawOrder">
+            <summary>
+            The draw order of the game component.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.IDrawn.Draw">
+            <summary>
+            Draws the object to the screen.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.GameObject">
+            <summary>
+            Represents an abstract game object within the game.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.GameObject.OnEnable">
+            <summary>
+            When the object is enabled.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.GameObject.OnDisable">
+            <summary>
+            When the object is disabled.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.GameObject.OnDestroy">
+            <summary>
+            When the object is being destroyed.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.ID">
+            <summary>
+            The unique ID of this game object.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.IsActive">
+            <summary>
+            Whether this object currently has behavior.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.Components">
+            <summary>
+            The components attached to this game object.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.Children">
+            <summary>
+            All game objects are childed to this game object.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.RelativeTransform">
+            <summary>
+            The relative transformation (before applying parent transformations).
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.#ctor">
+            <summary>
+            Creates a new instance of a game object.
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.Destroy">
+            <summary>
+            Frees up the memory in the game object and its components.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.GenerateNewID">
+            <summary>
+            Generates a new unique id for this object.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.SetParent(SpyceLibrary.GameObject)">
+            <summary>
+            Sets the parent of the game object.
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.Load(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the game object and loads all necessary assets.
+            </summary>
+            <param name="init"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the game object, components, and children.
+            </summary>
+            <param name="dt"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.Draw">
+            <summary>
+            Draws all the drawable components.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.AddComponent(SpyceLibrary.GameComponent)">
+            <summary>
+            Adds a component to the list of components
+            </summary>
+            <param name="component"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.GetComponent``1">
+            <summary>
+            Gets the component if it is attached to this game object.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.SetRelativeTransform(SpyceLibrary.Transform)">
+            <summary>
+            Sets the relative transform of the game object.
+            </summary>
+            <param name="transform"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.GetTransform">
+            <summary>
+            Gets the relative to world transform of the game object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.SetActive(System.Boolean)">
+            <summary>
+            Sets the current object's activeness.
+            </summary>
+            <param name="active"></param>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.HasTag(System.String)">
+            <summary>
+            Searches the list of tags for the specified tag.
+            </summary>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.AddTags(System.String[])">
+            <summary>
+            Adds a list of tags to the set of tags.
+            </summary>
+            <param name="addTags"></param>
+        </member>
+        <member name="T:SpyceLibrary.InputManager">
+            <summary>
+            A singleton class that handles user input.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.InputManager.Instance">
+            <summary>
+            Singleton access to the input manager.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.InputManager.OnKeyPress">
+            <summary>
+            When a key is first pressed down.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.InputManager.OnKeyRelease">
+            <summary>
+            When a key is first released.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.InputManager.OnMousePress">
+            <summary>
+            When a mouse button has just been pressed.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.InputManager.OnMouseRelease">
+            <summary>
+            When a mouse button has just been released.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.InputManager.OnScroll">
+            <summary>
+            When the scroll wheel has just been scrolled.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsScrolledUp">
+            <summary>
+            Determines if the mouse is scrolled up.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsScrolledDown">
+            <summary>
+            Determines if the mouse is scrolled down.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.MouseScrollAmount">
+            <summary>
+            Returns the amount the mouse is scrolled in this update cycle.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsMouseClicked(SpyceLibrary.MouseButton)">
+            <summary>
+            Determines whether the mouse has been clicked.
+            </summary>
+            <param name="button"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsMouseUp(SpyceLibrary.MouseButton)">
+            <summary>
+            Determines if the button is currently being held down.
+            </summary>
+            <param name="button"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsMouseDown(SpyceLibrary.MouseButton)">
+            <summary>
+            Determines if the button is currently being held down.
+            </summary>
+            <param name="button"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys[])">
+            <summary>
+            Determines whether the key(s) have been pressed.
+            </summary>
+            <param name="keys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys[])">
+            <summary>
+            Determines whether the key(s) are released.
+            </summary>
+            <param name="keys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsKeyDown(Microsoft.Xna.Framework.Input.Keys[])">
+            <summary>
+            Determines whether the key(s) are down.
+            </summary>
+            <param name="keys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.Update">
+            <summary>
+            Updates the state of the input manager.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.findNewKeys``1(``0[],``0[])">
+            <summary>
+            Creates a list of keys that are currently in a, but not in b.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.MouseButton">
+            <summary>
+            The mouse buttons on a mouse.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.MouseButton.LEFT">
+            <summary>
+            The left mouse button
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.MouseButton.RIGHT">
+            <summary>
+            The right mouse button
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.MouseButton.MIDDLE">
+            <summary>
+            The middle mouse button
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Physics.BoxCollider.Colliders">
+            <summary>
+            The list of colliders that are associated with this game object.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.#ctor">
+            <summary>
+            Creates a new instance of the collider.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.AddCollisionRectangle(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Adds a collision rectangle.
+            </summary>
+            <param name="rect"></param>
+        </member>
+        <member name="P:SpyceLibrary.Physics.PhysicsBody.Position">
+            <summary>
+            Position of the physics body.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Physics.PhysicsBody.Velocity">
+            <summary>
+            The velocity of the body for this tick.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsBody.#ctor">
+            <summary>
+            Creates a new instance of the physics body.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsBody.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Initializes the physics body.
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.#ctor">
+            <summary>
+            Creates a new instance of the physics engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.RegisterBody(SpyceLibrary.Physics.PhysicsBody)">
+            <summary>
+            Registers the body to the engine.
+            </summary>
+            <param name="body"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of each physics engine.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestComponent.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the player controller.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="T:SpyceLibrary.Scene">
+            <summary>
+            A scene represents a set of various game objects interacting. Scenes are indepedent of each other and
+            can be interchangebly loaded using the scene manager.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.#ctor">
+            <summary>
+            Creates a new instance of the game scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.PrintTickSpeed">
+            <summary>
+            Prints the current tick speed and FPS to the debug console.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.GetDebugName">
+            <summary>
+            The debug name of the current scene.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Scene.SaveObject(SpyceLibrary.GameObject,System.String)">
+            <summary>
+            Saves the object to a specified path.
+            </summary>
+            <param name="obj"></param>
+            <param name="path"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.LoadObject(System.String)">
+            <summary>
+            Loads an object from a specified path.
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Scene.RemoveInterval(System.Action)">
+            <summary>
+            Removes an existing intervaled function.
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.SetInterval(System.Action,System.Single,System.Single)">
+            <summary>
+            Runs a function on a fixed interval.
+            </summary>
+            <param name="action"></param>
+            <param name="interval"></param>
+            <param name="time"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.Unload">
+            <summary>
+            Performs any cleanup operations not done in regular garbage collection.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.AddObject(SpyceLibrary.GameObject)">
+            <summary>
+            Adds an object to the game scene.
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.OnObjectDestruction(SpyceLibrary.GameObject)">
+            <summary>
+            When an object is destroyed, it is removed from the scene.
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.RemoveObject(System.Guid)">
+            <summary>
+            Removes an object from the game scene.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the game scene with the necessary resources.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.Load(SpyceLibrary.Initializer)">
+            <summary>
+            Called before the first update is called.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates all the game objects in this scene.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.Draw">
+            <summary>
+            Calls draw on each of the objects in the scene.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.SceneManager">
+            <summary>
+            A singleton object that handles various screen states. This has functionality that allows for
+            smooth transitions between different screen states.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.SceneManager.Instance">
+            <summary>
+            Static access to the singleton scene manager object.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.SceneManager.CurrentScene">
+            <summary>
+            The scene that is currently being drawn and updated.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.SceneManager.CurrentSceneType">
+            <summary>
+            The type of the current scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.RegisterScene(System.Type,System.String)">
+            <summary>
+            Registers a scene with the scene manager.
+            </summary>
+            <param name="sceneType"></param>
+            <param name="sceneName"></param>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.OnExiting">
+            <summary>
+            Called when the game is closing.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.SetFrameDimension(System.Int32,System.Int32)">
+            <summary>
+            Sets the dimension of the window
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.Initialize(Microsoft.Xna.Framework.Content.ContentManager,Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.GraphicsDeviceManager,Microsoft.Xna.Framework.GameWindow)">
+            <summary>
+            Initializes the scene manager.
+            </summary>
+            <param name="content"></param>
+            <param name="spriteBatch"></param>
+            <param name="device"></param>
+            <param name="graphics"></param>
+            <param name="window"></param>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the scene manager and it's current scene.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.Draw">
+            <summary>
+            Renders the contents of the scene manager and it's current scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.ChangeScene(System.String)">
+            <summary>
+            Changes the scene to the given scene.
+            </summary>
+            <param name="scene"></param>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.LoadScene(System.String)">
+            <summary>
+            Creates a new instance of the given scene and returns it.
+            </summary>
+            <param name="scene"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Scenes.TestScene">
+            <summary>
+            This is the scene that will test the various functionality.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Scenes.TestScene.NAME">
+            <summary>
+            The name of this scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scenes.TestScene.#ctor">
+            <summary>
+            Creates a new instance of the game scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scenes.TestScene.AddObject(SpyceLibrary.GameObject)">
+            <summary>
+            Adds an object to the scene
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scenes.TestScene.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the instance of the game scene.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scenes.TestScene.Draw">
+            <summary>
+            Draws the contents of the game scene to the screen.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.Sprite.TexturePath">
+            <summary>
+            The path of the texture.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.#ctor">
+            <summary>
+            Creates a new instance of the game component.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetTexturePath(System.String)">
+            <summary>
+            Sets the texture path of the sprite.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset of the sprite.
+            </summary>
+            <param name="offset"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the textures of the sprite.
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.Draw">
+            <summary>
+            Draws the sprite to the screen.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.Time">
+            <summary>
+            Singleton class for handling time related applications.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Time.DeltaTime">
+            <summary>
+            The amount of elapsed time from the last update call.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Time.RawDeltaTime">
+            <summary>
+            The actual amount of elapsed time from the last update call.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Time.GameTime">
+            <summary>
+            The gametime field from the update cycle.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Time.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the time manager.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="P:SpyceLibrary.Transform.Identity">
+            <summary>
+            Gets the identity transform. When this transform is applied, you get the exact same
+            transform.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Transform.SetScale(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the scale of the transform.
+            </summary>
+            <param name="scale"></param>
+        </member>
+        <member name="M:SpyceLibrary.Transform.SetPosition(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the position of the transform.
+            </summary>
+            <param name="position"></param>
+        </member>
+    </members>
+</doc>
