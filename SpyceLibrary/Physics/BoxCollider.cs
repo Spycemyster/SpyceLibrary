@@ -8,14 +8,11 @@ namespace SpyceLibrary.Physics
     public class BoxCollider : GameComponent
     {
         #region Fields
-        /// <summary>
-        /// The list of colliders that are associated with this game object.
-        /// </summary>
-        public List<Rectangle> Colliders
+        public Rectangle CollisionRectangle
         {
-            get { return rectangles; }
+            get { return rectangle; }
         }
-        private List<Rectangle> rectangles;
+        private Rectangle rectangle;
         #endregion
 
         #region Constructor
@@ -24,18 +21,18 @@ namespace SpyceLibrary.Physics
         /// </summary>
         public BoxCollider()
         {
-            rectangles = new List<Rectangle>();
+            rectangle = new Rectangle();
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// Adds a collision rectangle.
+        /// Sets the collision rectangle.
         /// </summary>
         /// <param name="rect"></param>
-        public void AddCollisionRectangle(Rectangle rect)
+        public void SetCollisionRectangle(Rectangle rect)
         {
-            rectangles.Add(rect);
+            rectangle = rect;
         }
         #endregion
     }

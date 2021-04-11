@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using SpyceLibrary.Physics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +9,6 @@ namespace SpyceLibrary
     /// <summary>
     /// An abstract component that is attached to a game object
     /// </summary>
-    [XmlInclude(typeof(PhysicsBody))]
     [XmlInclude(typeof(GameObject))]
     public class GameComponent
     {

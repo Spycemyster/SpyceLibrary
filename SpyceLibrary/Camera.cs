@@ -9,7 +9,7 @@ namespace SpyceLibrary
     /// <summary>
     /// Handles matrix camera transformations.
     /// </summary>
-    public class Camera : GameComponent
+    public class Camera
     {
         #region Fields
         /// <summary>
@@ -17,10 +17,12 @@ namespace SpyceLibrary
         /// </summary>
         public Vector2 Position
         {
-            get { return Holder.GetTransform().Position; }
+            get { return (viewedObject != null) ? viewedObject.GetTransform().Position + offset : offset; }
         }
 
         private Viewport viewport;
+        private GameObject viewedObject;
+        private Vector2 offset;
         #endregion
 
         #region Constructor
@@ -29,19 +31,27 @@ namespace SpyceLibrary
         /// </summary>
         public Camera()
         {
+            offset = Vector2.Zero;
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// Loads the c
+        /// Fixes the view on the object.
         /// </summary>
-        /// <param name="init"></param>
-        /// <param name="holder"></param>
-        public override void Load(Initializer init, GameObject holder)
+        /// <param name="obj"></param>
+        public void FixViewOn(GameObject obj)
         {
-            base.Load(init, holder);
-            viewport = init.Graphics.Viewport;
+            viewedObject = obj;
+        }
+
+        /// <summary>
+        /// Sets the offset of the camera.
+        /// </summary>
+        /// <param name="offset"></param>
+        public void SetOffset(Vector2 offset)
+        {
+            this.offset = offset;
         }
 
         /// <summary>

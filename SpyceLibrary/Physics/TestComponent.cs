@@ -9,10 +9,12 @@ namespace SpyceLibrary.Physics
     public class TestComponent : GameComponent, IUpdated
     {
         #region Fields
-        private PhysicsBody body;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Creates a new instance of the test component.
+        /// </summary>
         public TestComponent()
         {
         }
@@ -22,7 +24,6 @@ namespace SpyceLibrary.Physics
         public override void Load(Initializer init, GameObject holder)
         {
             base.Load(init, holder);
-            body = holder.GetComponent<PhysicsBody>();
         }
 
         /// <summary>
@@ -31,23 +32,25 @@ namespace SpyceLibrary.Physics
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-            float speed = 1000;
+            float speed = 1000 * Time.Instance.DeltaTime;
+            Vector2 velocity = Vector2.Zero;
             if (InputManager.Instance.IsKeyDown(Keys.W))
             {
-                body.Velocity += new Vector2(0, -speed);
+                velocity = new Vector2(0, -speed);
             }
             else if (InputManager.Instance.IsKeyDown(Keys.S))
             {
-                body.Velocity += new Vector2(0, speed);
+                velocity = new Vector2(0, speed);
             }
             if (InputManager.Instance.IsKeyDown(Keys.A))
             {
-                body.Velocity += new Vector2(-speed, 0);
+                velocity = new Vector2(-speed, 0);
             }
             else if (InputManager.Instance.IsKeyDown(Keys.D))
             {
-                body.Velocity += new Vector2(speed, 0);
+                velocity = new Vector2(speed, 0);
             }
+            Holder.RelativeTransform.Position += velocity;
         }
         #endregion
     }

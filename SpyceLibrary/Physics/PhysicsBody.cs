@@ -28,6 +28,20 @@ namespace SpyceLibrary.Physics
             set;
         }
 
+        /// <summary>
+        /// Whether this object should be collided with in the collision detection.
+        /// </summary>
+        public bool IsCollidable
+        {
+            get;
+            set;
+        }
+
+        public BoxCollider Collider
+        {
+            get { return collider; }
+        }
+        private BoxCollider collider;
         #endregion
 
         #region Constructor
@@ -36,6 +50,7 @@ namespace SpyceLibrary.Physics
         /// </summary>
         public PhysicsBody()
         {
+            IsCollidable = true;
         }
         #endregion
 
@@ -48,6 +63,7 @@ namespace SpyceLibrary.Physics
         public override void Load(Initializer init, GameObject holder)
         {
             base.Load(init, holder);
+            collider = holder.GetComponent<BoxCollider>();
         }
         #endregion
     }

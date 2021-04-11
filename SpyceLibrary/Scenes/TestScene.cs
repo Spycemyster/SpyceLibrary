@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SpyceLibrary.Physics;
 using SpyceLibrary.Sprites;
 using System;
 using System.Collections.Generic;
@@ -25,7 +24,6 @@ namespace SpyceLibrary.Scenes
         private GameWindow Window;
         private ContentManager Content;
         private SpriteBatch spriteBatch;
-        private PhysicsEngine engine;
         private Camera mainCamera;
         #endregion
 
@@ -35,7 +33,6 @@ namespace SpyceLibrary.Scenes
         /// </summary>
         public TestScene()
         {
-            engine = new PhysicsEngine();
         }
         #endregion
 
@@ -49,23 +46,20 @@ namespace SpyceLibrary.Scenes
             Content = initializer.Content;
             spriteBatch = initializer.SpriteBatch;
             graphics = initializer.Device;
+            mainCamera = new Camera();
             SceneManager.Instance.SetFrameDimension(854, 480);
             SetInterval(PrintTickSpeed, 3, 3);
             GameObject player = CreateTestPlayer();
-            mainCamera = player.GetComponent<Camera>();
             AddObject(player);
         }
-
+         
         private GameObject CreateTestPlayer()
         {
             GameObject obj = new GameObject();
             Sprite sp = new Sprite();
             sp.SetTexturePath("System/blank");
             obj.AddComponent(sp);
-            obj.RelativeTransform.SetScale(new Vector2(100, 100));
-            obj.AddComponent(new PhysicsBody());
-            obj.AddComponent(new TestComponent());
-            obj.AddComponent(new Camera());
+            obj.RelativeTransform.SetScale(new Vector2(10, 10));
 
             return obj;
         }
@@ -77,7 +71,6 @@ namespace SpyceLibrary.Scenes
         public override void AddObject(GameObject obj)
         {
             base.AddObject(obj);
-            engine.RegisterBody(obj.GetComponent<PhysicsBody>());
             Debug.Instance.WriteLine(NAME, $"Added object of ID: {obj.ID}");
         }
 
@@ -90,7 +83,6 @@ namespace SpyceLibrary.Scenes
             base.Update(gameTime);
             double fps = Math.Round(1.0 / Time.Instance.RawDeltaTime);
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
-            engine.Update(gameTime);
         }
 
         /// <summary>
