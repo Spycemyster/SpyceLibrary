@@ -5,8 +5,12 @@ using System.Text;
 
 namespace SpyceLibrary
 {
+    /// <summary>
+    /// Represents a size transformation of the game object.
+    /// </summary>
     public class Transform
     {
+        #region Definitions
         /// <summary>
         /// Gets the identity transform. When this transform is applied, you get the exact same
         /// transform.
@@ -24,10 +28,26 @@ namespace SpyceLibrary
                 return t;
             }
         }
-        public Vector2 Position;
-        public Vector2 Scale;
-        public float Rotation;
+        #endregion
 
+        #region Fields
+        /// <summary>
+        /// The position of the transform.
+        /// </summary>
+        public Vector2 Position;
+
+        /// <summary>
+        /// The size scale of the transform.
+        /// </summary>
+        public Vector2 Scale;
+
+        /// <summary>
+        /// The rotation of the sprite.
+        /// </summary>
+        public float Rotation;
+        #endregion
+
+        #region Methods
         /// <summary>
         /// Sets the scale of the transform.
         /// </summary>
@@ -45,5 +65,16 @@ namespace SpyceLibrary
         {
             Position = position;
         }
+
+        /// <summary>
+        /// Sets the position of the transform.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SetPosition(float x, float y)
+        {
+            Position = new Vector2(x, y);
+        }
+        #endregion
     }
 }

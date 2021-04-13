@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,35 @@ namespace SpyceLibrary
     /// </summary>
     public class Debug
     {
+        #region Events
+        /// <summary>
+        /// Delegate handler for each event that is relevant to the debug object.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="contents"></param>
+        public delegate void DebugEvent(string sender, string contents);
+
+        /// <summary>
+        /// When a new message is added to the debug log.
+        /// </summary>
+        public DebugEvent OnNewDebugMessage;
+
+        /// <summary>
+        /// When a line is sent through the command prompt.
+        /// </summary>
+        public DebugEvent OnCommandSend;
+
+        /// <summary>
+        /// When the logs are cleared.
+        /// </summary>
+        public DebugEvent OnLogsCleared;
+
+        /// <summary>
+        /// When the logs are saved
+        /// </summary>
+        public DebugEvent OnLogsSaved;
+        #endregion
+
         #region Singleton
         private static Debug inst;
 
@@ -39,7 +69,23 @@ namespace SpyceLibrary
         /// </summary>
         public long TickSpeed
         {
-            get { return tickSpeed; }
+            get { return drawTickSpeed + updateTickSpeed; }
+        }
+
+        /// <summary>
+        /// The time it takes to run the update loop.
+        /// </summary>
+        public long UpdateTime
+        {
+            get { return updateTickSpeed; }
+        }
+
+        /// <summary>
+        /// The time it takes to run the draw loop.
+        /// </summary>
+        public long DrawTime
+        {
+            get { return drawTickSpeed; }
         }
         /// <summary>
         /// The main folder where all the logs are saved to.
@@ -53,8 +99,9 @@ namespace SpyceLibrary
         private const string SENDER = "DEBUG";
         private readonly List<LogEntry> logs;
         private Stopwatch tickMeasurer;
-        private long tickSpeed;
+        private long drawTickSpeed, updateTickSpeed;
         private Engine engine;
+        private SpriteFont font;
         #endregion
 
         #region Constructor
@@ -73,15 +120,17 @@ namespace SpyceLibrary
         public void Initialize(Engine engine)
         {
             this.engine = engine;
+            font = engine.Content.Load<SpriteFont>("System/DebugFont");
         }
 
         /// <summary>
         /// Clears all the logs.
         /// </summary>
-        public void ClearLogs()
+        /// <param name="sender"></param>
+        public void ClearLogs(string sender)
         {
             logs.Clear();
-
+            OnLogsCleared?.Invoke(sender, "");
             WriteLine(SENDER, "Cleared the logs...", ConsoleColor.Green, ConsoleColor.Red);
         }
 
@@ -107,19 +156,22 @@ namespace SpyceLibrary
             Console.ForegroundColor = messageColor;
             Console.WriteLine(message);
             Console.ResetColor();
+
+            OnNewDebugMessage?.Invoke(sender, message);
         }
 
         /// <summary>
         /// Saves the log to the logs folder as a timestamped file.
         /// </summary>
-        public void SaveLog()
+        /// <param name="sender"></param>
+        public void SaveLog(string sender)
         {
             if (!Directory.Exists(LOGS_FOLDER))
             {
                 Directory.CreateDirectory(LOGS_FOLDER);
             }
             string path = $"{LOGS_FOLDER}/{GetFormattedTime(DateTime.Now)}.{LOGS_FILE_EXTENSION}";
-            SaveLog(path);
+            SaveLog(sender, path);
         }
 
         private string GetFormattedTime(DateTime time)
@@ -130,8 +182,9 @@ namespace SpyceLibrary
         /// <summary>
         /// Saves the log to the specified path.
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="path"></param>
-        public void SaveLog(string path)
+        public void SaveLog(string sender, string path)
         {
             string file = "";
             for (int i = 0; i < logs.Count; i++)
@@ -140,6 +193,7 @@ namespace SpyceLibrary
             }
             File.WriteAllText(path, file);
             WriteLine(SENDER, $"Saved log to the path \"{path}\"", ConsoleColor.Green);
+            OnLogsSaved?.Invoke(sender, path);
         }
 
         private LogEntry CreateEntry(string sender, string message)
@@ -156,8 +210,15 @@ namespace SpyceLibrary
         #endregion
 
         #region Command Handling
+        /// <summary>
+        /// Parses the given line to the command prompt.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="toParse"></param>
         public void ParseCommand(string sender, string toParse)
         {
+            OnCommandSend?.Invoke(sender, toParse);
+
             // separate the command into its arguments
             string[] args = toParse.Split(' ');
 
@@ -183,22 +244,53 @@ namespace SpyceLibrary
                     break;
             }
         }
-        public void StartTick()
+
+        /// <summary>
+        /// Starts counting the current cycle of the game loop.
+        /// </summary>
+        public void StartUpdateTick()
         {
             tickMeasurer.Start();
         }
 
-        public void EndTick()
+        /// <summary>
+        /// Ends the counting of the current cycle of the update.
+        /// </summary>
+        public void EndUpdateTick()
         {
             tickMeasurer.Stop();
-            tickSpeed = tickMeasurer.ElapsedMilliseconds;
+            updateTickSpeed = tickMeasurer.ElapsedMilliseconds;
             tickMeasurer.Reset();
         }
+
+        /// <summary>
+        /// Starts counting the current cycle of the game loop.
+        /// </summary>
+        public void StartDrawTick()
+        {
+            tickMeasurer.Start();
+        }
+
+        /// <summary>
+        /// Ends the counting of the current cycle of the update.
+        /// </summary>
+        public void EndDrawTick()
+        {
+            tickMeasurer.Stop();
+            drawTickSpeed = tickMeasurer.ElapsedMilliseconds;
+            tickMeasurer.Reset();
+        }
+
+        /// <summary>
+        /// Lists all the objects within the current scene.
+        /// </summary>
+        /// <param name="sender"></param>
         private void listObjects(string sender)
         {
             if (SceneManager.Instance.CurrentScene == null)
             {
-                WriteLine(sender, "Cannot list the game objects of the current scene because there is no scene currently loaded...");
+                WriteLine(sender, "Cannot list the game objects of the current scene" +
+                    " because there is no scene currently loaded...");
                 return;
             }
 
@@ -207,6 +299,25 @@ namespace SpyceLibrary
             {
                 WriteLine(sender, $"{b}");
             }
+        }
+
+        /// <summary>
+        /// Gets the number of objects in the current scene.
+        /// </summary>
+        /// <returns></returns>
+        private int GetCurrentSceneObjectCount()
+        {
+            return SceneManager.Instance.CurrentScene.GameObjects.Count;
+        }
+
+        /// <summary>
+        /// Draws debug items to the screen.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(font, $"# of GameObjects: {GetCurrentSceneObjectCount()}",
+                new Vector2(8, 8), Color.White);
         }
         #endregion
     }

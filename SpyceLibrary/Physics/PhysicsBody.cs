@@ -6,6 +6,10 @@ using System.Text;
 
 namespace SpyceLibrary.Physics
 {
+    /// <summary>
+    /// A member of the physics engine. This represents a physical object within the game world
+    /// that has physics-based behaviors and interactions with other physical objects.
+    /// </summary>
     [Serializable]
     public class PhysicsBody : GameComponent
     {
@@ -36,7 +40,11 @@ namespace SpyceLibrary.Physics
             get;
             set;
         }
-
+        
+        /// <summary>
+        /// The rectangular collision rectangle of the physics body. TODO: Change to a more
+        /// generic collider type.
+        /// </summary>
         public BoxCollider Collider
         {
             get { return collider; }
@@ -63,7 +71,7 @@ namespace SpyceLibrary.Physics
         public override void Load(Initializer init, GameObject holder)
         {
             base.Load(init, holder);
-            collider = holder.GetComponent<BoxCollider>();
+            collider = RequireComponent<BoxCollider>();
         }
         #endregion
     }

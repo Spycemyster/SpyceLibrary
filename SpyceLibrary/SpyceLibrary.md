@@ -3,27 +3,79 @@
 
 ## Contents
 
+- [AnimatedSprite](#T-SpyceLibrary-Sprites-AnimatedSprite 'SpyceLibrary.Sprites.AnimatedSprite')
+  - [#ctor()](#M-SpyceLibrary-Sprites-AnimatedSprite-#ctor 'SpyceLibrary.Sprites.AnimatedSprite.#ctor')
 - [BoxCollider](#T-SpyceLibrary-Physics-BoxCollider 'SpyceLibrary.Physics.BoxCollider')
   - [#ctor()](#M-SpyceLibrary-Physics-BoxCollider-#ctor 'SpyceLibrary.Physics.BoxCollider.#ctor')
-  - [Colliders](#P-SpyceLibrary-Physics-BoxCollider-Colliders 'SpyceLibrary.Physics.BoxCollider.Colliders')
-  - [AddCollisionRectangle(rect)](#M-SpyceLibrary-Physics-BoxCollider-AddCollisionRectangle-Microsoft-Xna-Framework-Rectangle- 'SpyceLibrary.Physics.BoxCollider.AddCollisionRectangle(Microsoft.Xna.Framework.Rectangle)')
+  - [Offset](#P-SpyceLibrary-Physics-BoxCollider-Offset 'SpyceLibrary.Physics.BoxCollider.Offset')
+  - [Size](#P-SpyceLibrary-Physics-BoxCollider-Size 'SpyceLibrary.Physics.BoxCollider.Size')
+  - [ConstructRectangleAt(position)](#M-SpyceLibrary-Physics-BoxCollider-ConstructRectangleAt-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Physics.BoxCollider.ConstructRectangleAt(Microsoft.Xna.Framework.Vector2)')
+  - [SetBounds(size)](#M-SpyceLibrary-Physics-BoxCollider-SetBounds-Microsoft-Xna-Framework-Point- 'SpyceLibrary.Physics.BoxCollider.SetBounds(Microsoft.Xna.Framework.Point)')
+  - [SetOffset(offset)](#M-SpyceLibrary-Physics-BoxCollider-SetOffset-Microsoft-Xna-Framework-Point- 'SpyceLibrary.Physics.BoxCollider.SetOffset(Microsoft.Xna.Framework.Point)')
 - [Camera](#T-SpyceLibrary-Camera 'SpyceLibrary.Camera')
   - [#ctor()](#M-SpyceLibrary-Camera-#ctor 'SpyceLibrary.Camera.#ctor')
   - [Position](#P-SpyceLibrary-Camera-Position 'SpyceLibrary.Camera.Position')
+  - [FixViewOn(obj)](#M-SpyceLibrary-Camera-FixViewOn-SpyceLibrary-GameObject- 'SpyceLibrary.Camera.FixViewOn(SpyceLibrary.GameObject)')
   - [GetTransformedMatrix()](#M-SpyceLibrary-Camera-GetTransformedMatrix 'SpyceLibrary.Camera.GetTransformedMatrix')
-  - [Load(init,holder)](#M-SpyceLibrary-Camera-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Camera.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [SetOffset(offset)](#M-SpyceLibrary-Camera-SetOffset-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Camera.SetOffset(Microsoft.Xna.Framework.Vector2)')
+  - [SetViewOffsetPercent(pOffset)](#M-SpyceLibrary-Camera-SetViewOffsetPercent-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Camera.SetViewOffsetPercent(Microsoft.Xna.Framework.Vector2)')
+- [ComponentEvent](#T-SpyceLibrary-GameComponent-ComponentEvent 'SpyceLibrary.GameComponent.ComponentEvent')
 - [Debug](#T-SpyceLibrary-Debug 'SpyceLibrary.Debug')
   - [LOGS_FILE_EXTENSION](#F-SpyceLibrary-Debug-LOGS_FILE_EXTENSION 'SpyceLibrary.Debug.LOGS_FILE_EXTENSION')
   - [LOGS_FOLDER](#F-SpyceLibrary-Debug-LOGS_FOLDER 'SpyceLibrary.Debug.LOGS_FOLDER')
+  - [OnCommandSend](#F-SpyceLibrary-Debug-OnCommandSend 'SpyceLibrary.Debug.OnCommandSend')
+  - [OnLogsCleared](#F-SpyceLibrary-Debug-OnLogsCleared 'SpyceLibrary.Debug.OnLogsCleared')
+  - [OnLogsSaved](#F-SpyceLibrary-Debug-OnLogsSaved 'SpyceLibrary.Debug.OnLogsSaved')
+  - [OnNewDebugMessage](#F-SpyceLibrary-Debug-OnNewDebugMessage 'SpyceLibrary.Debug.OnNewDebugMessage')
+  - [DrawTime](#P-SpyceLibrary-Debug-DrawTime 'SpyceLibrary.Debug.DrawTime')
   - [Instance](#P-SpyceLibrary-Debug-Instance 'SpyceLibrary.Debug.Instance')
   - [TickSpeed](#P-SpyceLibrary-Debug-TickSpeed 'SpyceLibrary.Debug.TickSpeed')
-  - [ClearLogs()](#M-SpyceLibrary-Debug-ClearLogs 'SpyceLibrary.Debug.ClearLogs')
+  - [UpdateTime](#P-SpyceLibrary-Debug-UpdateTime 'SpyceLibrary.Debug.UpdateTime')
+  - [ClearLogs(sender)](#M-SpyceLibrary-Debug-ClearLogs-System-String- 'SpyceLibrary.Debug.ClearLogs(System.String)')
+  - [Draw(spriteBatch)](#M-SpyceLibrary-Debug-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.Debug.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
+  - [EndDrawTick()](#M-SpyceLibrary-Debug-EndDrawTick 'SpyceLibrary.Debug.EndDrawTick')
+  - [EndUpdateTick()](#M-SpyceLibrary-Debug-EndUpdateTick 'SpyceLibrary.Debug.EndUpdateTick')
+  - [GetCurrentSceneObjectCount()](#M-SpyceLibrary-Debug-GetCurrentSceneObjectCount 'SpyceLibrary.Debug.GetCurrentSceneObjectCount')
   - [Initialize(engine)](#M-SpyceLibrary-Debug-Initialize-SpyceLibrary-Engine- 'SpyceLibrary.Debug.Initialize(SpyceLibrary.Engine)')
-  - [SaveLog()](#M-SpyceLibrary-Debug-SaveLog 'SpyceLibrary.Debug.SaveLog')
-  - [SaveLog(path)](#M-SpyceLibrary-Debug-SaveLog-System-String- 'SpyceLibrary.Debug.SaveLog(System.String)')
+  - [ParseCommand(sender,toParse)](#M-SpyceLibrary-Debug-ParseCommand-System-String,System-String- 'SpyceLibrary.Debug.ParseCommand(System.String,System.String)')
+  - [SaveLog(sender)](#M-SpyceLibrary-Debug-SaveLog-System-String- 'SpyceLibrary.Debug.SaveLog(System.String)')
+  - [SaveLog(sender,path)](#M-SpyceLibrary-Debug-SaveLog-System-String,System-String- 'SpyceLibrary.Debug.SaveLog(System.String,System.String)')
+  - [StartDrawTick()](#M-SpyceLibrary-Debug-StartDrawTick 'SpyceLibrary.Debug.StartDrawTick')
+  - [StartUpdateTick()](#M-SpyceLibrary-Debug-StartUpdateTick 'SpyceLibrary.Debug.StartUpdateTick')
   - [WriteLine(sender,message,senderColor,messageColor)](#M-SpyceLibrary-Debug-WriteLine-System-String,System-String,System-ConsoleColor,System-ConsoleColor- 'SpyceLibrary.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)')
+  - [listObjects(sender)](#M-SpyceLibrary-Debug-listObjects-System-String- 'SpyceLibrary.Debug.listObjects(System.String)')
+- [DebugEvent](#T-SpyceLibrary-Debug-DebugEvent 'SpyceLibrary.Debug.DebugEvent')
 - [Engine](#T-SpyceLibrary-Engine 'SpyceLibrary.Engine')
   - [#ctor()](#M-SpyceLibrary-Engine-#ctor 'SpyceLibrary.Engine.#ctor')
+  - [Draw(gameTime)](#M-SpyceLibrary-Engine-Draw-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Engine.Draw(Microsoft.Xna.Framework.GameTime)')
+  - [Initialize()](#M-SpyceLibrary-Engine-Initialize 'SpyceLibrary.Engine.Initialize')
+  - [LoadContent()](#M-SpyceLibrary-Engine-LoadContent 'SpyceLibrary.Engine.LoadContent')
+  - [Update(gameTime)](#M-SpyceLibrary-Engine-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Engine.Update(Microsoft.Xna.Framework.GameTime)')
+- [FastNoiseLite](#T--FastNoiseLite '.FastNoiseLite')
+  - [#ctor()](#M-FastNoiseLite-#ctor-System-Int32- 'FastNoiseLite.#ctor(System.Int32)')
+  - [DomainWarp()](#M-FastNoiseLite-DomainWarp-System-Single@,System-Single@- 'FastNoiseLite.DomainWarp(System.Single@,System.Single@)')
+  - [DomainWarp()](#M-FastNoiseLite-DomainWarp-System-Single@,System-Single@,System-Single@- 'FastNoiseLite.DomainWarp(System.Single@,System.Single@,System.Single@)')
+  - [GetNoise()](#M-FastNoiseLite-GetNoise-System-Single,System-Single- 'FastNoiseLite.GetNoise(System.Single,System.Single)')
+  - [GetNoise()](#M-FastNoiseLite-GetNoise-System-Single,System-Single,System-Single- 'FastNoiseLite.GetNoise(System.Single,System.Single,System.Single)')
+  - [SetCellularDistanceFunction()](#M-FastNoiseLite-SetCellularDistanceFunction-FastNoiseLite-CellularDistanceFunction- 'FastNoiseLite.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction)')
+  - [SetCellularJitter()](#M-FastNoiseLite-SetCellularJitter-System-Single- 'FastNoiseLite.SetCellularJitter(System.Single)')
+  - [SetCellularReturnType()](#M-FastNoiseLite-SetCellularReturnType-FastNoiseLite-CellularReturnType- 'FastNoiseLite.SetCellularReturnType(FastNoiseLite.CellularReturnType)')
+  - [SetDomainWarpAmp()](#M-FastNoiseLite-SetDomainWarpAmp-System-Single- 'FastNoiseLite.SetDomainWarpAmp(System.Single)')
+  - [SetDomainWarpType()](#M-FastNoiseLite-SetDomainWarpType-FastNoiseLite-DomainWarpType- 'FastNoiseLite.SetDomainWarpType(FastNoiseLite.DomainWarpType)')
+  - [SetFractalGain()](#M-FastNoiseLite-SetFractalGain-System-Single- 'FastNoiseLite.SetFractalGain(System.Single)')
+  - [SetFractalLacunarity()](#M-FastNoiseLite-SetFractalLacunarity-System-Single- 'FastNoiseLite.SetFractalLacunarity(System.Single)')
+  - [SetFractalOctaves()](#M-FastNoiseLite-SetFractalOctaves-System-Int32- 'FastNoiseLite.SetFractalOctaves(System.Int32)')
+  - [SetFractalPingPongStrength()](#M-FastNoiseLite-SetFractalPingPongStrength-System-Single- 'FastNoiseLite.SetFractalPingPongStrength(System.Single)')
+  - [SetFractalType()](#M-FastNoiseLite-SetFractalType-FastNoiseLite-FractalType- 'FastNoiseLite.SetFractalType(FastNoiseLite.FractalType)')
+  - [SetFractalWeightedStrength()](#M-FastNoiseLite-SetFractalWeightedStrength-System-Single- 'FastNoiseLite.SetFractalWeightedStrength(System.Single)')
+  - [SetFrequency()](#M-FastNoiseLite-SetFrequency-System-Single- 'FastNoiseLite.SetFrequency(System.Single)')
+  - [SetNoiseType()](#M-FastNoiseLite-SetNoiseType-FastNoiseLite-NoiseType- 'FastNoiseLite.SetNoiseType(FastNoiseLite.NoiseType)')
+  - [SetRotationType3D()](#M-FastNoiseLite-SetRotationType3D-FastNoiseLite-RotationType3D- 'FastNoiseLite.SetRotationType3D(FastNoiseLite.RotationType3D)')
+  - [SetSeed()](#M-FastNoiseLite-SetSeed-System-Int32- 'FastNoiseLite.SetSeed(System.Int32)')
+- [FrameData](#T-SpyceLibrary-Sprites-FrameData 'SpyceLibrary.Sprites.FrameData')
+  - [Position](#P-SpyceLibrary-Sprites-FrameData-Position 'SpyceLibrary.Sprites.FrameData.Position')
+  - [Texture](#P-SpyceLibrary-Sprites-FrameData-Texture 'SpyceLibrary.Sprites.FrameData.Texture')
+  - [Time](#P-SpyceLibrary-Sprites-FrameData-Time 'SpyceLibrary.Sprites.FrameData.Time')
 - [GameComponent](#T-SpyceLibrary-GameComponent 'SpyceLibrary.GameComponent')
   - [#ctor()](#M-SpyceLibrary-GameComponent-#ctor 'SpyceLibrary.GameComponent.#ctor')
   - [OnDestroy](#F-SpyceLibrary-GameComponent-OnDestroy 'SpyceLibrary.GameComponent.OnDestroy')
@@ -32,10 +84,11 @@
   - [Holder](#P-SpyceLibrary-GameComponent-Holder 'SpyceLibrary.GameComponent.Holder')
   - [IsEnabled](#P-SpyceLibrary-GameComponent-IsEnabled 'SpyceLibrary.GameComponent.IsEnabled')
   - [Load(init,holder)](#M-SpyceLibrary-GameComponent-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.GameComponent.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [RequireComponent\`\`1()](#M-SpyceLibrary-GameComponent-RequireComponent``1 'SpyceLibrary.GameComponent.RequireComponent``1')
   - [SetActive()](#M-SpyceLibrary-GameComponent-SetActive-System-Boolean- 'SpyceLibrary.GameComponent.SetActive(System.Boolean)')
   - [Unload()](#M-SpyceLibrary-GameComponent-Unload 'SpyceLibrary.GameComponent.Unload')
 - [GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject')
-  - [#ctor(parent)](#M-SpyceLibrary-GameObject-#ctor 'SpyceLibrary.GameObject.#ctor')
+  - [#ctor()](#M-SpyceLibrary-GameObject-#ctor 'SpyceLibrary.GameObject.#ctor')
   - [Children](#P-SpyceLibrary-GameObject-Children 'SpyceLibrary.GameObject.Children')
   - [Components](#P-SpyceLibrary-GameObject-Components 'SpyceLibrary.GameObject.Components')
   - [ID](#P-SpyceLibrary-GameObject-ID 'SpyceLibrary.GameObject.ID')
@@ -49,16 +102,27 @@
   - [GetComponent\`\`1()](#M-SpyceLibrary-GameObject-GetComponent``1 'SpyceLibrary.GameObject.GetComponent``1')
   - [GetTransform()](#M-SpyceLibrary-GameObject-GetTransform 'SpyceLibrary.GameObject.GetTransform')
   - [HasTag(tag)](#M-SpyceLibrary-GameObject-HasTag-System-String- 'SpyceLibrary.GameObject.HasTag(System.String)')
+  - [IsDirectChild(parent,child)](#M-SpyceLibrary-GameObject-IsDirectChild-SpyceLibrary-GameObject,SpyceLibrary-GameObject- 'SpyceLibrary.GameObject.IsDirectChild(SpyceLibrary.GameObject,SpyceLibrary.GameObject)')
   - [Load(init)](#M-SpyceLibrary-GameObject-Load-SpyceLibrary-Initializer- 'SpyceLibrary.GameObject.Load(SpyceLibrary.Initializer)')
   - [SetActive(active)](#M-SpyceLibrary-GameObject-SetActive-System-Boolean- 'SpyceLibrary.GameObject.SetActive(System.Boolean)')
   - [SetParent(parent)](#M-SpyceLibrary-GameObject-SetParent-SpyceLibrary-GameObject- 'SpyceLibrary.GameObject.SetParent(SpyceLibrary.GameObject)')
   - [SetRelativeTransform(transform)](#M-SpyceLibrary-GameObject-SetRelativeTransform-SpyceLibrary-Transform- 'SpyceLibrary.GameObject.SetRelativeTransform(SpyceLibrary.Transform)')
-  - [Update(dt)](#M-SpyceLibrary-GameObject-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.GameObject.Update(Microsoft.Xna.Framework.GameTime)')
+  - [ToString()](#M-SpyceLibrary-GameObject-ToString 'SpyceLibrary.GameObject.ToString')
+  - [Update(gameTime)](#M-SpyceLibrary-GameObject-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.GameObject.Update(Microsoft.Xna.Framework.GameTime)')
+- [GameObjectEvent](#T-SpyceLibrary-GameObject-GameObjectEvent 'SpyceLibrary.GameObject.GameObjectEvent')
 - [IDrawn](#T-SpyceLibrary-IDrawn 'SpyceLibrary.IDrawn')
+  - [MAX_DRAW_ORDER](#F-SpyceLibrary-IDrawn-MAX_DRAW_ORDER 'SpyceLibrary.IDrawn.MAX_DRAW_ORDER')
   - [Draw()](#M-SpyceLibrary-IDrawn-Draw 'SpyceLibrary.IDrawn.Draw')
   - [DrawOrder()](#M-SpyceLibrary-IDrawn-DrawOrder 'SpyceLibrary.IDrawn.DrawOrder')
+  - [GetDrawRectangle()](#M-SpyceLibrary-IDrawn-GetDrawRectangle 'SpyceLibrary.IDrawn.GetDrawRectangle')
 - [IUpdated](#T-SpyceLibrary-IUpdated 'SpyceLibrary.IUpdated')
   - [Update(gameTime)](#M-SpyceLibrary-IUpdated-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.IUpdated.Update(Microsoft.Xna.Framework.GameTime)')
+- [Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer')
+  - [Content](#F-SpyceLibrary-Initializer-Content 'SpyceLibrary.Initializer.Content')
+  - [Device](#F-SpyceLibrary-Initializer-Device 'SpyceLibrary.Initializer.Device')
+  - [Graphics](#F-SpyceLibrary-Initializer-Graphics 'SpyceLibrary.Initializer.Graphics')
+  - [SpriteBatch](#F-SpyceLibrary-Initializer-SpriteBatch 'SpyceLibrary.Initializer.SpriteBatch')
+  - [Window](#F-SpyceLibrary-Initializer-Window 'SpyceLibrary.Initializer.Window')
 - [InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager')
   - [Instance](#P-SpyceLibrary-InputManager-Instance 'SpyceLibrary.InputManager.Instance')
   - [IsKeyDown(keys)](#M-SpyceLibrary-InputManager-IsKeyDown-Microsoft-Xna-Framework-Input-Keys[]- 'SpyceLibrary.InputManager.IsKeyDown(Microsoft.Xna.Framework.Input.Keys[])')
@@ -72,6 +136,7 @@
   - [MouseScrollAmount()](#M-SpyceLibrary-InputManager-MouseScrollAmount 'SpyceLibrary.InputManager.MouseScrollAmount')
   - [Update()](#M-SpyceLibrary-InputManager-Update 'SpyceLibrary.InputManager.Update')
   - [findNewKeys\`\`1(a,b)](#M-SpyceLibrary-InputManager-findNewKeys``1-``0[],``0[]- 'SpyceLibrary.InputManager.findNewKeys``1(``0[],``0[])')
+- [KeyboardEventHandler](#T-SpyceLibrary-InputManager-KeyboardEventHandler 'SpyceLibrary.InputManager.KeyboardEventHandler')
 - [LogEntry](#T-SpyceLibrary-LogEntry 'SpyceLibrary.LogEntry')
   - [Message](#F-SpyceLibrary-LogEntry-Message 'SpyceLibrary.LogEntry.Message')
   - [Sender](#F-SpyceLibrary-LogEntry-Sender 'SpyceLibrary.LogEntry.Sender')
@@ -80,17 +145,32 @@
   - [LEFT](#F-SpyceLibrary-MouseButton-LEFT 'SpyceLibrary.MouseButton.LEFT')
   - [MIDDLE](#F-SpyceLibrary-MouseButton-MIDDLE 'SpyceLibrary.MouseButton.MIDDLE')
   - [RIGHT](#F-SpyceLibrary-MouseButton-RIGHT 'SpyceLibrary.MouseButton.RIGHT')
+- [MouseEventHandler](#T-SpyceLibrary-InputManager-MouseEventHandler 'SpyceLibrary.InputManager.MouseEventHandler')
 - [PhysicsBody](#T-SpyceLibrary-Physics-PhysicsBody 'SpyceLibrary.Physics.PhysicsBody')
   - [#ctor()](#M-SpyceLibrary-Physics-PhysicsBody-#ctor 'SpyceLibrary.Physics.PhysicsBody.#ctor')
+  - [Collider](#P-SpyceLibrary-Physics-PhysicsBody-Collider 'SpyceLibrary.Physics.PhysicsBody.Collider')
+  - [IsCollidable](#P-SpyceLibrary-Physics-PhysicsBody-IsCollidable 'SpyceLibrary.Physics.PhysicsBody.IsCollidable')
   - [Position](#P-SpyceLibrary-Physics-PhysicsBody-Position 'SpyceLibrary.Physics.PhysicsBody.Position')
   - [Velocity](#P-SpyceLibrary-Physics-PhysicsBody-Velocity 'SpyceLibrary.Physics.PhysicsBody.Velocity')
   - [Load(init,holder)](#M-SpyceLibrary-Physics-PhysicsBody-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Physics.PhysicsBody.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
 - [PhysicsEngine](#T-SpyceLibrary-Physics-PhysicsEngine 'SpyceLibrary.Physics.PhysicsEngine')
   - [#ctor()](#M-SpyceLibrary-Physics-PhysicsEngine-#ctor 'SpyceLibrary.Physics.PhysicsEngine.#ctor')
+  - [QUAD_SIZE](#F-SpyceLibrary-Physics-PhysicsEngine-QUAD_SIZE 'SpyceLibrary.Physics.PhysicsEngine.QUAD_SIZE')
+  - [Clear()](#M-SpyceLibrary-Physics-PhysicsEngine-Clear 'SpyceLibrary.Physics.PhysicsEngine.Clear')
+  - [Draw()](#M-SpyceLibrary-Physics-PhysicsEngine-Draw-SpyceLibrary-Camera- 'SpyceLibrary.Physics.PhysicsEngine.Draw(SpyceLibrary.Camera)')
+  - [Initialize(initializer)](#M-SpyceLibrary-Physics-PhysicsEngine-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.Physics.PhysicsEngine.Initialize(SpyceLibrary.Initializer)')
+  - [ReaddQuadBody(body)](#M-SpyceLibrary-Physics-PhysicsEngine-ReaddQuadBody-SpyceLibrary-Physics-PhysicsBody- 'SpyceLibrary.Physics.PhysicsEngine.ReaddQuadBody(SpyceLibrary.Physics.PhysicsBody)')
   - [RegisterBody(body)](#M-SpyceLibrary-Physics-PhysicsEngine-RegisterBody-SpyceLibrary-Physics-PhysicsBody- 'SpyceLibrary.Physics.PhysicsEngine.RegisterBody(SpyceLibrary.Physics.PhysicsBody)')
+  - [UnregisterQuadBody(body)](#M-SpyceLibrary-Physics-PhysicsEngine-UnregisterQuadBody-SpyceLibrary-Physics-PhysicsBody- 'SpyceLibrary.Physics.PhysicsEngine.UnregisterQuadBody(SpyceLibrary.Physics.PhysicsBody)')
   - [Update(gameTime)](#M-SpyceLibrary-Physics-PhysicsEngine-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Physics.PhysicsEngine.Update(Microsoft.Xna.Framework.GameTime)')
+- [Program](#T-SpyceLibrary-Program 'SpyceLibrary.Program')
+  - [NAME](#F-SpyceLibrary-Program-NAME 'SpyceLibrary.Program.NAME')
+  - [Main()](#M-SpyceLibrary-Program-Main 'SpyceLibrary.Program.Main')
+  - [Run()](#M-SpyceLibrary-Program-Run 'SpyceLibrary.Program.Run')
 - [Scene](#T-SpyceLibrary-Scene 'SpyceLibrary.Scene')
   - [#ctor()](#M-SpyceLibrary-Scene-#ctor 'SpyceLibrary.Scene.#ctor')
+  - [GameObjects](#P-SpyceLibrary-Scene-GameObjects 'SpyceLibrary.Scene.GameObjects')
+  - [ScreenRectangle](#P-SpyceLibrary-Scene-ScreenRectangle 'SpyceLibrary.Scene.ScreenRectangle')
   - [AddObject(obj)](#M-SpyceLibrary-Scene-AddObject-SpyceLibrary-GameObject- 'SpyceLibrary.Scene.AddObject(SpyceLibrary.GameObject)')
   - [Draw()](#M-SpyceLibrary-Scene-Draw 'SpyceLibrary.Scene.Draw')
   - [GetDebugName()](#M-SpyceLibrary-Scene-GetDebugName 'SpyceLibrary.Scene.GetDebugName')
@@ -103,6 +183,8 @@
   - [RemoveObject(id)](#M-SpyceLibrary-Scene-RemoveObject-System-Guid- 'SpyceLibrary.Scene.RemoveObject(System.Guid)')
   - [SaveObject(obj,path)](#M-SpyceLibrary-Scene-SaveObject-SpyceLibrary-GameObject,System-String- 'SpyceLibrary.Scene.SaveObject(SpyceLibrary.GameObject,System.String)')
   - [SetInterval(action,interval,time)](#M-SpyceLibrary-Scene-SetInterval-System-Action,System-Single,System-Single- 'SpyceLibrary.Scene.SetInterval(System.Action,System.Single,System.Single)')
+  - [SetScreenRectangleBounds(width,height)](#M-SpyceLibrary-Scene-SetScreenRectangleBounds-System-Int32,System-Int32- 'SpyceLibrary.Scene.SetScreenRectangleBounds(System.Int32,System.Int32)')
+  - [SetScreenRectangleLocation(x,y)](#M-SpyceLibrary-Scene-SetScreenRectangleLocation-System-Int32,System-Int32- 'SpyceLibrary.Scene.SetScreenRectangleLocation(System.Int32,System.Int32)')
   - [Unload()](#M-SpyceLibrary-Scene-Unload 'SpyceLibrary.Scene.Unload')
   - [Update(gameTime)](#M-SpyceLibrary-Scene-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Scene.Update(Microsoft.Xna.Framework.GameTime)')
 - [SceneManager](#T-SpyceLibrary-SceneManager 'SpyceLibrary.SceneManager')
@@ -111,6 +193,7 @@
   - [Instance](#P-SpyceLibrary-SceneManager-Instance 'SpyceLibrary.SceneManager.Instance')
   - [ChangeScene(scene)](#M-SpyceLibrary-SceneManager-ChangeScene-System-String- 'SpyceLibrary.SceneManager.ChangeScene(System.String)')
   - [Draw()](#M-SpyceLibrary-SceneManager-Draw 'SpyceLibrary.SceneManager.Draw')
+  - [GetWindowSize()](#M-SpyceLibrary-SceneManager-GetWindowSize 'SpyceLibrary.SceneManager.GetWindowSize')
   - [Initialize(content,spriteBatch,device,graphics,window)](#M-SpyceLibrary-SceneManager-Initialize-Microsoft-Xna-Framework-Content-ContentManager,Microsoft-Xna-Framework-Graphics-SpriteBatch,Microsoft-Xna-Framework-Graphics-GraphicsDevice,Microsoft-Xna-Framework-GraphicsDeviceManager,Microsoft-Xna-Framework-GameWindow- 'SpyceLibrary.SceneManager.Initialize(Microsoft.Xna.Framework.Content.ContentManager,Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.GraphicsDeviceManager,Microsoft.Xna.Framework.GameWindow)')
   - [LoadScene(scene)](#M-SpyceLibrary-SceneManager-LoadScene-System-String- 'SpyceLibrary.SceneManager.LoadScene(System.String)')
   - [OnExiting()](#M-SpyceLibrary-SceneManager-OnExiting 'SpyceLibrary.SceneManager.OnExiting')
@@ -121,26 +204,69 @@
   - [#ctor()](#M-SpyceLibrary-Sprites-Sprite-#ctor 'SpyceLibrary.Sprites.Sprite.#ctor')
   - [TexturePath](#P-SpyceLibrary-Sprites-Sprite-TexturePath 'SpyceLibrary.Sprites.Sprite.TexturePath')
   - [Draw()](#M-SpyceLibrary-Sprites-Sprite-Draw 'SpyceLibrary.Sprites.Sprite.Draw')
+  - [DrawOrder()](#M-SpyceLibrary-Sprites-Sprite-DrawOrder 'SpyceLibrary.Sprites.Sprite.DrawOrder')
+  - [GetDrawRectangle()](#M-SpyceLibrary-Sprites-Sprite-GetDrawRectangle 'SpyceLibrary.Sprites.Sprite.GetDrawRectangle')
   - [Load(init,holder)](#M-SpyceLibrary-Sprites-Sprite-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Sprites.Sprite.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [SetDrawOrder(order)](#M-SpyceLibrary-Sprites-Sprite-SetDrawOrder-System-UInt32- 'SpyceLibrary.Sprites.Sprite.SetDrawOrder(System.UInt32)')
   - [SetOffset(offset)](#M-SpyceLibrary-Sprites-Sprite-SetOffset-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Sprites.Sprite.SetOffset(Microsoft.Xna.Framework.Vector2)')
+  - [SetSize(size)](#M-SpyceLibrary-Sprites-Sprite-SetSize-Microsoft-Xna-Framework-Point- 'SpyceLibrary.Sprites.Sprite.SetSize(Microsoft.Xna.Framework.Point)')
+  - [SetSize(width,height)](#M-SpyceLibrary-Sprites-Sprite-SetSize-System-Int32,System-Int32- 'SpyceLibrary.Sprites.Sprite.SetSize(System.Int32,System.Int32)')
   - [SetTexturePath(path)](#M-SpyceLibrary-Sprites-Sprite-SetTexturePath-System-String- 'SpyceLibrary.Sprites.Sprite.SetTexturePath(System.String)')
+- [SpriteAnimation](#T-SpyceLibrary-Sprites-SpriteAnimation 'SpyceLibrary.Sprites.SpriteAnimation')
+  - [CurrentFrame](#P-SpyceLibrary-Sprites-SpriteAnimation-CurrentFrame 'SpyceLibrary.Sprites.SpriteAnimation.CurrentFrame')
+  - [FrameData](#P-SpyceLibrary-Sprites-SpriteAnimation-FrameData 'SpyceLibrary.Sprites.SpriteAnimation.FrameData')
+  - [SetCurrentFrame(frame)](#M-SpyceLibrary-Sprites-SpriteAnimation-SetCurrentFrame-System-Int32- 'SpyceLibrary.Sprites.SpriteAnimation.SetCurrentFrame(System.Int32)')
+  - [Update(gameTime)](#M-SpyceLibrary-Sprites-SpriteAnimation-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Sprites.SpriteAnimation.Update(Microsoft.Xna.Framework.GameTime)')
 - [TestComponent](#T-SpyceLibrary-Physics-TestComponent 'SpyceLibrary.Physics.TestComponent')
+  - [#ctor()](#M-SpyceLibrary-Physics-TestComponent-#ctor 'SpyceLibrary.Physics.TestComponent.#ctor')
+  - [Load(init,holder)](#M-SpyceLibrary-Physics-TestComponent-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Physics.TestComponent.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
   - [Update(gameTime)](#M-SpyceLibrary-Physics-TestComponent-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Physics.TestComponent.Update(Microsoft.Xna.Framework.GameTime)')
 - [TestScene](#T-SpyceLibrary-Scenes-TestScene 'SpyceLibrary.Scenes.TestScene')
   - [#ctor()](#M-SpyceLibrary-Scenes-TestScene-#ctor 'SpyceLibrary.Scenes.TestScene.#ctor')
   - [NAME](#F-SpyceLibrary-Scenes-TestScene-NAME 'SpyceLibrary.Scenes.TestScene.NAME')
+  - [WINDOW_HEIGHT](#F-SpyceLibrary-Scenes-TestScene-WINDOW_HEIGHT 'SpyceLibrary.Scenes.TestScene.WINDOW_HEIGHT')
+  - [WINDOW_WIDTH](#F-SpyceLibrary-Scenes-TestScene-WINDOW_WIDTH 'SpyceLibrary.Scenes.TestScene.WINDOW_WIDTH')
   - [AddObject(obj)](#M-SpyceLibrary-Scenes-TestScene-AddObject-SpyceLibrary-GameObject- 'SpyceLibrary.Scenes.TestScene.AddObject(SpyceLibrary.GameObject)')
   - [Draw()](#M-SpyceLibrary-Scenes-TestScene-Draw 'SpyceLibrary.Scenes.TestScene.Draw')
+  - [Load(initializer)](#M-SpyceLibrary-Scenes-TestScene-Load-SpyceLibrary-Initializer- 'SpyceLibrary.Scenes.TestScene.Load(SpyceLibrary.Initializer)')
+  - [Unload()](#M-SpyceLibrary-Scenes-TestScene-Unload 'SpyceLibrary.Scenes.TestScene.Unload')
   - [Update(gameTime)](#M-SpyceLibrary-Scenes-TestScene-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Scenes.TestScene.Update(Microsoft.Xna.Framework.GameTime)')
 - [Time](#T-SpyceLibrary-Time 'SpyceLibrary.Time')
   - [DeltaTime](#P-SpyceLibrary-Time-DeltaTime 'SpyceLibrary.Time.DeltaTime')
   - [GameTime](#P-SpyceLibrary-Time-GameTime 'SpyceLibrary.Time.GameTime')
+  - [Instance](#P-SpyceLibrary-Time-Instance 'SpyceLibrary.Time.Instance')
   - [RawDeltaTime](#P-SpyceLibrary-Time-RawDeltaTime 'SpyceLibrary.Time.RawDeltaTime')
   - [Update(gameTime)](#M-SpyceLibrary-Time-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Time.Update(Microsoft.Xna.Framework.GameTime)')
 - [Transform](#T-SpyceLibrary-Transform 'SpyceLibrary.Transform')
+  - [Position](#F-SpyceLibrary-Transform-Position 'SpyceLibrary.Transform.Position')
+  - [Rotation](#F-SpyceLibrary-Transform-Rotation 'SpyceLibrary.Transform.Rotation')
+  - [Scale](#F-SpyceLibrary-Transform-Scale 'SpyceLibrary.Transform.Scale')
   - [Identity](#P-SpyceLibrary-Transform-Identity 'SpyceLibrary.Transform.Identity')
   - [SetPosition(position)](#M-SpyceLibrary-Transform-SetPosition-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Transform.SetPosition(Microsoft.Xna.Framework.Vector2)')
+  - [SetPosition(x,y)](#M-SpyceLibrary-Transform-SetPosition-System-Single,System-Single- 'SpyceLibrary.Transform.SetPosition(System.Single,System.Single)')
   - [SetScale(scale)](#M-SpyceLibrary-Transform-SetScale-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Transform.SetScale(Microsoft.Xna.Framework.Vector2)')
+
+<a name='T-SpyceLibrary-Sprites-AnimatedSprite'></a>
+## AnimatedSprite `type`
+
+##### Namespace
+
+SpyceLibrary.Sprites
+
+##### Summary
+
+A spritesheet based sprite.
+
+<a name='M-SpyceLibrary-Sprites-AnimatedSprite-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Creates a new instance of the Animated Sprite.
+
+##### Parameters
+
+This constructor has no parameters.
 
 <a name='T-SpyceLibrary-Physics-BoxCollider'></a>
 ## BoxCollider `type`
@@ -160,25 +286,62 @@ Creates a new instance of the collider.
 
 This constructor has no parameters.
 
-<a name='P-SpyceLibrary-Physics-BoxCollider-Colliders'></a>
-### Colliders `property`
+<a name='P-SpyceLibrary-Physics-BoxCollider-Offset'></a>
+### Offset `property`
 
 ##### Summary
 
-The list of colliders that are associated with this game object.
+The offset of the collider.
 
-<a name='M-SpyceLibrary-Physics-BoxCollider-AddCollisionRectangle-Microsoft-Xna-Framework-Rectangle-'></a>
-### AddCollisionRectangle(rect) `method`
+<a name='P-SpyceLibrary-Physics-BoxCollider-Size'></a>
+### Size `property`
 
 ##### Summary
 
-Adds a collision rectangle.
+The size of the collider.
+
+<a name='M-SpyceLibrary-Physics-BoxCollider-ConstructRectangleAt-Microsoft-Xna-Framework-Vector2-'></a>
+### ConstructRectangleAt(position) `method`
+
+##### Summary
+
+Constructs a rectangle at the given position.
+
+##### Returns
+
+
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| rect | [Microsoft.Xna.Framework.Rectangle](#T-Microsoft-Xna-Framework-Rectangle 'Microsoft.Xna.Framework.Rectangle') |  |
+| position | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-Physics-BoxCollider-SetBounds-Microsoft-Xna-Framework-Point-'></a>
+### SetBounds(size) `method`
+
+##### Summary
+
+Sets the size of the collision rectangle.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| size | [Microsoft.Xna.Framework.Point](#T-Microsoft-Xna-Framework-Point 'Microsoft.Xna.Framework.Point') |  |
+
+<a name='M-SpyceLibrary-Physics-BoxCollider-SetOffset-Microsoft-Xna-Framework-Point-'></a>
+### SetOffset(offset) `method`
+
+##### Summary
+
+Sets the offset of the collision rectangle.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| offset | [Microsoft.Xna.Framework.Point](#T-Microsoft-Xna-Framework-Point 'Microsoft.Xna.Framework.Point') |  |
 
 <a name='T-SpyceLibrary-Camera'></a>
 ## Camera `type`
@@ -209,6 +372,19 @@ This constructor has no parameters.
 
 The position of the camera.
 
+<a name='M-SpyceLibrary-Camera-FixViewOn-SpyceLibrary-GameObject-'></a>
+### FixViewOn(obj) `method`
+
+##### Summary
+
+Fixes the view on the object.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| obj | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+
 <a name='M-SpyceLibrary-Camera-GetTransformedMatrix'></a>
 ### GetTransformedMatrix() `method`
 
@@ -224,19 +400,48 @@ Gets the transformed viewport matrix.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Camera-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
-### Load(init,holder) `method`
+<a name='M-SpyceLibrary-Camera-SetOffset-Microsoft-Xna-Framework-Vector2-'></a>
+### SetOffset(offset) `method`
 
 ##### Summary
 
-Loads the c
+Sets the offset of the camera.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
-| holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+| offset | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-Camera-SetViewOffsetPercent-Microsoft-Xna-Framework-Vector2-'></a>
+### SetViewOffsetPercent(pOffset) `method`
+
+##### Summary
+
+Sets the percentage for how offset the camera is relative to the screen.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| pOffset | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='T-SpyceLibrary-GameComponent-ComponentEvent'></a>
+## ComponentEvent `type`
+
+##### Namespace
+
+SpyceLibrary.GameComponent
+
+##### Summary
+
+Delegate for handling events related to UI components.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| component | [T:SpyceLibrary.GameComponent.ComponentEvent](#T-T-SpyceLibrary-GameComponent-ComponentEvent 'T:SpyceLibrary.GameComponent.ComponentEvent') |  |
 
 <a name='T-SpyceLibrary-Debug'></a>
 ## Debug `type`
@@ -264,6 +469,41 @@ The file extension for the logs.
 
 The main folder where all the logs are saved to.
 
+<a name='F-SpyceLibrary-Debug-OnCommandSend'></a>
+### OnCommandSend `constants`
+
+##### Summary
+
+When a line is sent through the command prompt.
+
+<a name='F-SpyceLibrary-Debug-OnLogsCleared'></a>
+### OnLogsCleared `constants`
+
+##### Summary
+
+When the logs are cleared.
+
+<a name='F-SpyceLibrary-Debug-OnLogsSaved'></a>
+### OnLogsSaved `constants`
+
+##### Summary
+
+When the logs are saved
+
+<a name='F-SpyceLibrary-Debug-OnNewDebugMessage'></a>
+### OnNewDebugMessage `constants`
+
+##### Summary
+
+When a new message is added to the debug log.
+
+<a name='P-SpyceLibrary-Debug-DrawTime'></a>
+### DrawTime `property`
+
+##### Summary
+
+The time it takes to run the draw loop.
+
 <a name='P-SpyceLibrary-Debug-Instance'></a>
 ### Instance `property`
 
@@ -278,12 +518,71 @@ Accessor for the singleton.
 
 The measured time (milliseconds) between a draw and update function.
 
-<a name='M-SpyceLibrary-Debug-ClearLogs'></a>
-### ClearLogs() `method`
+<a name='P-SpyceLibrary-Debug-UpdateTime'></a>
+### UpdateTime `property`
+
+##### Summary
+
+The time it takes to run the update loop.
+
+<a name='M-SpyceLibrary-Debug-ClearLogs-System-String-'></a>
+### ClearLogs(sender) `method`
 
 ##### Summary
 
 Clears all the logs.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-SpyceLibrary-Debug-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
+### Draw(spriteBatch) `method`
+
+##### Summary
+
+Draws debug items to the screen.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| spriteBatch | [Microsoft.Xna.Framework.Graphics.SpriteBatch](#T-Microsoft-Xna-Framework-Graphics-SpriteBatch 'Microsoft.Xna.Framework.Graphics.SpriteBatch') |  |
+
+<a name='M-SpyceLibrary-Debug-EndDrawTick'></a>
+### EndDrawTick() `method`
+
+##### Summary
+
+Ends the counting of the current cycle of the update.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debug-EndUpdateTick'></a>
+### EndUpdateTick() `method`
+
+##### Summary
+
+Ends the counting of the current cycle of the update.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debug-GetCurrentSceneObjectCount'></a>
+### GetCurrentSceneObjectCount() `method`
+
+##### Summary
+
+Gets the number of objects in the current scene.
+
+##### Returns
+
+
 
 ##### Parameters
 
@@ -302,8 +601,22 @@ Initializes the in-game debugger.
 | ---- | ---- | ----------- |
 | engine | [SpyceLibrary.Engine](#T-SpyceLibrary-Engine 'SpyceLibrary.Engine') |  |
 
-<a name='M-SpyceLibrary-Debug-SaveLog'></a>
-### SaveLog() `method`
+<a name='M-SpyceLibrary-Debug-ParseCommand-System-String,System-String-'></a>
+### ParseCommand(sender,toParse) `method`
+
+##### Summary
+
+Parses the given line to the command prompt.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| toParse | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-SpyceLibrary-Debug-SaveLog-System-String-'></a>
+### SaveLog(sender) `method`
 
 ##### Summary
 
@@ -311,10 +624,12 @@ Saves the log to the logs folder as a timestamped file.
 
 ##### Parameters
 
-This method has no parameters.
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='M-SpyceLibrary-Debug-SaveLog-System-String-'></a>
-### SaveLog(path) `method`
+<a name='M-SpyceLibrary-Debug-SaveLog-System-String,System-String-'></a>
+### SaveLog(sender,path) `method`
 
 ##### Summary
 
@@ -324,7 +639,30 @@ Saves the log to the specified path.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 | path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-SpyceLibrary-Debug-StartDrawTick'></a>
+### StartDrawTick() `method`
+
+##### Summary
+
+Starts counting the current cycle of the game loop.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debug-StartUpdateTick'></a>
+### StartUpdateTick() `method`
+
+##### Summary
+
+Starts counting the current cycle of the game loop.
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='M-SpyceLibrary-Debug-WriteLine-System-String,System-String,System-ConsoleColor,System-ConsoleColor-'></a>
 ### WriteLine(sender,message,senderColor,messageColor) `method`
@@ -342,12 +680,46 @@ Writes a new line to the debug log.
 | senderColor | [System.ConsoleColor](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ConsoleColor 'System.ConsoleColor') |  |
 | messageColor | [System.ConsoleColor](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ConsoleColor 'System.ConsoleColor') |  |
 
+<a name='M-SpyceLibrary-Debug-listObjects-System-String-'></a>
+### listObjects(sender) `method`
+
+##### Summary
+
+Lists all the objects within the current scene.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='T-SpyceLibrary-Debug-DebugEvent'></a>
+## DebugEvent `type`
+
+##### Namespace
+
+SpyceLibrary.Debug
+
+##### Summary
+
+Delegate handler for each event that is relevant to the debug object.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [T:SpyceLibrary.Debug.DebugEvent](#T-T-SpyceLibrary-Debug-DebugEvent 'T:SpyceLibrary.Debug.DebugEvent') |  |
+
 <a name='T-SpyceLibrary-Engine'></a>
 ## Engine `type`
 
 ##### Namespace
 
 SpyceLibrary
+
+##### Summary
+
+The game engine holds various components from the game and runs them respectively.
 
 <a name='M-SpyceLibrary-Engine-#ctor'></a>
 ### #ctor() `constructor`
@@ -359,6 +731,404 @@ Creates a new instance of the engine.
 ##### Parameters
 
 This constructor has no parameters.
+
+<a name='M-SpyceLibrary-Engine-Draw-Microsoft-Xna-Framework-GameTime-'></a>
+### Draw(gameTime) `method`
+
+##### Summary
+
+Draws the instance of the engine.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='M-SpyceLibrary-Engine-Initialize'></a>
+### Initialize() `method`
+
+##### Summary
+
+Initializes the graphics window.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Engine-LoadContent'></a>
+### LoadContent() `method`
+
+##### Summary
+
+Loads and initializes necessary game assets.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Engine-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of the game and it's members.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T--FastNoiseLite'></a>
+## FastNoiseLite `type`
+
+##### Namespace
+
+
+
+<a name='M-FastNoiseLite-#ctor-System-Int32-'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Create new FastNoise object with optional seed
+
+##### Parameters
+
+This constructor has no parameters.
+
+<a name='M-FastNoiseLite-DomainWarp-System-Single@,System-Single@-'></a>
+### DomainWarp() `method`
+
+##### Summary
+
+2D warps the input position using current domain warp settings
+
+##### Parameters
+
+This method has no parameters.
+
+##### Example
+
+Example usage with GetNoise
+
+```
+DomainWarp(ref x, ref y)
+            noise = GetNoise(x, y)
+```
+
+<a name='M-FastNoiseLite-DomainWarp-System-Single@,System-Single@,System-Single@-'></a>
+### DomainWarp() `method`
+
+##### Summary
+
+3D warps the input position using current domain warp settings
+
+##### Parameters
+
+This method has no parameters.
+
+##### Example
+
+Example usage with GetNoise
+
+```
+DomainWarp(ref x, ref y, ref z)
+            noise = GetNoise(x, y, z)
+```
+
+<a name='M-FastNoiseLite-GetNoise-System-Single,System-Single-'></a>
+### GetNoise() `method`
+
+##### Summary
+
+2D noise at given position using current settings
+
+##### Returns
+
+Noise output bounded between -1...1
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-FastNoiseLite-GetNoise-System-Single,System-Single,System-Single-'></a>
+### GetNoise() `method`
+
+##### Summary
+
+3D noise at given position using current settings
+
+##### Returns
+
+Noise output bounded between -1...1
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-FastNoiseLite-SetCellularDistanceFunction-FastNoiseLite-CellularDistanceFunction-'></a>
+### SetCellularDistanceFunction() `method`
+
+##### Summary
+
+Sets distance function used in cellular noise calculations
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: Distance
+
+<a name='M-FastNoiseLite-SetCellularJitter-System-Single-'></a>
+### SetCellularJitter() `method`
+
+##### Summary
+
+Sets the maximum distance a cellular point can move from it's grid position
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 1.0
+Note: Setting this higher than 1 will cause artifacts
+
+<a name='M-FastNoiseLite-SetCellularReturnType-FastNoiseLite-CellularReturnType-'></a>
+### SetCellularReturnType() `method`
+
+##### Summary
+
+Sets return type from cellular noise calculations
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: EuclideanSq
+
+<a name='M-FastNoiseLite-SetDomainWarpAmp-System-Single-'></a>
+### SetDomainWarpAmp() `method`
+
+##### Summary
+
+Sets the maximum warp distance from original position when using DomainWarp(...)
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 1.0
+
+<a name='M-FastNoiseLite-SetDomainWarpType-FastNoiseLite-DomainWarpType-'></a>
+### SetDomainWarpType() `method`
+
+##### Summary
+
+Sets the warp algorithm when using DomainWarp(...)
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: OpenSimplex2
+
+<a name='M-FastNoiseLite-SetFractalGain-System-Single-'></a>
+### SetFractalGain() `method`
+
+##### Summary
+
+Sets octave gain for all fractal noise types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 0.5
+
+<a name='M-FastNoiseLite-SetFractalLacunarity-System-Single-'></a>
+### SetFractalLacunarity() `method`
+
+##### Summary
+
+Sets octave lacunarity for all fractal noise types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 2.0
+
+<a name='M-FastNoiseLite-SetFractalOctaves-System-Int32-'></a>
+### SetFractalOctaves() `method`
+
+##### Summary
+
+Sets octave count for all fractal noise types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 3
+
+<a name='M-FastNoiseLite-SetFractalPingPongStrength-System-Single-'></a>
+### SetFractalPingPongStrength() `method`
+
+##### Summary
+
+Sets strength of the fractal ping pong effect
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 2.0
+
+<a name='M-FastNoiseLite-SetFractalType-FastNoiseLite-FractalType-'></a>
+### SetFractalType() `method`
+
+##### Summary
+
+Sets method for combining octaves in all fractal noise types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: None
+Note: FractalType.DomainWarp... only affects DomainWarp(...)
+
+<a name='M-FastNoiseLite-SetFractalWeightedStrength-System-Single-'></a>
+### SetFractalWeightedStrength() `method`
+
+##### Summary
+
+Sets octave weighting for all none DomainWarp fratal types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 0.0
+Note: Keep between 0...1 to maintain -1...1 output bounding
+
+<a name='M-FastNoiseLite-SetFrequency-System-Single-'></a>
+### SetFrequency() `method`
+
+##### Summary
+
+Sets frequency for all noise types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 0.01
+
+<a name='M-FastNoiseLite-SetNoiseType-FastNoiseLite-NoiseType-'></a>
+### SetNoiseType() `method`
+
+##### Summary
+
+Sets noise algorithm used for GetNoise(...)
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: OpenSimplex2
+
+<a name='M-FastNoiseLite-SetRotationType3D-FastNoiseLite-RotationType3D-'></a>
+### SetRotationType3D() `method`
+
+##### Summary
+
+Sets domain rotation type for 3D Noise and 3D DomainWarp.
+Can aid in reducing directional artifacts when sampling a 2D plane in 3D
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: None
+
+<a name='M-FastNoiseLite-SetSeed-System-Int32-'></a>
+### SetSeed() `method`
+
+##### Summary
+
+Sets seed used for all noise types
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Default: 1337
+
+<a name='T-SpyceLibrary-Sprites-FrameData'></a>
+## FrameData `type`
+
+##### Namespace
+
+SpyceLibrary.Sprites
+
+##### Summary
+
+Represents a single frame for an animation.
+
+<a name='P-SpyceLibrary-Sprites-FrameData-Position'></a>
+### Position `property`
+
+##### Summary
+
+The position of the frame data on the texture file.
+
+<a name='P-SpyceLibrary-Sprites-FrameData-Texture'></a>
+### Texture `property`
+
+##### Summary
+
+The texture that the frame is located on. Each frame data holds a refernce to its
+texture to allow for animations to potentially consist of different files.
+
+<a name='P-SpyceLibrary-Sprites-FrameData-Time'></a>
+### Time `property`
+
+##### Summary
+
+The amount of time is spent on this individual frame.
 
 <a name='T-SpyceLibrary-GameComponent'></a>
 ## GameComponent `type`
@@ -431,6 +1201,23 @@ Called before the first Update has been called and after the object is created
 | init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 | holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
 
+<a name='M-SpyceLibrary-GameComponent-RequireComponent``1'></a>
+### RequireComponent\`\`1() `method`
+
+##### Summary
+
+Checks if the component is in the game object and throws an exception if it is not.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Generic Types
+
+| Name | Description |
+| ---- | ----------- |
+| T |  |
+
 <a name='M-SpyceLibrary-GameComponent-SetActive-System-Boolean-'></a>
 ### SetActive() `method`
 
@@ -465,7 +1252,7 @@ SpyceLibrary
 Represents an abstract game object within the game.
 
 <a name='M-SpyceLibrary-GameObject-#ctor'></a>
-### #ctor(parent) `constructor`
+### #ctor() `constructor`
 
 ##### Summary
 
@@ -473,9 +1260,7 @@ Creates a new instance of a game object.
 
 ##### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| parent | [M:SpyceLibrary.GameObject.#ctor](#T-M-SpyceLibrary-GameObject-#ctor 'M:SpyceLibrary.GameObject.#ctor') |  |
+This constructor has no parameters.
 
 <a name='P-SpyceLibrary-GameObject-Children'></a>
 ### Children `property`
@@ -624,6 +1409,24 @@ Searches the list of tags for the specified tag.
 | ---- | ---- | ----------- |
 | tag | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
+<a name='M-SpyceLibrary-GameObject-IsDirectChild-SpyceLibrary-GameObject,SpyceLibrary-GameObject-'></a>
+### IsDirectChild(parent,child) `method`
+
+##### Summary
+
+Checks if the first element is the direct parent of the second element.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| parent | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+| child | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+
 <a name='M-SpyceLibrary-GameObject-Load-SpyceLibrary-Initializer-'></a>
 ### Load(init) `method`
 
@@ -676,8 +1479,23 @@ Sets the relative transform of the game object.
 | ---- | ---- | ----------- |
 | transform | [SpyceLibrary.Transform](#T-SpyceLibrary-Transform 'SpyceLibrary.Transform') |  |
 
+<a name='M-SpyceLibrary-GameObject-ToString'></a>
+### ToString() `method`
+
+##### Summary
+
+Gets a string representation of the game object.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-SpyceLibrary-GameObject-Update-Microsoft-Xna-Framework-GameTime-'></a>
-### Update(dt) `method`
+### Update(gameTime) `method`
 
 ##### Summary
 
@@ -687,7 +1505,24 @@ Updates the state of the game object, components, and children.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| dt | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T-SpyceLibrary-GameObject-GameObjectEvent'></a>
+## GameObjectEvent `type`
+
+##### Namespace
+
+SpyceLibrary.GameObject
+
+##### Summary
+
+Delegate handler for game object events.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| obj | [T:SpyceLibrary.GameObject.GameObjectEvent](#T-T-SpyceLibrary-GameObject-GameObjectEvent 'T:SpyceLibrary.GameObject.GameObjectEvent') |  |
 
 <a name='T-SpyceLibrary-IDrawn'></a>
 ## IDrawn `type`
@@ -695,6 +1530,17 @@ Updates the state of the game object, components, and children.
 ##### Namespace
 
 SpyceLibrary
+
+##### Summary
+
+An object that has draw behavior.
+
+<a name='F-SpyceLibrary-IDrawn-MAX_DRAW_ORDER'></a>
+### MAX_DRAW_ORDER `constants`
+
+##### Summary
+
+The maximum number of layers to be drawn on.
 
 <a name='M-SpyceLibrary-IDrawn-Draw'></a>
 ### Draw() `method`
@@ -722,12 +1568,31 @@ The draw order of the game component.
 
 This method has no parameters.
 
+<a name='M-SpyceLibrary-IDrawn-GetDrawRectangle'></a>
+### GetDrawRectangle() `method`
+
+##### Summary
+
+The visible rectangle on the game world.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='T-SpyceLibrary-IUpdated'></a>
 ## IUpdated `type`
 
 ##### Namespace
 
 SpyceLibrary
+
+##### Summary
+
+An object that has realtime update behavior.
 
 <a name='M-SpyceLibrary-IUpdated-Update-Microsoft-Xna-Framework-GameTime-'></a>
 ### Update(gameTime) `method`
@@ -741,6 +1606,52 @@ Updates the state of the object.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T-SpyceLibrary-Initializer'></a>
+## Initializer `type`
+
+##### Namespace
+
+SpyceLibrary
+
+##### Summary
+
+Holds necessary data members for initializing game objects.
+
+<a name='F-SpyceLibrary-Initializer-Content'></a>
+### Content `constants`
+
+##### Summary
+
+Loads content for the game object.
+
+<a name='F-SpyceLibrary-Initializer-Device'></a>
+### Device `constants`
+
+##### Summary
+
+The graphics device manager of the game.
+
+<a name='F-SpyceLibrary-Initializer-Graphics'></a>
+### Graphics `constants`
+
+##### Summary
+
+The graphics device for the game engine.
+
+<a name='F-SpyceLibrary-Initializer-SpriteBatch'></a>
+### SpriteBatch `constants`
+
+##### Summary
+
+Allows for creation of sprite batches and drawn to the screen.
+
+<a name='F-SpyceLibrary-Initializer-Window'></a>
+### Window `constants`
+
+##### Summary
+
+The window of the game engine.
 
 <a name='T-SpyceLibrary-InputManager'></a>
 ## InputManager `type`
@@ -936,6 +1847,23 @@ Creates a list of keys that are currently in a, but not in b.
 | a | [\`\`0[]](#T-``0[] '``0[]') |  |
 | b | [\`\`0[]](#T-``0[] '``0[]') |  |
 
+<a name='T-SpyceLibrary-InputManager-KeyboardEventHandler'></a>
+## KeyboardEventHandler `type`
+
+##### Namespace
+
+SpyceLibrary.InputManager
+
+##### Summary
+
+Delegate handler for events from keyboards.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| key | [T:SpyceLibrary.InputManager.KeyboardEventHandler](#T-T-SpyceLibrary-InputManager-KeyboardEventHandler 'T:SpyceLibrary.InputManager.KeyboardEventHandler') |  |
+
 <a name='T-SpyceLibrary-LogEntry'></a>
 ## LogEntry `type`
 
@@ -996,12 +1924,34 @@ The middle mouse button
 
 The right mouse button
 
+<a name='T-SpyceLibrary-InputManager-MouseEventHandler'></a>
+## MouseEventHandler `type`
+
+##### Namespace
+
+SpyceLibrary.InputManager
+
+##### Summary
+
+Delegate handlder for events from them mouse.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| button | [T:SpyceLibrary.InputManager.MouseEventHandler](#T-T-SpyceLibrary-InputManager-MouseEventHandler 'T:SpyceLibrary.InputManager.MouseEventHandler') |  |
+
 <a name='T-SpyceLibrary-Physics-PhysicsBody'></a>
 ## PhysicsBody `type`
 
 ##### Namespace
 
 SpyceLibrary.Physics
+
+##### Summary
+
+A member of the physics engine. This represents a physical object within the game world
+that has physics-based behaviors and interactions with other physical objects.
 
 <a name='M-SpyceLibrary-Physics-PhysicsBody-#ctor'></a>
 ### #ctor() `constructor`
@@ -1013,6 +1963,21 @@ Creates a new instance of the physics body.
 ##### Parameters
 
 This constructor has no parameters.
+
+<a name='P-SpyceLibrary-Physics-PhysicsBody-Collider'></a>
+### Collider `property`
+
+##### Summary
+
+The rectangular collision rectangle of the physics body. TODO: Change to a more
+generic collider type.
+
+<a name='P-SpyceLibrary-Physics-PhysicsBody-IsCollidable'></a>
+### IsCollidable `property`
+
+##### Summary
+
+Whether this object should be collided with in the collision detection.
 
 <a name='P-SpyceLibrary-Physics-PhysicsBody-Position'></a>
 ### Position `property`
@@ -1049,6 +2014,10 @@ Initializes the physics body.
 
 SpyceLibrary.Physics
 
+##### Summary
+
+Updates physical objects within the game world.
+
 <a name='M-SpyceLibrary-Physics-PhysicsEngine-#ctor'></a>
 ### #ctor() `constructor`
 
@@ -1060,12 +2029,80 @@ Creates a new instance of the physics engine.
 
 This constructor has no parameters.
 
+<a name='F-SpyceLibrary-Physics-PhysicsEngine-QUAD_SIZE'></a>
+### QUAD_SIZE `constants`
+
+##### Summary
+
+The size of each theoretical quad.
+
+<a name='M-SpyceLibrary-Physics-PhysicsEngine-Clear'></a>
+### Clear() `method`
+
+##### Summary
+
+Clears all the bodies from the physics engine.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Physics-PhysicsEngine-Draw-SpyceLibrary-Camera-'></a>
+### Draw() `method`
+
+##### Summary
+
+Debug Purposes. Draws a half opacity rectangle for all the physics bodies in the world.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Physics-PhysicsEngine-Initialize-SpyceLibrary-Initializer-'></a>
+### Initialize(initializer) `method`
+
+##### Summary
+
+Initializes the physics engine.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='M-SpyceLibrary-Physics-PhysicsEngine-ReaddQuadBody-SpyceLibrary-Physics-PhysicsBody-'></a>
+### ReaddQuadBody(body) `method`
+
+##### Summary
+
+Registers the quad bodies of this body into the quad map.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| body | [SpyceLibrary.Physics.PhysicsBody](#T-SpyceLibrary-Physics-PhysicsBody 'SpyceLibrary.Physics.PhysicsBody') |  |
+
 <a name='M-SpyceLibrary-Physics-PhysicsEngine-RegisterBody-SpyceLibrary-Physics-PhysicsBody-'></a>
 ### RegisterBody(body) `method`
 
 ##### Summary
 
 Registers the body to the engine.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| body | [SpyceLibrary.Physics.PhysicsBody](#T-SpyceLibrary-Physics-PhysicsBody 'SpyceLibrary.Physics.PhysicsBody') |  |
+
+<a name='M-SpyceLibrary-Physics-PhysicsEngine-UnregisterQuadBody-SpyceLibrary-Physics-PhysicsBody-'></a>
+### UnregisterQuadBody(body) `method`
+
+##### Summary
+
+Unregisters the bod with the quad map.
 
 ##### Parameters
 
@@ -1085,6 +2122,46 @@ Updates the state of each physics engine.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T-SpyceLibrary-Program'></a>
+## Program `type`
+
+##### Namespace
+
+SpyceLibrary
+
+##### Summary
+
+Game runner class.
+
+<a name='F-SpyceLibrary-Program-NAME'></a>
+### NAME `constants`
+
+##### Summary
+
+The debug name of the game runner.
+
+<a name='M-SpyceLibrary-Program-Main'></a>
+### Main() `method`
+
+##### Summary
+
+Main method.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Program-Run'></a>
+### Run() `method`
+
+##### Summary
+
+Runs the game.
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='T-SpyceLibrary-Scene'></a>
 ## Scene `type`
@@ -1108,6 +2185,20 @@ Creates a new instance of the game scene.
 ##### Parameters
 
 This constructor has no parameters.
+
+<a name='P-SpyceLibrary-Scene-GameObjects'></a>
+### GameObjects `property`
+
+##### Summary
+
+Refernce to the data structure holding all the game objects in the game.
+
+<a name='P-SpyceLibrary-Scene-ScreenRectangle'></a>
+### ScreenRectangle `property`
+
+##### Summary
+
+The rectangle of the screen.
 
 <a name='M-SpyceLibrary-Scene-AddObject-SpyceLibrary-GameObject-'></a>
 ### AddObject(obj) `method`
@@ -1270,6 +2361,34 @@ Runs a function on a fixed interval.
 | interval | [System.Single](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Single 'System.Single') |  |
 | time | [System.Single](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Single 'System.Single') |  |
 
+<a name='M-SpyceLibrary-Scene-SetScreenRectangleBounds-System-Int32,System-Int32-'></a>
+### SetScreenRectangleBounds(width,height) `method`
+
+##### Summary
+
+Sets the size of the screen rectangle.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| width | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+| height | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+
+<a name='M-SpyceLibrary-Scene-SetScreenRectangleLocation-System-Int32,System-Int32-'></a>
+### SetScreenRectangleLocation(x,y) `method`
+
+##### Summary
+
+Sets the position of the screen rectangle.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| x | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+| y | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+
 <a name='M-SpyceLibrary-Scene-Unload'></a>
 ### Unload() `method`
 
@@ -1346,6 +2465,21 @@ Changes the scene to the given scene.
 ##### Summary
 
 Renders the contents of the scene manager and it's current scene.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-SceneManager-GetWindowSize'></a>
+### GetWindowSize() `method`
+
+##### Summary
+
+Returns the size of the window in pixels.
+
+##### Returns
+
+
 
 ##### Parameters
 
@@ -1444,6 +2578,10 @@ Updates the scene manager and it's current scene.
 
 SpyceLibrary.Sprites
 
+##### Summary
+
+Represents a drawable texture to the game object.
+
 <a name='M-SpyceLibrary-Sprites-Sprite-#ctor'></a>
 ### #ctor() `constructor`
 
@@ -1473,6 +2611,36 @@ Draws the sprite to the screen.
 
 This method has no parameters.
 
+<a name='M-SpyceLibrary-Sprites-Sprite-DrawOrder'></a>
+### DrawOrder() `method`
+
+##### Summary
+
+Gets the draw order for the sprite.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Sprites-Sprite-GetDrawRectangle'></a>
+### GetDrawRectangle() `method`
+
+##### Summary
+
+Gets the visible rectangle for the sprite.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-SpyceLibrary-Sprites-Sprite-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
 ### Load(init,holder) `method`
 
@@ -1487,6 +2655,19 @@ Loads the textures of the sprite.
 | init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 | holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
 
+<a name='M-SpyceLibrary-Sprites-Sprite-SetDrawOrder-System-UInt32-'></a>
+### SetDrawOrder(order) `method`
+
+##### Summary
+
+Sets the draw order for the sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| order | [System.UInt32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.UInt32 'System.UInt32') |  |
+
 <a name='M-SpyceLibrary-Sprites-Sprite-SetOffset-Microsoft-Xna-Framework-Vector2-'></a>
 ### SetOffset(offset) `method`
 
@@ -1499,6 +2680,33 @@ Sets the offset of the sprite.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | offset | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-Sprites-Sprite-SetSize-Microsoft-Xna-Framework-Point-'></a>
+### SetSize(size) `method`
+
+##### Summary
+
+Sets the drawn dimension of the sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| size | [Microsoft.Xna.Framework.Point](#T-Microsoft-Xna-Framework-Point 'Microsoft.Xna.Framework.Point') |  |
+
+<a name='M-SpyceLibrary-Sprites-Sprite-SetSize-System-Int32,System-Int32-'></a>
+### SetSize(width,height) `method`
+
+##### Summary
+
+Sets the drawn dimension of the sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| width | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+| height | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
 
 <a name='M-SpyceLibrary-Sprites-Sprite-SetTexturePath-System-String-'></a>
 ### SetTexturePath(path) `method`
@@ -1513,12 +2721,92 @@ Sets the texture path of the sprite.
 | ---- | ---- | ----------- |
 | path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
+<a name='T-SpyceLibrary-Sprites-SpriteAnimation'></a>
+## SpriteAnimation `type`
+
+##### Namespace
+
+SpyceLibrary.Sprites
+
+##### Summary
+
+Represents an individual animation for a spritesheet.
+
+<a name='P-SpyceLibrary-Sprites-SpriteAnimation-CurrentFrame'></a>
+### CurrentFrame `property`
+
+##### Summary
+
+The current frame being displayed.
+
+<a name='P-SpyceLibrary-Sprites-SpriteAnimation-FrameData'></a>
+### FrameData `property`
+
+##### Summary
+
+The list of frame data in the animated sprite.
+
+<a name='M-SpyceLibrary-Sprites-SpriteAnimation-SetCurrentFrame-System-Int32-'></a>
+### SetCurrentFrame(frame) `method`
+
+##### Summary
+
+Sets the current frame of the animated sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| frame | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+
+<a name='M-SpyceLibrary-Sprites-SpriteAnimation-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of the animated sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
 <a name='T-SpyceLibrary-Physics-TestComponent'></a>
 ## TestComponent `type`
 
 ##### Namespace
 
 SpyceLibrary.Physics
+
+##### Summary
+
+A component for testing means.
+
+<a name='M-SpyceLibrary-Physics-TestComponent-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Creates a new instance of the test component.
+
+##### Parameters
+
+This constructor has no parameters.
+
+<a name='M-SpyceLibrary-Physics-TestComponent-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
+### Load(init,holder) `method`
+
+##### Summary
+
+Loads the test component.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+| holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
 
 <a name='M-SpyceLibrary-Physics-TestComponent-Update-Microsoft-Xna-Framework-GameTime-'></a>
 ### Update(gameTime) `method`
@@ -1562,6 +2850,20 @@ This constructor has no parameters.
 
 The name of this scene.
 
+<a name='F-SpyceLibrary-Scenes-TestScene-WINDOW_HEIGHT'></a>
+### WINDOW_HEIGHT `constants`
+
+##### Summary
+
+Height of the window size.
+
+<a name='F-SpyceLibrary-Scenes-TestScene-WINDOW_WIDTH'></a>
+### WINDOW_WIDTH `constants`
+
+##### Summary
+
+Width of the window size.
+
 <a name='M-SpyceLibrary-Scenes-TestScene-AddObject-SpyceLibrary-GameObject-'></a>
 ### AddObject(obj) `method`
 
@@ -1581,6 +2883,30 @@ Adds an object to the scene
 ##### Summary
 
 Draws the contents of the game scene to the screen.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Scenes-TestScene-Load-SpyceLibrary-Initializer-'></a>
+### Load(initializer) `method`
+
+##### Summary
+
+Loads the scene and initializes it's data members.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='M-SpyceLibrary-Scenes-TestScene-Unload'></a>
+### Unload() `method`
+
+##### Summary
+
+Unloads the test scene
 
 ##### Parameters
 
@@ -1624,6 +2950,13 @@ The amount of elapsed time from the last update call.
 
 The gametime field from the update cycle.
 
+<a name='P-SpyceLibrary-Time-Instance'></a>
+### Instance `property`
+
+##### Summary
+
+Singleton instance of the time.
+
 <a name='P-SpyceLibrary-Time-RawDeltaTime'></a>
 ### RawDeltaTime `property`
 
@@ -1651,6 +2984,31 @@ Updates the state of the time manager.
 
 SpyceLibrary
 
+##### Summary
+
+Represents a size transformation of the game object.
+
+<a name='F-SpyceLibrary-Transform-Position'></a>
+### Position `constants`
+
+##### Summary
+
+The position of the transform.
+
+<a name='F-SpyceLibrary-Transform-Rotation'></a>
+### Rotation `constants`
+
+##### Summary
+
+The rotation of the sprite.
+
+<a name='F-SpyceLibrary-Transform-Scale'></a>
+### Scale `constants`
+
+##### Summary
+
+The size scale of the transform.
+
 <a name='P-SpyceLibrary-Transform-Identity'></a>
 ### Identity `property`
 
@@ -1671,6 +3029,20 @@ Sets the position of the transform.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | position | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-Transform-SetPosition-System-Single,System-Single-'></a>
+### SetPosition(x,y) `method`
+
+##### Summary
+
+Sets the position of the transform.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| x | [System.Single](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Single 'System.Single') |  |
+| y | [System.Single](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Single 'System.Single') |  |
 
 <a name='M-SpyceLibrary-Transform-SetScale-Microsoft-Xna-Framework-Vector2-'></a>
 ### SetScale(scale) `method`

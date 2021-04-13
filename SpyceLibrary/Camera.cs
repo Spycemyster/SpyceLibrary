@@ -17,12 +17,18 @@ namespace SpyceLibrary
         /// </summary>
         public Vector2 Position
         {
-            get { return (viewedObject != null) ? viewedObject.GetTransform().Position + offset : offset; }
+            get 
+            {
+                Point windowSize = SceneManager.Instance.GetWindowSize();
+                return (viewedObject != null) ?
+                    viewedObject.GetTransform().Position + offset - windowSize.ToVector2() * percentOffset 
+                    : offset - windowSize.ToVector2() * percentOffset;
+            }
         }
 
         private Viewport viewport;
         private GameObject viewedObject;
-        private Vector2 offset;
+        private Vector2 offset, percentOffset;
         #endregion
 
         #region Constructor
@@ -43,6 +49,15 @@ namespace SpyceLibrary
         public void FixViewOn(GameObject obj)
         {
             viewedObject = obj;
+        }
+
+        /// <summary>
+        /// Sets the percentage for how offset the camera is relative to the screen.
+        /// </summary>
+        /// <param name="pOffset"></param>
+        public void SetViewOffsetPercent(Vector2 pOffset)
+        {
+            percentOffset = pOffset;
         }
 
         /// <summary>

@@ -8,11 +8,23 @@ namespace SpyceLibrary.Physics
     public class BoxCollider : GameComponent
     {
         #region Fields
-        public Rectangle CollisionRectangle
+        /// <summary>
+        /// The size of the collider.
+        /// </summary>
+        public Point Size
         {
-            get { return rectangle; }
+            get;
+            set;
         }
-        private Rectangle rectangle;
+
+        /// <summary>
+        /// The offset of the collider.
+        /// </summary>
+        public Point Offset
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constructor
@@ -21,18 +33,36 @@ namespace SpyceLibrary.Physics
         /// </summary>
         public BoxCollider()
         {
-            rectangle = new Rectangle();
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// Sets the collision rectangle.
+        /// Constructs a rectangle at the given position.
         /// </summary>
-        /// <param name="rect"></param>
-        public void SetCollisionRectangle(Rectangle rect)
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public Rectangle ConstructRectangleAt(Vector2 position)
         {
-            rectangle = rect;
+            return new Rectangle(position.ToPoint() + Offset, Size);
+        }
+
+        /// <summary>
+        /// Sets the offset of the collision rectangle.
+        /// </summary>
+        /// <param name="offset"></param>
+        public void SetOffset(Point offset)
+        {
+            Offset = offset;
+        }
+
+        /// <summary>
+        /// Sets the size of the collision rectangle.
+        /// </summary>
+        /// <param name="size"></param>
+        public void SetBounds(Point size)
+        {
+            Size = size;
         }
         #endregion
     }

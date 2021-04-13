@@ -1,16 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SpyceLibrary.Physics
 {
+    /// <summary>
+    /// Updates physical objects within the game world.
+    /// </summary>
     public class PhysicsEngine : IUpdated
     {
         #region Fields
-        public const int QUAD_SIZE = 32;
-        private Dictionary<GameObject, PhysicsBody> bodies;
-        private Dictionary<Point, List<PhysicsBody>> bodyQuad;
+        /// <summary>
+        /// The size of each theoretical quad.
+        /// </summary>
+        public const int QUAD_SIZE = 64;
+        private readonly Dictionary<GameObject, PhysicsBody> bodies;
+        private readonly Dictionary<Point, List<PhysicsBody>> bodyQuad;
+        private Initializer initializer;
+        private Texture2D blank;
+        private const string DEBUG_NAME = "PHYSICS";
         #endregion
 
         #region Constructor
@@ -27,6 +37,16 @@ namespace SpyceLibrary.Physics
 
         #region Methods
         /// <summary>
+        /// Initializes the physics engine.
+        /// </summary>
+        /// <param name="initializer"></param>
+        public void Initialize(Initializer initializer)
+        {
+            this.initializer = initializer;
+            blank = initializer.Content.Load<Texture2D>("System/blank");
+        }
+
+        /// <summary>
         /// Registers the body to the engine.
         /// </summary>
         /// <param name="body"></param>
@@ -35,32 +55,8 @@ namespace SpyceLibrary.Physics
             if (body == null)
                 return;
             bodies.Add(body.Holder, body);
-            body.OnDestroy += onBodyRemoved;
-        }
-
-        private void onBodyRemoved(GameComponent component)
-        {
-            UnregisterQuadBody((PhysicsBody)component);
-            bodies.Remove(component.Holder);
-        }
-
-        private Point[] GetFirstQuad(PhysicsBody body)
-        {
-            BoxCollider collider = body.Collider;
-            int x = (int)((body.Position.X + collider.CollisionRectangle.X) / QUAD_SIZE);
-            int y = (int)((body.Position.Y + collider.CollisionRectangle.Y) / QUAD_SIZE);
-            int lx = (int)Math.Ceiling((body.Position.X + collider.CollisionRectangle.Width) / QUAD_SIZE);
-            int ly = (int)Math.Ceiling((body.Position.Y + collider.CollisionRectangle.Height) / QUAD_SIZE);
-            return new Point[] { new Point(x, y), new Point(lx, ly) };
-        }
-        private Point[] GetFirstQuad(PhysicsBody body, Vector2 newPosition)
-        {
-            BoxCollider collider = body.Collider;
-            int x = (int)((newPosition.X + collider.CollisionRectangle.X) / QUAD_SIZE);
-            int y = (int)((newPosition.Y + collider.CollisionRectangle.Y) / QUAD_SIZE);
-            int lx = (int)Math.Ceiling((newPosition.X + collider.CollisionRectangle.Width) / QUAD_SIZE);
-            int ly = (int)Math.Ceiling((newPosition.Y + collider.CollisionRectangle.Height) / QUAD_SIZE);
-            return new Point[] { new Point(x, y), new Point(lx, ly) };
+            body.OnDestroy += OnBodyRemoved;
+            ReaddQuadBody(body);
         }
 
         /// <summary>
@@ -74,14 +70,92 @@ namespace SpyceLibrary.Physics
                 if (body.Velocity != Vector2.Zero)
                 {
                     UnregisterQuadBody(body);
-                    Vector2 newPosition = body.Velocity * Time.Instance.DeltaTime;
-                    if (body.IsCollidable && canExistHere(body, newPosition))
+                    Vector2 vel = body.Velocity * Time.Instance.DeltaTime;
+                    Vector2 velX = new Vector2(vel.X, 0);
+                    Vector2 velY = new Vector2(0, vel.Y);
+                    if (body.IsCollidable && CanExistHere(body, body.Position + velX)
+                        || !CanExistHere(body, body.Position))
                     {
-                        body.Position = newPosition;
+                        body.Position += velX;
+                        //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
+                    }
+                    if (body.IsCollidable && CanExistHere(body, body.Position + velY)
+                        || !CanExistHere(body, body.Position))
+                    {
+                        body.Position += velY;
+                        //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
                     }
                     body.Velocity = Vector2.Zero;
                     ReaddQuadBody(body);
-                    
+
+                }
+            }
+        }
+
+        private void OnBodyRemoved(GameComponent component)
+        {
+            UnregisterQuadBody((PhysicsBody)component);
+            bodies.Remove(component.Holder);
+        }
+
+        private Point[] GetFirstQuad(PhysicsBody body)
+        {
+            return GetFirstQuad(body, body.Position);
+            //Rectangle colliderRect = body.Collider.ConstructRectangleAt(body.Position);
+            //int x = colliderRect.X / QUAD_SIZE;
+            //int y = colliderRect.Y / QUAD_SIZE;
+            //int lx = (int)Math.Ceiling((body.Position.X + colliderRect.Width) / QUAD_SIZE);
+            //int ly = (int)Math.Ceiling((body.Position.Y + colliderRect.Height) / QUAD_SIZE);
+            //return new Point[] { new Point(x, y), new Point(lx, ly) };
+        }
+        private Point[] GetFirstQuad(PhysicsBody body, Vector2 newPosition)
+        {
+            Rectangle colliderRect = body.Collider.ConstructRectangleAt(body.Position);
+            int x = (int)((newPosition.X + body.Collider.Offset.X) / QUAD_SIZE);
+            int y = (int)((newPosition.Y + body.Collider.Offset.Y) / QUAD_SIZE);
+            int lx = (int)Math.Ceiling((newPosition.X + colliderRect.Width) / QUAD_SIZE);
+            int ly = (int)Math.Ceiling((newPosition.Y + colliderRect.Height) / QUAD_SIZE);
+            return new Point[] { new Point(x, y), new Point(lx, ly) };
+        }
+
+        /// <summary>
+        /// Clears all the bodies from the physics engine.
+        /// </summary>
+        public void Clear()
+        {
+            bodies.Clear();
+            bodyQuad.Clear();
+        }
+
+        /// <summary>
+        /// Debug Purposes. Draws a half opacity rectangle for all the physics bodies in the world.
+        /// </summary>
+        public void Draw(Camera camera)
+        {
+            Point windowSize = SceneManager.Instance.GetWindowSize();
+            int startY = (int)(camera.Position.Y / QUAD_SIZE) - 1;
+            int startX = (int)(camera.Position.X / QUAD_SIZE) - 1;
+            int endY = (int)((camera.Position.Y + windowSize.Y) / QUAD_SIZE);
+            int endX = (int)((camera.Position.X + windowSize.X) / QUAD_SIZE);
+            for (int y = startY; y <= endY; y++)
+            {
+                for (int x = startX; x <= endX; x++)
+                {
+                    Point p = new Point(x, y);
+
+                    float opacity = (bodyQuad.ContainsKey(p)) ? 0.9f : 0.4f;
+                    Color c = (Math.Abs(x + y) % 2 == 1) ? Color.Green : Color.Blue;
+                    Rectangle rect = new Rectangle(x * QUAD_SIZE, y * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE);
+                    initializer.SpriteBatch.Draw(blank, rect, c * opacity);
+                }
+            }
+
+            foreach (PhysicsBody body in bodies.Values)
+            {
+                if (body.IsCollidable)
+                {
+                    Rectangle collisionRect = body.Collider.ConstructRectangleAt(body.Position);
+                    initializer.SpriteBatch.Draw(blank, collisionRect, Color.Red * 0.5f);
                 }
             }
         }
@@ -109,6 +183,8 @@ namespace SpyceLibrary.Physics
                     {
                         bodyQuad.Remove(p);
                     }
+
+                    //Debug.Instance.WriteLine(DEBUG_NAME, $"Unregistered {p}");
                 }
             }
         }
@@ -132,16 +208,18 @@ namespace SpyceLibrary.Physics
 
                     List<PhysicsBody> bodies = bodyQuad[p];
                     bodies.Add(body);
+
+                    //Debug.Instance.WriteLine(DEBUG_NAME, $"Registered {p}");
                 }
             }
         }
-        private bool canExistHere(PhysicsBody body, Vector2 newPosition)
+        private bool CanExistHere(PhysicsBody body, Vector2 newPosition)
         {
             Point[] quads = GetFirstQuad(body, newPosition);
 
-            for (int y = quads[0].Y; y < quads[1].Y; y++)
+            for (int y = quads[0].Y; y <= quads[1].Y; y++)
             {
-                for (int x = quads[0].X; x < quads[1].X; x++)
+                for (int x = quads[0].X; x <= quads[1].X; x++)
                 {
                     Point key = new Point(x, y);
                     if (!bodyQuad.ContainsKey(key))
@@ -150,13 +228,31 @@ namespace SpyceLibrary.Physics
 
                     foreach (PhysicsBody b in bodies)
                     {
-                        if (b == body) continue;
+                        if (b == body || !b.IsCollidable) continue;
 
-                        if (body.Collider.CollisionRectangle.Intersects(b.Collider.CollisionRectangle))
+                        Rectangle bodyCollision = body.Collider.ConstructRectangleAt(newPosition);
+                        Rectangle bCollision = b.Collider.ConstructRectangleAt(b.Position);
+                        if (bodyCollision.Intersects(bCollision))
                             return false;
                     }
                 }
             }
+
+            #region Inefficient Collision Detection (But it works)
+            //foreach (PhysicsBody b in bodies.Values)
+            //{
+            //    if (b == body)
+            //        continue;
+
+            //    Rectangle bodyRect = body.Collider.ConstructRectangleAt(newPosition);
+            //    Rectangle bRect = b.Collider.ConstructRectangleAt(b.Position);
+
+            //    if (bodyRect.Intersects(bRect))
+            //    {
+            //        return false;
+            //    }
+            //}
+            #endregion
 
             return true;
         }

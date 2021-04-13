@@ -90,6 +90,15 @@ namespace SpyceLibrary
         }
 
         /// <summary>
+        /// Returns the size of the window in pixels.
+        /// </summary>
+        /// <returns></returns>
+        public Point GetWindowSize()
+        {
+            return new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+        }
+
+        /// <summary>
         /// Sets the dimension of the window
         /// </summary>
         /// <param name="width"></param>

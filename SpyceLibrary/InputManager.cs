@@ -31,7 +31,16 @@ namespace SpyceLibrary
         #endregion
 
         #region Events
+        /// <summary>
+        /// Delegate handler for events from keyboards.
+        /// </summary>
+        /// <param name="key"></param>
         public delegate void KeyboardEventHandler(Keys key);
+
+        /// <summary>
+        /// Delegate handlder for events from them mouse.
+        /// </summary>
+        /// <param name="button"></param>
         public delegate void MouseEventHandler(MouseButton button);
 
         /// <summary>
@@ -270,6 +279,12 @@ namespace SpyceLibrary
                         OnKeyRelease(key);
                     }
                 }
+            }
+
+            // checks if the mouse wheel has been scrolled
+            if (MouseScrollAmount() != 0)
+            {
+                OnScroll?.Invoke(MouseButton.MIDDLE);
             }
         }
         

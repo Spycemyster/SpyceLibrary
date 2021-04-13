@@ -6,10 +6,14 @@ using System;
 
 namespace SpyceLibrary
 {
+    /// <summary>
+    /// The game engine holds various components from the game and runs them respectively.
+    /// </summary>
     public class Engine : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private const string DEBUG_NAME = "SYSTEM";
 
         /// <summary>
         /// Creates a new instance of the engine.
@@ -22,17 +26,23 @@ namespace SpyceLibrary
             IsFixedTimeStep = false;
         }
 
+        /// <summary>
+        /// Initializes the graphics window.
+        /// </summary>
         protected override void Initialize()
         {
             base.Initialize();
         }
 
+        /// <summary>
+        /// Loads and initializes necessary game assets.
+        /// </summary>
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Debug.Instance.Initialize(this);
             SceneManager.Instance.Initialize(Content, spriteBatch, GraphicsDevice, graphics, Window);
-            Debug.Instance.WriteLine("System", "Running through the SpyceLibrary. By Spencer Chang.",
+            Debug.Instance.WriteLine(DEBUG_NAME, "Running through the SpyceLibrary. By Spencer Chang.",
                 ConsoleColor.Green, ConsoleColor.Green);
 
             // Register all scenes here
@@ -42,9 +52,13 @@ namespace SpyceLibrary
             SceneManager.Instance.ChangeScene(TestScene.NAME);
         }
 
+        /// <summary>
+        /// Updates the state of the game and it's members.
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
-            Debug.Instance.StartTick();
+            Debug.Instance.StartUpdateTick();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -53,25 +67,31 @@ namespace SpyceLibrary
             InputManager.Instance.Update();
 
             base.Update(gameTime);
+            Debug.Instance.EndUpdateTick();
         }
 
+        /// <summary>
+        /// Draws the instance of the engine.
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
+            Debug.Instance.StartDrawTick();
             SceneManager.Instance.Draw();
 
             base.Draw(gameTime);
 
-            Debug.Instance.EndTick();
+            Debug.Instance.EndDrawTick();
         }
 
         protected override void OnExiting(object sender, EventArgs args)
         {
             base.OnExiting(sender, args);
 
-            Debug.Instance.WriteLine("System", "Quitting the game...", ConsoleColor.Green, ConsoleColor.Green);
+            Debug.Instance.WriteLine(DEBUG_NAME, "Quitting the game...", ConsoleColor.Green, ConsoleColor.Green);
             SceneManager.Instance.OnExiting();
-            Debug.Instance.WriteLine("System", "Bye!", ConsoleColor.Green, ConsoleColor.Green);
-            Debug.Instance.SaveLog();
+            Debug.Instance.WriteLine(DEBUG_NAME, "Bye!", ConsoleColor.Green, ConsoleColor.Green);
+            Debug.Instance.SaveLog(DEBUG_NAME);
         }
     }
 }

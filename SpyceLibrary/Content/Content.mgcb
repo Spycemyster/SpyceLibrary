@@ -25,3 +25,10 @@
 /processorParam:TextureFormat=Color
 /build:System/blank.png
 
+#begin System/DebugFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:System/DebugFont.spritefont
+

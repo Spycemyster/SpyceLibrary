@@ -13,13 +13,26 @@ namespace SpyceLibrary
     public class Scene
     {
         #region Fields
+        /// <summary>
+        /// Refernce to the data structure holding all the game objects in the game.
+        /// </summary>
         public Dictionary<Guid, GameObject> GameObjects
         {
             get { return objects; }
         }
+
+        /// <summary>
+        /// The rectangle of the screen.
+        /// </summary>
+        public Rectangle ScreenRectangle
+        {
+            get { return screenRect; }
+        }
+
         private readonly Dictionary<Guid, GameObject> objects;
         private readonly List<FunctionCall> repeatFunctions;
         private Initializer initializer;
+        private Rectangle screenRect;
         #endregion
 
         #region Constructor
@@ -45,6 +58,26 @@ namespace SpyceLibrary
 
         #region Methods
         /// <summary>
+        /// Sets the size of the screen rectangle.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void SetScreenRectangleBounds(int width, int height)
+        {
+            screenRect.Size = new Point(width, height);
+        }
+
+        /// <summary>
+        /// Sets the position of the screen rectangle.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SetScreenRectangleLocation(int x, int y)
+        {
+            screenRect.Location = new Point(x, y);
+        }
+
+        /// <summary>
         /// Prints the current tick speed and FPS to the debug console.
         /// </summary>
         public void PrintTickSpeed()
@@ -53,7 +86,9 @@ namespace SpyceLibrary
             long speed = Debug.Instance.TickSpeed;
             ConsoleColor textColor = (speed > 16) ? ((speed > 32)
                 ? ConsoleColor.Red : ConsoleColor.Yellow) : ConsoleColor.Green;
-            Debug.Instance.WriteLine(GetDebugName(), $"Current Tick Speed: {speed} ms, FPS: {String.Format("{0:0.000}", fps)}", ConsoleColor.Green, textColor);
+            Debug.Instance.WriteLine(GetDebugName(), $"Current Tick: {speed} ms, Draw: {Debug.Instance.DrawTime} ms, " +
+                $"Update Speed: {Debug.Instance.UpdateTime} ms, FPS: {String.Format("{0:0.000}", fps)}",
+                ConsoleColor.Green, textColor);
         }
 
         /// <summary>

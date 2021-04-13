@@ -12,6 +12,10 @@ namespace SpyceLibrary
     {
         #region Singleton
         private static Time inst;
+
+        /// <summary>
+        /// Singleton instance of the time.
+        /// </summary>
         public static Time Instance
         {
             get 

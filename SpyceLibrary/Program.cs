@@ -3,8 +3,14 @@ using System.Threading;
 
 namespace SpyceLibrary
 {
+    /// <summary>
+    /// Game runner class.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main method.
+        /// </summary>
         public static void Main()
         {
             Program p = new Program();
@@ -14,7 +20,14 @@ namespace SpyceLibrary
         private Thread gameThread, consoleThread;
         private bool isRunning;
 
+        /// <summary>
+        /// The debug name of the game runner.
+        /// </summary>
         public const string NAME = "CONSOLE";
+
+        /// <summary>
+        /// Runs the game.
+        /// </summary>
         public void Run()
         {
             Engine engine = new Engine();

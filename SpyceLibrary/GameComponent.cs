@@ -13,6 +13,10 @@ namespace SpyceLibrary
     public class GameComponent
     {
         #region Events
+        /// <summary>
+        /// Delegate for handling events related to UI components.
+        /// </summary>
+        /// <param name="component"></param>
         public delegate void ComponentEvent(GameComponent component);
 
         /// <summary>
@@ -68,6 +72,23 @@ namespace SpyceLibrary
 
         #region Methods
         /// <summary>
+        /// Checks if the component is in the game object and throws an exception if it is not.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T RequireComponent<T>()
+        {
+            T comp = Holder.GetComponent<T>();
+            
+            if (comp == null)
+            {
+                throw new Exception($"Required component {typeof(T)} could not be found.");
+            }
+            else
+            {
+                return comp;
+            }
+        }
+        /// <summary>
         /// Performs any final cleanup operations that aren't handled through regular garbage collection.
         /// </summary>
         public virtual void Unload()
@@ -107,6 +128,9 @@ namespace SpyceLibrary
     }
 
     #region Interfaces
+    /// <summary>
+    /// An object that has realtime update behavior.
+    /// </summary>
     public interface IUpdated
     {
         /// <summary>
@@ -116,13 +140,27 @@ namespace SpyceLibrary
         public void Update(GameTime gameTime);
     }
 
+    /// <summary>
+    /// An object that has draw behavior.
+    /// </summary>
     public interface IDrawn
     {
+        /// <summary>
+        /// The maximum number of layers to be drawn on.
+        /// </summary>
+        public const float MAX_DRAW_ORDER = 5f;
+
         /// <summary>
         /// The draw order of the game component.
         /// </summary>
         /// <returns></returns>
-        public int DrawOrder();
+        public uint DrawOrder();
+
+        /// <summary>
+        /// The visible rectangle on the game world.
+        /// </summary>
+        /// <returns></returns>
+        public Rectangle GetDrawRectangle();
 
         /// <summary>
         /// Draws the object to the screen.

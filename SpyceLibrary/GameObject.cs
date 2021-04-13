@@ -12,6 +12,10 @@ namespace SpyceLibrary
     public class GameObject
     {
         #region Events
+        /// <summary>
+        /// Delegate handler for game object events.
+        /// </summary>
+        /// <param name="obj"></param>
         public delegate void GameObjectEvent(GameObject obj);
 
         /// <summary>
@@ -85,7 +89,6 @@ namespace SpyceLibrary
         /// <summary>
         /// Creates a new instance of a game object.
         /// </summary>
-        /// <param name="parent"></param>
         public GameObject()
         {
             tags = new SortedSet<string>();
@@ -150,7 +153,7 @@ namespace SpyceLibrary
         /// <summary>
         /// Updates the state of the game object, components, and children.
         /// </summary>
-        /// <param name="dt"></param>
+        /// <param name="gameTime"></param>
         public virtual void Update(GameTime gameTime)
         {
             foreach (IUpdated comp in updatedComponents)
@@ -266,13 +269,17 @@ namespace SpyceLibrary
             }
         }
 
+        /// <summary>
+        /// Gets a string representation of the game object.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string raw = "";
             raw += $"[{id}]\n";
             if (tags.Count > 0)
             {
-                raw += $"Tags: ";
+                raw += $"Tags: {{";
                 int count = 0;
                 foreach (string s in tags)
                 {
@@ -284,21 +291,22 @@ namespace SpyceLibrary
                     }
                     else
                     {
-                        raw += "\n";
+                        raw += "}\n";
                     }
                 }
             }
-            raw += $"Position: ({relativeTransform.Position.X}, {relativeTransform.Position.Y}), Rotation: {relativeTransform.Rotation}, Scale: ({relativeTransform.Scale.X}, {relativeTransform.Scale.Y})\n";
+            raw += $"\tPosition: ({relativeTransform.Position.X}, {relativeTransform.Position.Y}), Rotation: {relativeTransform.Rotation}, Scale: ({relativeTransform.Scale.X}, {relativeTransform.Scale.Y})\n";
             if (parent != null)
             {
-                raw += $"Parent: {parent.id}\n";
+                raw += $"\tParent: {parent.id}\n";
             }
             for (int i = 0; i < components.Count; i++)
             {
-                raw += $"{components[i]}";
+                raw += $"\t{components[i]}\n";
             }
             return raw;
         }
+
 
         #region Probably Delete
         ///// <summary>
@@ -334,6 +342,19 @@ namespace SpyceLibrary
         //    return cloned;
         //}
         #endregion
+        #endregion
+
+        #region Static Methods
+        /// <summary>
+        /// Checks if the first element is the direct parent of the second element.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="child"></param>
+        /// <returns></returns>
+        public bool IsDirectChild(GameObject parent, GameObject child)
+        {
+            return child.parent == parent;
+        }
         #endregion
     }
 }

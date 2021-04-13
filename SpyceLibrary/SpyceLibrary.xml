@@ -19,12 +19,23 @@
             Creates a new instance of the camera.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Camera.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+        <member name="M:SpyceLibrary.Camera.FixViewOn(SpyceLibrary.GameObject)">
             <summary>
-            Loads the c
+            Fixes the view on the object.
             </summary>
-            <param name="init"></param>
-            <param name="holder"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Camera.SetViewOffsetPercent(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the percentage for how offset the camera is relative to the screen.
+            </summary>
+            <param name="pOffset"></param>
+        </member>
+        <member name="M:SpyceLibrary.Camera.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset of the camera.
+            </summary>
+            <param name="offset"></param>
         </member>
         <member name="M:SpyceLibrary.Camera.GetTransformedMatrix">
             <summary>
@@ -38,6 +49,33 @@
             the game project.
             </summary>
         </member>
+        <member name="T:SpyceLibrary.Debug.DebugEvent">
+            <summary>
+            Delegate handler for each event that is relevant to the debug object.
+            </summary>
+            <param name="sender"></param>
+            <param name="contents"></param>
+        </member>
+        <member name="F:SpyceLibrary.Debug.OnNewDebugMessage">
+            <summary>
+            When a new message is added to the debug log.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Debug.OnCommandSend">
+            <summary>
+            When a line is sent through the command prompt.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Debug.OnLogsCleared">
+            <summary>
+            When the logs are cleared.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Debug.OnLogsSaved">
+            <summary>
+            When the logs are saved
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.Debug.Instance">
             <summary>
             Accessor for the singleton.
@@ -46,6 +84,16 @@
         <member name="P:SpyceLibrary.Debug.TickSpeed">
             <summary>
             The measured time (milliseconds) between a draw and update function.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Debug.UpdateTime">
+            <summary>
+            The time it takes to run the update loop.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Debug.DrawTime">
+            <summary>
+            The time it takes to run the draw loop.
             </summary>
         </member>
         <member name="F:SpyceLibrary.Debug.LOGS_FOLDER">
@@ -64,10 +112,11 @@
             </summary>
             <param name="engine"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.ClearLogs">
+        <member name="M:SpyceLibrary.Debug.ClearLogs(System.String)">
             <summary>
             Clears all the logs.
             </summary>
+            <param name="sender"></param>
         </member>
         <member name="M:SpyceLibrary.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)">
             <summary>
@@ -78,16 +127,63 @@
             <param name="senderColor"></param>
             <param name="messageColor"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.SaveLog">
+        <member name="M:SpyceLibrary.Debug.SaveLog(System.String)">
             <summary>
             Saves the log to the logs folder as a timestamped file.
             </summary>
+            <param name="sender"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.SaveLog(System.String)">
+        <member name="M:SpyceLibrary.Debug.SaveLog(System.String,System.String)">
             <summary>
             Saves the log to the specified path.
             </summary>
+            <param name="sender"></param>
             <param name="path"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debug.ParseCommand(System.String,System.String)">
+            <summary>
+            Parses the given line to the command prompt.
+            </summary>
+            <param name="sender"></param>
+            <param name="toParse"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debug.StartUpdateTick">
+            <summary>
+            Starts counting the current cycle of the game loop.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.EndUpdateTick">
+            <summary>
+            Ends the counting of the current cycle of the update.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.StartDrawTick">
+            <summary>
+            Starts counting the current cycle of the game loop.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.EndDrawTick">
+            <summary>
+            Ends the counting of the current cycle of the update.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debug.listObjects(System.String)">
+            <summary>
+            Lists all the objects within the current scene.
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debug.GetCurrentSceneObjectCount">
+            <summary>
+            Gets the number of objects in the current scene.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Debug.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws debug items to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
         </member>
         <member name="F:SpyceLibrary.LogEntry.Sender">
             <summary>
@@ -104,15 +200,48 @@
             The time the message was created.
             </summary>
         </member>
+        <member name="T:SpyceLibrary.Engine">
+            <summary>
+            The game engine holds various components from the game and runs them respectively.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Engine.#ctor">
             <summary>
             Creates a new instance of the engine.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Engine.Initialize">
+            <summary>
+            Initializes the graphics window.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Engine.LoadContent">
+            <summary>
+            Loads and initializes necessary game assets.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Engine.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the game and it's members.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Engine.Draw(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Draws the instance of the engine.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
         <member name="T:SpyceLibrary.GameComponent">
             <summary>
             An abstract component that is attached to a game object
             </summary>
+        </member>
+        <member name="T:SpyceLibrary.GameComponent.ComponentEvent">
+            <summary>
+            Delegate for handling events related to UI components.
+            </summary>
+            <param name="component"></param>
         </member>
         <member name="F:SpyceLibrary.GameComponent.OnEnable">
             <summary>
@@ -144,6 +273,12 @@
             Creates a new instance of the game component.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.GameComponent.RequireComponent``1">
+            <summary>
+            Checks if the component is in the game object and throws an exception if it is not.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="M:SpyceLibrary.GameComponent.Unload">
             <summary>
             Performs any final cleanup operations that aren't handled through regular garbage collection.
@@ -161,15 +296,36 @@
             <param name="init"></param>
             <param name="holder"></param>
         </member>
+        <member name="T:SpyceLibrary.IUpdated">
+            <summary>
+            An object that has realtime update behavior.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.IUpdated.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the state of the object.
             </summary>
             <param name="gameTime"></param>
         </member>
+        <member name="T:SpyceLibrary.IDrawn">
+            <summary>
+            An object that has draw behavior.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.IDrawn.MAX_DRAW_ORDER">
+            <summary>
+            The maximum number of layers to be drawn on.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.IDrawn.DrawOrder">
             <summary>
             The draw order of the game component.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.IDrawn.GetDrawRectangle">
+            <summary>
+            The visible rectangle on the game world.
             </summary>
             <returns></returns>
         </member>
@@ -182,6 +338,12 @@
             <summary>
             Represents an abstract game object within the game.
             </summary>
+        </member>
+        <member name="T:SpyceLibrary.GameObject.GameObjectEvent">
+            <summary>
+            Delegate handler for game object events.
+            </summary>
+            <param name="obj"></param>
         </member>
         <member name="E:SpyceLibrary.GameObject.OnEnable">
             <summary>
@@ -227,7 +389,6 @@
             <summary>
             Creates a new instance of a game object.
             </summary>
-            <param name="parent"></param>
         </member>
         <member name="M:SpyceLibrary.GameObject.Destroy">
             <summary>
@@ -255,7 +416,7 @@
             <summary>
             Updates the state of the game object, components, and children.
             </summary>
-            <param name="dt"></param>
+            <param name="gameTime"></param>
         </member>
         <member name="M:SpyceLibrary.GameObject.Draw">
             <summary>
@@ -306,6 +467,50 @@
             </summary>
             <param name="addTags"></param>
         </member>
+        <member name="M:SpyceLibrary.GameObject.ToString">
+            <summary>
+            Gets a string representation of the game object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.IsDirectChild(SpyceLibrary.GameObject,SpyceLibrary.GameObject)">
+            <summary>
+            Checks if the first element is the direct parent of the second element.
+            </summary>
+            <param name="parent"></param>
+            <param name="child"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Initializer">
+            <summary>
+            Holds necessary data members for initializing game objects.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Initializer.Content">
+            <summary>
+            Loads content for the game object.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Initializer.Graphics">
+            <summary>
+            The graphics device for the game engine.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Initializer.SpriteBatch">
+            <summary>
+            Allows for creation of sprite batches and drawn to the screen.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Initializer.Device">
+            <summary>
+            The graphics device manager of the game.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Initializer.Window">
+            <summary>
+            The window of the game engine.
+            </summary>
+        </member>
         <member name="T:SpyceLibrary.InputManager">
             <summary>
             A singleton class that handles user input.
@@ -315,6 +520,18 @@
             <summary>
             Singleton access to the input manager.
             </summary>
+        </member>
+        <member name="T:SpyceLibrary.InputManager.KeyboardEventHandler">
+            <summary>
+            Delegate handler for events from keyboards.
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="T:SpyceLibrary.InputManager.MouseEventHandler">
+            <summary>
+            Delegate handlder for events from them mouse.
+            </summary>
+            <param name="button"></param>
         </member>
         <member name="E:SpyceLibrary.InputManager.OnKeyPress">
             <summary>
@@ -434,9 +651,14 @@
             The middle mouse button
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Physics.BoxCollider.Colliders">
+        <member name="P:SpyceLibrary.Physics.BoxCollider.Size">
             <summary>
-            The list of colliders that are associated with this game object.
+            The size of the collider.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Physics.BoxCollider.Offset">
+            <summary>
+            The offset of the collider.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Physics.BoxCollider.#ctor">
@@ -444,11 +666,30 @@
             Creates a new instance of the collider.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.AddCollisionRectangle(Microsoft.Xna.Framework.Rectangle)">
+        <member name="M:SpyceLibrary.Physics.BoxCollider.ConstructRectangleAt(Microsoft.Xna.Framework.Vector2)">
             <summary>
-            Adds a collision rectangle.
+            Constructs a rectangle at the given position.
             </summary>
-            <param name="rect"></param>
+            <param name="position"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.SetOffset(Microsoft.Xna.Framework.Point)">
+            <summary>
+            Sets the offset of the collision rectangle.
+            </summary>
+            <param name="offset"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.SetBounds(Microsoft.Xna.Framework.Point)">
+            <summary>
+            Sets the size of the collision rectangle.
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.PhysicsBody">
+            <summary>
+            A member of the physics engine. This represents a physical object within the game world
+            that has physics-based behaviors and interactions with other physical objects.
+            </summary>
         </member>
         <member name="P:SpyceLibrary.Physics.PhysicsBody.Position">
             <summary>
@@ -458,6 +699,17 @@
         <member name="P:SpyceLibrary.Physics.PhysicsBody.Velocity">
             <summary>
             The velocity of the body for this tick.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Physics.PhysicsBody.IsCollidable">
+            <summary>
+            Whether this object should be collided with in the collision detection.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Physics.PhysicsBody.Collider">
+            <summary>
+            The rectangular collision rectangle of the physics body. TODO: Change to a more
+            generic collider type.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Physics.PhysicsBody.#ctor">
@@ -472,10 +724,26 @@
             <param name="init"></param>
             <param name="holder"></param>
         </member>
+        <member name="T:SpyceLibrary.Physics.PhysicsEngine">
+            <summary>
+            Updates physical objects within the game world.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Physics.PhysicsEngine.QUAD_SIZE">
+            <summary>
+            The size of each theoretical quad.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Physics.PhysicsEngine.#ctor">
             <summary>
             Creates a new instance of the physics engine.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the physics engine.
+            </summary>
+            <param name="initializer"></param>
         </member>
         <member name="M:SpyceLibrary.Physics.PhysicsEngine.RegisterBody(SpyceLibrary.Physics.PhysicsBody)">
             <summary>
@@ -489,11 +757,70 @@
             </summary>
             <param name="gameTime"></param>
         </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Clear">
+            <summary>
+            Clears all the bodies from the physics engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Draw(SpyceLibrary.Camera)">
+            <summary>
+            Debug Purposes. Draws a half opacity rectangle for all the physics bodies in the world.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.UnregisterQuadBody(SpyceLibrary.Physics.PhysicsBody)">
+            <summary>
+            Unregisters the bod with the quad map.
+            </summary>
+            <param name="body"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.ReaddQuadBody(SpyceLibrary.Physics.PhysicsBody)">
+            <summary>
+            Registers the quad bodies of this body into the quad map.
+            </summary>
+            <param name="body"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.TestComponent">
+            <summary>
+            A component for testing means.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestComponent.#ctor">
+            <summary>
+            Creates a new instance of the test component.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestComponent.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the test component.
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
         <member name="M:SpyceLibrary.Physics.TestComponent.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the state of the player controller.
             </summary>
             <param name="gameTime"></param>
+        </member>
+        <member name="T:SpyceLibrary.Program">
+            <summary>
+            Game runner class.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Program.Main">
+            <summary>
+            Main method.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Program.NAME">
+            <summary>
+            The debug name of the game runner.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Program.Run">
+            <summary>
+            Runs the game.
+            </summary>
         </member>
         <member name="T:SpyceLibrary.Scene">
             <summary>
@@ -501,10 +828,34 @@
             can be interchangebly loaded using the scene manager.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.Scene.GameObjects">
+            <summary>
+            Refernce to the data structure holding all the game objects in the game.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Scene.ScreenRectangle">
+            <summary>
+            The rectangle of the screen.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Scene.#ctor">
             <summary>
             Creates a new instance of the game scene.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.SetScreenRectangleBounds(System.Int32,System.Int32)">
+            <summary>
+            Sets the size of the screen rectangle.
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.SetScreenRectangleLocation(System.Int32,System.Int32)">
+            <summary>
+            Sets the position of the screen rectangle.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
         </member>
         <member name="M:SpyceLibrary.Scene.PrintTickSpeed">
             <summary>
@@ -624,6 +975,12 @@
             Called when the game is closing.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.SceneManager.GetWindowSize">
+            <summary>
+            Returns the size of the window in pixels.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.SceneManager.SetFrameDimension(System.Int32,System.Int32)">
             <summary>
             Sets the dimension of the window
@@ -675,9 +1032,30 @@
             The name of this scene.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.Scenes.TestScene.WINDOW_WIDTH">
+            <summary>
+            Width of the window size.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Scenes.TestScene.WINDOW_HEIGHT">
+            <summary>
+            Height of the window size.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Scenes.TestScene.#ctor">
             <summary>
             Creates a new instance of the game scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scenes.TestScene.Load(SpyceLibrary.Initializer)">
+            <summary>
+            Loads the scene and initializes it's data members.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scenes.TestScene.Unload">
+            <summary>
+            Unloads the test scene
             </summary>
         </member>
         <member name="M:SpyceLibrary.Scenes.TestScene.AddObject(SpyceLibrary.GameObject)">
@@ -697,6 +1075,69 @@
             Draws the contents of the game scene to the screen.
             </summary>
         </member>
+        <member name="T:SpyceLibrary.Sprites.AnimatedSprite">
+            <summary>
+            A spritesheet based sprite.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.AnimatedSprite.#ctor">
+            <summary>
+            Creates a new instance of the Animated Sprite.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.Sprites.SpriteAnimation">
+            <summary>
+            Represents an individual animation for a spritesheet.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.SpriteAnimation.FrameData">
+            <summary>
+            The list of frame data in the animated sprite.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.SpriteAnimation.CurrentFrame">
+            <summary>
+            The current frame being displayed.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.SpriteAnimation.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the animated sprite.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.SpriteAnimation.SetCurrentFrame(System.Int32)">
+            <summary>
+            Sets the current frame of the animated sprite.
+            </summary>
+            <param name="frame"></param>
+        </member>
+        <member name="T:SpyceLibrary.Sprites.FrameData">
+            <summary>
+            Represents a single frame for an animation.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.FrameData.Position">
+            <summary>
+            The position of the frame data on the texture file.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.FrameData.Time">
+            <summary>
+            The amount of time is spent on this individual frame.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.FrameData.Texture">
+            <summary>
+            The texture that the frame is located on. Each frame data holds a refernce to its
+            texture to allow for animations to potentially consist of different files.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.Sprites.Sprite">
+            <summary>
+            Represents a drawable texture to the game object.
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.Sprites.Sprite.TexturePath">
             <summary>
             The path of the texture.
@@ -706,6 +1147,12 @@
             <summary>
             Creates a new instance of the game component.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetDrawOrder(System.UInt32)">
+            <summary>
+            Sets the draw order for the sprite.
+            </summary>
+            <param name="order"></param>
         </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.SetTexturePath(System.String)">
             <summary>
@@ -719,6 +1166,19 @@
             </summary>
             <param name="offset"></param>
         </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetSize(Microsoft.Xna.Framework.Point)">
+            <summary>
+            Sets the drawn dimension of the sprite.
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetSize(System.Int32,System.Int32)">
+            <summary>
+            Sets the drawn dimension of the sprite.
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
             <summary>
             Loads the textures of the sprite.
@@ -731,9 +1191,26 @@
             Draws the sprite to the screen.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.GetDrawRectangle">
+            <summary>
+            Gets the visible rectangle for the sprite.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.DrawOrder">
+            <summary>
+            Gets the draw order for the sprite.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SpyceLibrary.Time">
             <summary>
             Singleton class for handling time related applications.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Time.Instance">
+            <summary>
+            Singleton instance of the time.
             </summary>
         </member>
         <member name="P:SpyceLibrary.Time.DeltaTime">
@@ -757,10 +1234,30 @@
             </summary>
             <param name="gameTime"></param>
         </member>
+        <member name="T:SpyceLibrary.Transform">
+            <summary>
+            Represents a size transformation of the game object.
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.Transform.Identity">
             <summary>
             Gets the identity transform. When this transform is applied, you get the exact same
             transform.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Transform.Position">
+            <summary>
+            The position of the transform.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Transform.Scale">
+            <summary>
+            The size scale of the transform.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Transform.Rotation">
+            <summary>
+            The rotation of the sprite.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Transform.SetScale(Microsoft.Xna.Framework.Vector2)">
@@ -774,6 +1271,178 @@
             Sets the position of the transform.
             </summary>
             <param name="position"></param>
+        </member>
+        <member name="M:SpyceLibrary.Transform.SetPosition(System.Single,System.Single)">
+            <summary>
+            Sets the position of the transform.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:FastNoiseLite.#ctor(System.Int32)">
+            <summary>
+            Create new FastNoise object with optional seed
+            </summary>
+        </member>
+        <member name="M:FastNoiseLite.SetSeed(System.Int32)">
+            <summary>
+            Sets seed used for all noise types
+            </summary>
+            <remarks>
+            Default: 1337
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFrequency(System.Single)">
+            <summary>
+            Sets frequency for all noise types
+            </summary>
+            <remarks>
+            Default: 0.01
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetNoiseType(FastNoiseLite.NoiseType)">
+            <summary>
+            Sets noise algorithm used for GetNoise(...)
+            </summary>
+            <remarks>
+            Default: OpenSimplex2
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetRotationType3D(FastNoiseLite.RotationType3D)">
+            <summary>
+            Sets domain rotation type for 3D Noise and 3D DomainWarp.
+            Can aid in reducing directional artifacts when sampling a 2D plane in 3D
+            </summary>
+            <remarks>
+            Default: None
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFractalType(FastNoiseLite.FractalType)">
+            <summary>
+            Sets method for combining octaves in all fractal noise types
+            </summary>
+            <remarks>
+            Default: None
+            Note: FractalType.DomainWarp... only affects DomainWarp(...)
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFractalOctaves(System.Int32)">
+            <summary>
+            Sets octave count for all fractal noise types 
+            </summary>
+            <remarks>
+            Default: 3
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFractalLacunarity(System.Single)">
+            <summary>
+            Sets octave lacunarity for all fractal noise types
+            </summary>
+            <remarks>
+            Default: 2.0
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFractalGain(System.Single)">
+            <summary>
+            Sets octave gain for all fractal noise types
+            </summary>
+            <remarks>
+            Default: 0.5
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFractalWeightedStrength(System.Single)">
+            <summary>
+            Sets octave weighting for all none DomainWarp fratal types
+            </summary>
+            <remarks>
+            Default: 0.0
+            Note: Keep between 0...1 to maintain -1...1 output bounding
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetFractalPingPongStrength(System.Single)">
+            <summary>
+            Sets strength of the fractal ping pong effect
+            </summary>
+            <remarks>
+            Default: 2.0
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction)">
+            <summary>
+            Sets distance function used in cellular noise calculations
+            </summary>
+            <remarks>
+            Default: Distance
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetCellularReturnType(FastNoiseLite.CellularReturnType)">
+            <summary>
+            Sets return type from cellular noise calculations
+            </summary>
+            <remarks>
+            Default: EuclideanSq
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetCellularJitter(System.Single)">
+            <summary>
+            Sets the maximum distance a cellular point can move from it's grid position
+            </summary>
+            <remarks>
+            Default: 1.0
+            Note: Setting this higher than 1 will cause artifacts
+            </remarks> 
+        </member>
+        <member name="M:FastNoiseLite.SetDomainWarpType(FastNoiseLite.DomainWarpType)">
+            <summary>
+            Sets the warp algorithm when using DomainWarp(...)
+            </summary>
+            <remarks>
+            Default: OpenSimplex2
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.SetDomainWarpAmp(System.Single)">
+            <summary>
+            Sets the maximum warp distance from original position when using DomainWarp(...)
+            </summary>
+            <remarks>
+            Default: 1.0
+            </remarks>
+        </member>
+        <member name="M:FastNoiseLite.GetNoise(System.Single,System.Single)">
+            <summary>
+            2D noise at given position using current settings
+            </summary>
+            <returns>
+            Noise output bounded between -1...1
+            </returns>
+        </member>
+        <member name="M:FastNoiseLite.GetNoise(System.Single,System.Single,System.Single)">
+            <summary>
+            3D noise at given position using current settings
+            </summary>
+            <returns>
+            Noise output bounded between -1...1
+            </returns>
+        </member>
+        <member name="M:FastNoiseLite.DomainWarp(System.Single@,System.Single@)">
+            <summary>
+            2D warps the input position using current domain warp settings
+            </summary>
+            <example>
+            Example usage with GetNoise
+            <code>DomainWarp(ref x, ref y)
+            noise = GetNoise(x, y)</code>
+            </example>
+        </member>
+        <member name="M:FastNoiseLite.DomainWarp(System.Single@,System.Single@,System.Single@)">
+            <summary>
+            3D warps the input position using current domain warp settings
+            </summary>
+            <example>
+            Example usage with GetNoise
+            <code>DomainWarp(ref x, ref y, ref z)
+            noise = GetNoise(x, y, z)</code>
+            </example>
         </member>
     </members>
 </doc>

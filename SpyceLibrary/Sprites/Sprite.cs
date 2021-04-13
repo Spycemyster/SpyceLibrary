@@ -6,6 +6,9 @@ using System.Text;
 
 namespace SpyceLibrary.Sprites
 {
+    /// <summary>
+    /// Represents a drawable texture to the game object.
+    /// </summary>
     public class Sprite : GameComponent, IDrawn
     {
         #region Fields
@@ -21,6 +24,7 @@ namespace SpyceLibrary.Sprites
         private Point size;
         private SpriteBatch spriteBatch;
         private Vector2 offset;
+        private uint drawOrder;
         #endregion
 
         #region Constructor
@@ -33,6 +37,14 @@ namespace SpyceLibrary.Sprites
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Sets the draw order for the sprite.
+        /// </summary>
+        /// <param name="order"></param>
+        public void SetDrawOrder(uint order)
+        {
+            drawOrder = order;
+        }
         /// <summary>
         /// Sets the texture path of the sprite.
         /// </summary>
@@ -52,6 +64,25 @@ namespace SpyceLibrary.Sprites
         }
 
         /// <summary>
+        /// Sets the drawn dimension of the sprite.
+        /// </summary>
+        /// <param name="size"></param>
+        public void SetSize(Point size)
+        {
+            this.size = size;
+        }
+
+        /// <summary>
+        /// Sets the drawn dimension of the sprite.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void SetSize(int width, int height)
+        {
+            SetSize(new Point(width, height));
+        }
+
+        /// <summary>
         /// Loads the textures of the sprite.
         /// </summary>
         /// <param name="init"></param>
@@ -61,30 +92,41 @@ namespace SpyceLibrary.Sprites
             base.Load(init, holder);
             spriteBatch = init.SpriteBatch;
             texture = init.Content.Load<Texture2D>(texturePath);
-            size = new Point(texture.Width, texture.Height);
+            //size = new Point(texture.Width, texture.Height);
         }
 
         /// <summary>
         /// Draws the sprite to the screen.
         /// </summary>
-        public void Draw()
+        public virtual void Draw()
         {
-            Transform tr = Holder.GetTransform();
             Rectangle rect = GetDrawRectangle();
-            spriteBatch.Draw(texture, rect, null, Color.White, tr.Rotation,
-                Vector2.Zero, SpriteEffects.None, DrawOrder());
+            if (GetDrawRectangle().Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
+            {
+                Transform tr = Holder.GetTransform();
+                spriteBatch.Draw(texture, rect, null, Color.White, tr.Rotation,
+                    Vector2.Zero, SpriteEffects.None, DrawOrder());
+            }
         }
 
-        private Rectangle GetDrawRectangle()
+        /// <summary>
+        /// Gets the visible rectangle for the sprite.
+        /// </summary>
+        /// <returns></returns>
+        public Rectangle GetDrawRectangle()
         {
             Transform tr = Holder.GetTransform();
             return new Rectangle((int)(tr.Position.X + offset.X), (int)(tr.Position.Y + offset.Y),
                 (int)(size.X * tr.Scale.X), (int)(size.Y * tr.Scale.Y));
         }
 
-        public int DrawOrder()
+        /// <summary>
+        /// Gets the draw order for the sprite.
+        /// </summary>
+        /// <returns></returns>
+        public uint DrawOrder()
         {
-            return 0;
+            return drawOrder;
         }
 
         #endregion
