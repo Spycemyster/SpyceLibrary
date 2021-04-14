@@ -101,18 +101,12 @@ namespace SpyceLibrary.Physics
         private Point[] GetFirstQuad(PhysicsBody body)
         {
             return GetFirstQuad(body, body.Position);
-            //Rectangle colliderRect = body.Collider.ConstructRectangleAt(body.Position);
-            //int x = colliderRect.X / QUAD_SIZE;
-            //int y = colliderRect.Y / QUAD_SIZE;
-            //int lx = (int)Math.Ceiling((body.Position.X + colliderRect.Width) / QUAD_SIZE);
-            //int ly = (int)Math.Ceiling((body.Position.Y + colliderRect.Height) / QUAD_SIZE);
-            //return new Point[] { new Point(x, y), new Point(lx, ly) };
         }
         private Point[] GetFirstQuad(PhysicsBody body, Vector2 newPosition)
         {
             Rectangle colliderRect = body.Collider.ConstructRectangleAt(body.Position);
-            int x = (int)((newPosition.X + body.Collider.Offset.X) / QUAD_SIZE);
-            int y = (int)((newPosition.Y + body.Collider.Offset.Y) / QUAD_SIZE);
+            int x = (int)Math.Floor((newPosition.X + body.Collider.Offset.X) / QUAD_SIZE);
+            int y = (int)Math.Floor((newPosition.Y + body.Collider.Offset.Y) / QUAD_SIZE);
             int lx = (int)Math.Ceiling((newPosition.X + colliderRect.Width) / QUAD_SIZE);
             int ly = (int)Math.Ceiling((newPosition.Y + colliderRect.Height) / QUAD_SIZE);
             return new Point[] { new Point(x, y), new Point(lx, ly) };

@@ -20,6 +20,7 @@
   - [SetOffset(offset)](#M-SpyceLibrary-Camera-SetOffset-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Camera.SetOffset(Microsoft.Xna.Framework.Vector2)')
   - [SetViewOffsetPercent(pOffset)](#M-SpyceLibrary-Camera-SetViewOffsetPercent-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Camera.SetViewOffsetPercent(Microsoft.Xna.Framework.Vector2)')
 - [CommandHandler](#T-SpyceLibrary-Debugging-Commands-CommandHandler 'SpyceLibrary.Debugging.Commands.CommandHandler')
+  - [COMMAND_NAME](#F-SpyceLibrary-Debugging-Commands-CommandHandler-COMMAND_NAME 'SpyceLibrary.Debugging.Commands.CommandHandler.COMMAND_NAME')
   - [Instance](#P-SpyceLibrary-Debugging-Commands-CommandHandler-Instance 'SpyceLibrary.Debugging.Commands.CommandHandler.Instance')
   - [Initialize(initializer)](#M-SpyceLibrary-Debugging-Commands-CommandHandler-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.CommandHandler.Initialize(SpyceLibrary.Initializer)')
   - [ParseCommand(sender,command)](#M-SpyceLibrary-Debugging-Commands-CommandHandler-ParseCommand-System-String,System-String- 'SpyceLibrary.Debugging.Commands.CommandHandler.ParseCommand(System.String,System.String)')
@@ -40,7 +41,7 @@
   - [EndDrawTick()](#M-SpyceLibrary-Debugging-Debug-EndDrawTick 'SpyceLibrary.Debugging.Debug.EndDrawTick')
   - [EndUpdateTick()](#M-SpyceLibrary-Debugging-Debug-EndUpdateTick 'SpyceLibrary.Debugging.Debug.EndUpdateTick')
   - [GetCurrentSceneObjectCount()](#M-SpyceLibrary-Debugging-Debug-GetCurrentSceneObjectCount 'SpyceLibrary.Debugging.Debug.GetCurrentSceneObjectCount')
-  - [Initialize(engine)](#M-SpyceLibrary-Debugging-Debug-Initialize-SpyceLibrary-Engine- 'SpyceLibrary.Debugging.Debug.Initialize(SpyceLibrary.Engine)')
+  - [Initialize(engine,initializer)](#M-SpyceLibrary-Debugging-Debug-Initialize-SpyceLibrary-Engine,SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Debug.Initialize(SpyceLibrary.Engine,SpyceLibrary.Initializer)')
   - [ParseCommand(sender,toParse)](#M-SpyceLibrary-Debugging-Debug-ParseCommand-System-String,System-String- 'SpyceLibrary.Debugging.Debug.ParseCommand(System.String,System.String)')
   - [SaveLog(sender)](#M-SpyceLibrary-Debugging-Debug-SaveLog-System-String- 'SpyceLibrary.Debugging.Debug.SaveLog(System.String)')
   - [SaveLog(sender,path)](#M-SpyceLibrary-Debugging-Debug-SaveLog-System-String,System-String- 'SpyceLibrary.Debugging.Debug.SaveLog(System.String,System.String)')
@@ -57,7 +58,11 @@
   - [Draw(gameTime)](#M-SpyceLibrary-Engine-Draw-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Engine.Draw(Microsoft.Xna.Framework.GameTime)')
   - [Initialize()](#M-SpyceLibrary-Engine-Initialize 'SpyceLibrary.Engine.Initialize')
   - [LoadContent()](#M-SpyceLibrary-Engine-LoadContent 'SpyceLibrary.Engine.LoadContent')
+  - [OnExiting(sender,args)](#M-SpyceLibrary-Engine-OnExiting-System-Object,System-EventArgs- 'SpyceLibrary.Engine.OnExiting(System.Object,System.EventArgs)')
   - [Update(gameTime)](#M-SpyceLibrary-Engine-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Engine.Update(Microsoft.Xna.Framework.GameTime)')
+- [ExitCommand](#T-SpyceLibrary-Debugging-Commands-ExitCommand 'SpyceLibrary.Debugging.Commands.ExitCommand')
+  - [Help()](#M-SpyceLibrary-Debugging-Commands-ExitCommand-Help 'SpyceLibrary.Debugging.Commands.ExitCommand.Help')
+  - [Run(sender,args,initializer)](#M-SpyceLibrary-Debugging-Commands-ExitCommand-Run-System-String,System-String[],SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.ExitCommand.Run(System.String,System.String[],SpyceLibrary.Initializer)')
 - [FastNoiseLite](#T--FastNoiseLite '.FastNoiseLite')
   - [#ctor()](#M-FastNoiseLite-#ctor-System-Int32- 'FastNoiseLite.#ctor(System.Int32)')
   - [DomainWarp()](#M-FastNoiseLite-DomainWarp-System-Single@,System-Single@- 'FastNoiseLite.DomainWarp(System.Single@,System.Single@)')
@@ -258,6 +263,13 @@
   - [SetPosition(position)](#M-SpyceLibrary-Transform-SetPosition-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Transform.SetPosition(Microsoft.Xna.Framework.Vector2)')
   - [SetPosition(x,y)](#M-SpyceLibrary-Transform-SetPosition-System-Single,System-Single- 'SpyceLibrary.Transform.SetPosition(System.Single,System.Single)')
   - [SetScale(scale)](#M-SpyceLibrary-Transform-SetScale-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Transform.SetScale(Microsoft.Xna.Framework.Vector2)')
+- [UIElement](#T-SpyceLibrary-UI-UIElement 'SpyceLibrary.UI.UIElement')
+  - [#ctor()](#M-SpyceLibrary-UI-UIElement-#ctor 'SpyceLibrary.UI.UIElement.#ctor')
+  - [EnableCameraOffset(camera)](#M-SpyceLibrary-UI-UIElement-EnableCameraOffset-SpyceLibrary-Camera- 'SpyceLibrary.UI.UIElement.EnableCameraOffset(SpyceLibrary.Camera)')
+  - [GiveFocus()](#M-SpyceLibrary-UI-UIElement-GiveFocus 'SpyceLibrary.UI.UIElement.GiveFocus')
+  - [Load(init,holder)](#M-SpyceLibrary-UI-UIElement-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.UI.UIElement.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [Unload()](#M-SpyceLibrary-UI-UIElement-Unload 'SpyceLibrary.UI.UIElement.Unload')
+  - [Update(gameTime)](#M-SpyceLibrary-UI-UIElement-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.UI.UIElement.Update(Microsoft.Xna.Framework.GameTime)')
 
 <a name='T-SpyceLibrary-Sprites-AnimatedSprite'></a>
 ## AnimatedSprite `type`
@@ -449,6 +461,13 @@ SpyceLibrary.Debugging.Commands
 ##### Summary
 
 Takes in full command lines and parses it into a command form.
+
+<a name='F-SpyceLibrary-Debugging-Commands-CommandHandler-COMMAND_NAME'></a>
+### COMMAND_NAME `constants`
+
+##### Summary
+
+The name of the debug messages that originate from this class.
 
 <a name='P-SpyceLibrary-Debugging-Commands-CommandHandler-Instance'></a>
 ### Instance `property`
@@ -646,8 +665,8 @@ Gets the number of objects in the current scene.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Debugging-Debug-Initialize-SpyceLibrary-Engine-'></a>
-### Initialize(engine) `method`
+<a name='M-SpyceLibrary-Debugging-Debug-Initialize-SpyceLibrary-Engine,SpyceLibrary-Initializer-'></a>
+### Initialize(engine,initializer) `method`
 
 ##### Summary
 
@@ -658,6 +677,7 @@ Initializes the in-game debugger.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | engine | [SpyceLibrary.Engine](#T-SpyceLibrary-Engine 'SpyceLibrary.Engine') |  |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 
 <a name='M-SpyceLibrary-Debugging-Debug-ParseCommand-System-String,System-String-'></a>
 ### ParseCommand(sender,toParse) `method`
@@ -866,6 +886,20 @@ Loads and initializes necessary game assets.
 
 This method has no parameters.
 
+<a name='M-SpyceLibrary-Engine-OnExiting-System-Object,System-EventArgs-'></a>
+### OnExiting(sender,args) `method`
+
+##### Summary
+
+Called when the game is exiting.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') |  |
+| args | [System.EventArgs](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.EventArgs 'System.EventArgs') |  |
+
 <a name='M-SpyceLibrary-Engine-Update-Microsoft-Xna-Framework-GameTime-'></a>
 ### Update(gameTime) `method`
 
@@ -878,6 +912,47 @@ Updates the state of the game and it's members.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T-SpyceLibrary-Debugging-Commands-ExitCommand'></a>
+## ExitCommand `type`
+
+##### Namespace
+
+SpyceLibrary.Debugging.Commands
+
+##### Summary
+
+Exits the game.
+
+<a name='M-SpyceLibrary-Debugging-Commands-ExitCommand-Help'></a>
+### Help() `method`
+
+##### Summary
+
+The syntax of the command.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debugging-Commands-ExitCommand-Run-System-String,System-String[],SpyceLibrary-Initializer-'></a>
+### Run(sender,args,initializer) `method`
+
+##### Summary
+
+Runs the exit command.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| args | [System.String[]](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String[] 'System.String[]') |  |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 
 <a name='T--FastNoiseLite'></a>
 ## FastNoiseLite `type`
@@ -3237,3 +3312,87 @@ Sets the scale of the transform.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | scale | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='T-SpyceLibrary-UI-UIElement'></a>
+## UIElement `type`
+
+##### Namespace
+
+SpyceLibrary.UI
+
+##### Summary
+
+Abstract class for various user interface elements.
+
+<a name='M-SpyceLibrary-UI-UIElement-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Creates a new instance of the UI element.
+
+##### Parameters
+
+This constructor has no parameters.
+
+<a name='M-SpyceLibrary-UI-UIElement-EnableCameraOffset-SpyceLibrary-Camera-'></a>
+### EnableCameraOffset(camera) `method`
+
+##### Summary
+
+Performs UI events based off the camera transformation.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| camera | [SpyceLibrary.Camera](#T-SpyceLibrary-Camera 'SpyceLibrary.Camera') |  |
+
+<a name='M-SpyceLibrary-UI-UIElement-GiveFocus'></a>
+### GiveFocus() `method`
+
+##### Summary
+
+Marks the element this tick for having focus.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-UI-UIElement-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
+### Load(init,holder) `method`
+
+##### Summary
+
+Loads the necessary assets for the UI element.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+| holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+
+<a name='M-SpyceLibrary-UI-UIElement-Unload'></a>
+### Unload() `method`
+
+##### Summary
+
+Unregisters all the events.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-UI-UIElement-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of each UI element.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |

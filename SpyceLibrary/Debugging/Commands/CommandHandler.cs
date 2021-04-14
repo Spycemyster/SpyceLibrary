@@ -45,6 +45,7 @@ namespace SpyceLibrary.Debugging.Commands
             this.initializer = initializer;
             commands.Add("echo", new EchoCommand());
             commands.Add("list", new ListCommand());
+            commands.Add("exit", new ExitCommand());
         }
 
         /// <summary>
@@ -73,7 +74,10 @@ namespace SpyceLibrary.Debugging.Commands
             }
             else if (tokenized.Length >= 2)
             {
-                exec = commands[tokenized[1]];
+                if (commands.ContainsKey(tokenized[1]))
+                {
+                    exec = commands[tokenized[1]];
+                }
             }
             else
             {

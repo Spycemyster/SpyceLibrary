@@ -118,13 +118,19 @@ namespace SpyceLibrary.Debugging
         /// Initializes the in-game debugger.
         /// </summary>
         /// <param name="engine"></param>
-        public void Initialize(Engine engine)
+        /// <param name="initializer"></param>
+        public void Initialize(Engine engine, Initializer initializer)
         {
             this.engine = engine;
             font = engine.Content.Load<SpriteFont>("System/DebugFont");
 
             // TEMP
             CommandHandler.Instance.Initialize(null);
+        }
+
+        internal void Exit()
+        {
+            engine.Exit();
         }
 
         /// <summary>

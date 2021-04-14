@@ -27,21 +27,35 @@ namespace SpyceLibrary.Debugging.Commands
             {
                 page = int.Parse(args[3]);
             }
+            int skip = num * page;
             switch(args[1])
             {
                 case "objects":
                     // list all objects
-                    Dictionary<Guid, GameObject>.ValueCollection objects = SceneManager.Instance.CurrentScene.GameObjects.Values;
-                    
-                    foreach (GameObject obj in objects)
+                    Dictionary<Guid, GameObject>.ValueCollection.Enumerator enumerator 
+                        = SceneManager.Instance.CurrentScene.GameObjects.Values.GetEnumerator();
+                    for (int i = 0; i < skip; i++)
                     {
-                        Debug.Instance.WriteLine(sender, obj.ToString());
-                        num--;
-                        if (num == 0)
+                        enumerator.MoveNext();
+                    }
+
+                    if (num != -1)
+                    {
+                        for (int i = 0; i < num; i++)
                         {
-                            break;
+
                         }
                     }
+
+                    //foreach (GameObject obj in objects)
+                    //{
+                    //    Debug.Instance.WriteLine(sender, obj.ToString());
+                    //    count--;
+                    //    if (num == 0)
+                    //    {
+                    //        break;
+                    //    }
+                    //}
                     break;
                 default:
                     Debug.Instance.WriteLine("List", $"Could not list type '{args[1]}'");
@@ -55,7 +69,7 @@ namespace SpyceLibrary.Debugging.Commands
         /// <returns></returns>
         public string Help()
         {
-            return "Prints out a list of the given type.\n\n'list <object type> <count> <page offset>'";
+            return "Prints out a list of the given type.\n\n\t'list <object type> <count> <page offset>'";
         }
     }
 }

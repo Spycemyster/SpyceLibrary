@@ -78,12 +78,12 @@ namespace SpyceLibrary.Scenes
             SetInterval(PrintTickSpeed, 3, 3);
             GameObject player = CreateTestPlayer();
             AddObject(player);
-            for (int i = 0; i < 100000; i++)
-            {
-                GameObject obj = CreateBlankSprite(random.Next(1, 10), random.Next(1, 10));//CreateBlankSprite(100, 100);
-                obj.RelativeTransform.SetPosition(random.Next(0, 100000), random.Next(0, 100000));
-                AddObject(obj);
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
+            //    obj.RelativeTransform.SetPosition(random.Next(0, 1000), random.Next(0, 1000));
+            //    AddObject(obj);
+            //}
 
             mainCamera.FixViewOn(player);
             mainCamera.SetViewOffsetPercent(new Vector2(0.5f, 0.5f));
@@ -173,7 +173,7 @@ namespace SpyceLibrary.Scenes
 
             base.Draw();
 
-            //physicsEngine.Draw(mainCamera);
+            physicsEngine.Draw(mainCamera);
 
             spriteBatch.End();
 

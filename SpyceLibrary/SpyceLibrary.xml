@@ -53,6 +53,11 @@
             Singleton access to the command handler.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.Debugging.Commands.CommandHandler.COMMAND_NAME">
+            <summary>
+            The name of the debug messages that originate from this class.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Debugging.Commands.CommandHandler.Initialize(SpyceLibrary.Initializer)">
             <summary>
             Initializes the command handler.
@@ -84,6 +89,25 @@
             Prints out the syntax for the command.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Debugging.Commands.ExitCommand">
+            <summary>
+            Exits the game.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.ExitCommand.Help">
+            <summary>
+            The syntax of the command.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.ExitCommand.Run(System.String,System.String[],SpyceLibrary.Initializer)">
+            <summary>
+            Runs the exit command.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <param name="initializer"></param>
         </member>
         <member name="T:SpyceLibrary.Debugging.Commands.ICommand">
             <summary>
@@ -186,11 +210,12 @@
             The file extension for the logs.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Debugging.Debug.Initialize(SpyceLibrary.Engine)">
+        <member name="M:SpyceLibrary.Debugging.Debug.Initialize(SpyceLibrary.Engine,SpyceLibrary.Initializer)">
             <summary>
             Initializes the in-game debugger.
             </summary>
             <param name="engine"></param>
+            <param name="initializer"></param>
         </member>
         <member name="M:SpyceLibrary.Debugging.Debug.ClearLogs(System.String)">
             <summary>
@@ -311,6 +336,13 @@
             Draws the instance of the engine.
             </summary>
             <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Engine.OnExiting(System.Object,System.EventArgs)">
+            <summary>
+            Called when the game is exiting.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
         </member>
         <member name="T:SpyceLibrary.GameComponent">
             <summary>
@@ -1358,6 +1390,45 @@
             </summary>
             <param name="x"></param>
             <param name="y"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIElement">
+            <summary>
+            Abstract class for various user interface elements.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIElement.#ctor">
+            <summary>
+            Creates a new instance of the UI element.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIElement.EnableCameraOffset(SpyceLibrary.Camera)">
+            <summary>
+            Performs UI events based off the camera transformation.
+            </summary>
+            <param name="camera"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIElement.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the necessary assets for the UI element.
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIElement.Unload">
+            <summary>
+            Unregisters all the events.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIElement.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of each UI element.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIElement.GiveFocus">
+            <summary>
+            Marks the element this tick for having focus.
+            </summary>
         </member>
         <member name="M:FastNoiseLite.#ctor(System.Int32)">
             <summary>

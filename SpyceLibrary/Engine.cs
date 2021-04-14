@@ -41,7 +41,7 @@ namespace SpyceLibrary
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Debug.Instance.Initialize(this);
+            Debug.Instance.Initialize(this, null);
             SceneManager.Instance.Initialize(Content, spriteBatch, GraphicsDevice, graphics, Window);
             Debug.Instance.WriteLine(DEBUG_NAME, "Running through the SpyceLibrary. By Spencer Chang.",
                 ConsoleColor.Green, ConsoleColor.Green);
@@ -85,6 +85,11 @@ namespace SpyceLibrary
             Debug.Instance.EndDrawTick();
         }
 
+        /// <summary>
+        /// Called when the game is exiting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         protected override void OnExiting(object sender, EventArgs args)
         {
             base.OnExiting(sender, args);

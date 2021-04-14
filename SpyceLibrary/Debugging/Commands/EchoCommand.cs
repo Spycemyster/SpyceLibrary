@@ -26,7 +26,7 @@ namespace SpyceLibrary.Debugging.Commands
         /// <returns></returns>
         public string Help()
         {
-            return "Prints out the given screen to the console.\n\n'echo \"insert string here in quotes\"'";
+            return "Prints out the given screen to the console.\n\n\t'echo \"insert string here in quotes\"'";
         }
     }
 }
