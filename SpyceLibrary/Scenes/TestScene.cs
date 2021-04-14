@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpyceLibrary.Physics;
 using SpyceLibrary.Sprites;
+using SpyceLibrary.Debugging;
 using System;
 using System.Collections.Generic;
 using System.IO;

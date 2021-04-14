@@ -19,32 +19,39 @@
   - [GetTransformedMatrix()](#M-SpyceLibrary-Camera-GetTransformedMatrix 'SpyceLibrary.Camera.GetTransformedMatrix')
   - [SetOffset(offset)](#M-SpyceLibrary-Camera-SetOffset-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Camera.SetOffset(Microsoft.Xna.Framework.Vector2)')
   - [SetViewOffsetPercent(pOffset)](#M-SpyceLibrary-Camera-SetViewOffsetPercent-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Camera.SetViewOffsetPercent(Microsoft.Xna.Framework.Vector2)')
+- [CommandHandler](#T-SpyceLibrary-Debugging-Commands-CommandHandler 'SpyceLibrary.Debugging.Commands.CommandHandler')
+  - [Instance](#P-SpyceLibrary-Debugging-Commands-CommandHandler-Instance 'SpyceLibrary.Debugging.Commands.CommandHandler.Instance')
+  - [Initialize(initializer)](#M-SpyceLibrary-Debugging-Commands-CommandHandler-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.CommandHandler.Initialize(SpyceLibrary.Initializer)')
+  - [ParseCommand(sender,command)](#M-SpyceLibrary-Debugging-Commands-CommandHandler-ParseCommand-System-String,System-String- 'SpyceLibrary.Debugging.Commands.CommandHandler.ParseCommand(System.String,System.String)')
 - [ComponentEvent](#T-SpyceLibrary-GameComponent-ComponentEvent 'SpyceLibrary.GameComponent.ComponentEvent')
-- [Debug](#T-SpyceLibrary-Debug 'SpyceLibrary.Debug')
-  - [LOGS_FILE_EXTENSION](#F-SpyceLibrary-Debug-LOGS_FILE_EXTENSION 'SpyceLibrary.Debug.LOGS_FILE_EXTENSION')
-  - [LOGS_FOLDER](#F-SpyceLibrary-Debug-LOGS_FOLDER 'SpyceLibrary.Debug.LOGS_FOLDER')
-  - [OnCommandSend](#F-SpyceLibrary-Debug-OnCommandSend 'SpyceLibrary.Debug.OnCommandSend')
-  - [OnLogsCleared](#F-SpyceLibrary-Debug-OnLogsCleared 'SpyceLibrary.Debug.OnLogsCleared')
-  - [OnLogsSaved](#F-SpyceLibrary-Debug-OnLogsSaved 'SpyceLibrary.Debug.OnLogsSaved')
-  - [OnNewDebugMessage](#F-SpyceLibrary-Debug-OnNewDebugMessage 'SpyceLibrary.Debug.OnNewDebugMessage')
-  - [DrawTime](#P-SpyceLibrary-Debug-DrawTime 'SpyceLibrary.Debug.DrawTime')
-  - [Instance](#P-SpyceLibrary-Debug-Instance 'SpyceLibrary.Debug.Instance')
-  - [TickSpeed](#P-SpyceLibrary-Debug-TickSpeed 'SpyceLibrary.Debug.TickSpeed')
-  - [UpdateTime](#P-SpyceLibrary-Debug-UpdateTime 'SpyceLibrary.Debug.UpdateTime')
-  - [ClearLogs(sender)](#M-SpyceLibrary-Debug-ClearLogs-System-String- 'SpyceLibrary.Debug.ClearLogs(System.String)')
-  - [Draw(spriteBatch)](#M-SpyceLibrary-Debug-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.Debug.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
-  - [EndDrawTick()](#M-SpyceLibrary-Debug-EndDrawTick 'SpyceLibrary.Debug.EndDrawTick')
-  - [EndUpdateTick()](#M-SpyceLibrary-Debug-EndUpdateTick 'SpyceLibrary.Debug.EndUpdateTick')
-  - [GetCurrentSceneObjectCount()](#M-SpyceLibrary-Debug-GetCurrentSceneObjectCount 'SpyceLibrary.Debug.GetCurrentSceneObjectCount')
-  - [Initialize(engine)](#M-SpyceLibrary-Debug-Initialize-SpyceLibrary-Engine- 'SpyceLibrary.Debug.Initialize(SpyceLibrary.Engine)')
-  - [ParseCommand(sender,toParse)](#M-SpyceLibrary-Debug-ParseCommand-System-String,System-String- 'SpyceLibrary.Debug.ParseCommand(System.String,System.String)')
-  - [SaveLog(sender)](#M-SpyceLibrary-Debug-SaveLog-System-String- 'SpyceLibrary.Debug.SaveLog(System.String)')
-  - [SaveLog(sender,path)](#M-SpyceLibrary-Debug-SaveLog-System-String,System-String- 'SpyceLibrary.Debug.SaveLog(System.String,System.String)')
-  - [StartDrawTick()](#M-SpyceLibrary-Debug-StartDrawTick 'SpyceLibrary.Debug.StartDrawTick')
-  - [StartUpdateTick()](#M-SpyceLibrary-Debug-StartUpdateTick 'SpyceLibrary.Debug.StartUpdateTick')
-  - [WriteLine(sender,message,senderColor,messageColor)](#M-SpyceLibrary-Debug-WriteLine-System-String,System-String,System-ConsoleColor,System-ConsoleColor- 'SpyceLibrary.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)')
-  - [listObjects(sender)](#M-SpyceLibrary-Debug-listObjects-System-String- 'SpyceLibrary.Debug.listObjects(System.String)')
-- [DebugEvent](#T-SpyceLibrary-Debug-DebugEvent 'SpyceLibrary.Debug.DebugEvent')
+- [Debug](#T-SpyceLibrary-Debugging-Debug 'SpyceLibrary.Debugging.Debug')
+  - [LOGS_FILE_EXTENSION](#F-SpyceLibrary-Debugging-Debug-LOGS_FILE_EXTENSION 'SpyceLibrary.Debugging.Debug.LOGS_FILE_EXTENSION')
+  - [LOGS_FOLDER](#F-SpyceLibrary-Debugging-Debug-LOGS_FOLDER 'SpyceLibrary.Debugging.Debug.LOGS_FOLDER')
+  - [OnCommandSend](#F-SpyceLibrary-Debugging-Debug-OnCommandSend 'SpyceLibrary.Debugging.Debug.OnCommandSend')
+  - [OnLogsCleared](#F-SpyceLibrary-Debugging-Debug-OnLogsCleared 'SpyceLibrary.Debugging.Debug.OnLogsCleared')
+  - [OnLogsSaved](#F-SpyceLibrary-Debugging-Debug-OnLogsSaved 'SpyceLibrary.Debugging.Debug.OnLogsSaved')
+  - [OnNewDebugMessage](#F-SpyceLibrary-Debugging-Debug-OnNewDebugMessage 'SpyceLibrary.Debugging.Debug.OnNewDebugMessage')
+  - [DrawTime](#P-SpyceLibrary-Debugging-Debug-DrawTime 'SpyceLibrary.Debugging.Debug.DrawTime')
+  - [Instance](#P-SpyceLibrary-Debugging-Debug-Instance 'SpyceLibrary.Debugging.Debug.Instance')
+  - [TickSpeed](#P-SpyceLibrary-Debugging-Debug-TickSpeed 'SpyceLibrary.Debugging.Debug.TickSpeed')
+  - [UpdateTime](#P-SpyceLibrary-Debugging-Debug-UpdateTime 'SpyceLibrary.Debugging.Debug.UpdateTime')
+  - [ClearLogs(sender)](#M-SpyceLibrary-Debugging-Debug-ClearLogs-System-String- 'SpyceLibrary.Debugging.Debug.ClearLogs(System.String)')
+  - [Draw(spriteBatch)](#M-SpyceLibrary-Debugging-Debug-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.Debugging.Debug.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
+  - [EndDrawTick()](#M-SpyceLibrary-Debugging-Debug-EndDrawTick 'SpyceLibrary.Debugging.Debug.EndDrawTick')
+  - [EndUpdateTick()](#M-SpyceLibrary-Debugging-Debug-EndUpdateTick 'SpyceLibrary.Debugging.Debug.EndUpdateTick')
+  - [GetCurrentSceneObjectCount()](#M-SpyceLibrary-Debugging-Debug-GetCurrentSceneObjectCount 'SpyceLibrary.Debugging.Debug.GetCurrentSceneObjectCount')
+  - [Initialize(engine)](#M-SpyceLibrary-Debugging-Debug-Initialize-SpyceLibrary-Engine- 'SpyceLibrary.Debugging.Debug.Initialize(SpyceLibrary.Engine)')
+  - [ParseCommand(sender,toParse)](#M-SpyceLibrary-Debugging-Debug-ParseCommand-System-String,System-String- 'SpyceLibrary.Debugging.Debug.ParseCommand(System.String,System.String)')
+  - [SaveLog(sender)](#M-SpyceLibrary-Debugging-Debug-SaveLog-System-String- 'SpyceLibrary.Debugging.Debug.SaveLog(System.String)')
+  - [SaveLog(sender,path)](#M-SpyceLibrary-Debugging-Debug-SaveLog-System-String,System-String- 'SpyceLibrary.Debugging.Debug.SaveLog(System.String,System.String)')
+  - [StartDrawTick()](#M-SpyceLibrary-Debugging-Debug-StartDrawTick 'SpyceLibrary.Debugging.Debug.StartDrawTick')
+  - [StartUpdateTick()](#M-SpyceLibrary-Debugging-Debug-StartUpdateTick 'SpyceLibrary.Debugging.Debug.StartUpdateTick')
+  - [WriteLine(sender,message,senderColor,messageColor)](#M-SpyceLibrary-Debugging-Debug-WriteLine-System-String,System-String,System-ConsoleColor,System-ConsoleColor- 'SpyceLibrary.Debugging.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)')
+  - [listObjects(sender)](#M-SpyceLibrary-Debugging-Debug-listObjects-System-String- 'SpyceLibrary.Debugging.Debug.listObjects(System.String)')
+- [DebugEvent](#T-SpyceLibrary-Debugging-Debug-DebugEvent 'SpyceLibrary.Debugging.Debug.DebugEvent')
+- [EchoCommand](#T-SpyceLibrary-Debugging-Commands-EchoCommand 'SpyceLibrary.Debugging.Commands.EchoCommand')
+  - [Help()](#M-SpyceLibrary-Debugging-Commands-EchoCommand-Help 'SpyceLibrary.Debugging.Commands.EchoCommand.Help')
+  - [Run(sender,args,initializer)](#M-SpyceLibrary-Debugging-Commands-EchoCommand-Run-System-String,System-String[],SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.EchoCommand.Run(System.String,System.String[],SpyceLibrary.Initializer)')
 - [Engine](#T-SpyceLibrary-Engine 'SpyceLibrary.Engine')
   - [#ctor()](#M-SpyceLibrary-Engine-#ctor 'SpyceLibrary.Engine.#ctor')
   - [Draw(gameTime)](#M-SpyceLibrary-Engine-Draw-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Engine.Draw(Microsoft.Xna.Framework.GameTime)')
@@ -110,6 +117,9 @@
   - [ToString()](#M-SpyceLibrary-GameObject-ToString 'SpyceLibrary.GameObject.ToString')
   - [Update(gameTime)](#M-SpyceLibrary-GameObject-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.GameObject.Update(Microsoft.Xna.Framework.GameTime)')
 - [GameObjectEvent](#T-SpyceLibrary-GameObject-GameObjectEvent 'SpyceLibrary.GameObject.GameObjectEvent')
+- [ICommand](#T-SpyceLibrary-Debugging-Commands-ICommand 'SpyceLibrary.Debugging.Commands.ICommand')
+  - [Help()](#M-SpyceLibrary-Debugging-Commands-ICommand-Help 'SpyceLibrary.Debugging.Commands.ICommand.Help')
+  - [Run(sender,args,initializer)](#M-SpyceLibrary-Debugging-Commands-ICommand-Run-System-String,System-String[],SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.ICommand.Run(System.String,System.String[],SpyceLibrary.Initializer)')
 - [IDrawn](#T-SpyceLibrary-IDrawn 'SpyceLibrary.IDrawn')
   - [MAX_DRAW_ORDER](#F-SpyceLibrary-IDrawn-MAX_DRAW_ORDER 'SpyceLibrary.IDrawn.MAX_DRAW_ORDER')
   - [Draw()](#M-SpyceLibrary-IDrawn-Draw 'SpyceLibrary.IDrawn.Draw')
@@ -137,10 +147,13 @@
   - [Update()](#M-SpyceLibrary-InputManager-Update 'SpyceLibrary.InputManager.Update')
   - [findNewKeys\`\`1(a,b)](#M-SpyceLibrary-InputManager-findNewKeys``1-``0[],``0[]- 'SpyceLibrary.InputManager.findNewKeys``1(``0[],``0[])')
 - [KeyboardEventHandler](#T-SpyceLibrary-InputManager-KeyboardEventHandler 'SpyceLibrary.InputManager.KeyboardEventHandler')
-- [LogEntry](#T-SpyceLibrary-LogEntry 'SpyceLibrary.LogEntry')
-  - [Message](#F-SpyceLibrary-LogEntry-Message 'SpyceLibrary.LogEntry.Message')
-  - [Sender](#F-SpyceLibrary-LogEntry-Sender 'SpyceLibrary.LogEntry.Sender')
-  - [Time](#F-SpyceLibrary-LogEntry-Time 'SpyceLibrary.LogEntry.Time')
+- [ListCommand](#T-SpyceLibrary-Debugging-Commands-ListCommand 'SpyceLibrary.Debugging.Commands.ListCommand')
+  - [Help()](#M-SpyceLibrary-Debugging-Commands-ListCommand-Help 'SpyceLibrary.Debugging.Commands.ListCommand.Help')
+  - [Run(sender,args,initializer)](#M-SpyceLibrary-Debugging-Commands-ListCommand-Run-System-String,System-String[],SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.ListCommand.Run(System.String,System.String[],SpyceLibrary.Initializer)')
+- [LogEntry](#T-SpyceLibrary-Debugging-LogEntry 'SpyceLibrary.Debugging.LogEntry')
+  - [Message](#F-SpyceLibrary-Debugging-LogEntry-Message 'SpyceLibrary.Debugging.LogEntry.Message')
+  - [Sender](#F-SpyceLibrary-Debugging-LogEntry-Sender 'SpyceLibrary.Debugging.LogEntry.Sender')
+  - [Time](#F-SpyceLibrary-Debugging-LogEntry-Time 'SpyceLibrary.Debugging.LogEntry.Time')
 - [MouseButton](#T-SpyceLibrary-MouseButton 'SpyceLibrary.MouseButton')
   - [LEFT](#F-SpyceLibrary-MouseButton-LEFT 'SpyceLibrary.MouseButton.LEFT')
   - [MIDDLE](#F-SpyceLibrary-MouseButton-MIDDLE 'SpyceLibrary.MouseButton.MIDDLE')
@@ -426,6 +439,51 @@ Sets the percentage for how offset the camera is relative to the screen.
 | ---- | ---- | ----------- |
 | pOffset | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
 
+<a name='T-SpyceLibrary-Debugging-Commands-CommandHandler'></a>
+## CommandHandler `type`
+
+##### Namespace
+
+SpyceLibrary.Debugging.Commands
+
+##### Summary
+
+Takes in full command lines and parses it into a command form.
+
+<a name='P-SpyceLibrary-Debugging-Commands-CommandHandler-Instance'></a>
+### Instance `property`
+
+##### Summary
+
+Singleton access to the command handler.
+
+<a name='M-SpyceLibrary-Debugging-Commands-CommandHandler-Initialize-SpyceLibrary-Initializer-'></a>
+### Initialize(initializer) `method`
+
+##### Summary
+
+Initializes the command handler.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='M-SpyceLibrary-Debugging-Commands-CommandHandler-ParseCommand-System-String,System-String-'></a>
+### ParseCommand(sender,command) `method`
+
+##### Summary
+
+Parses the arguments and executes the command.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| command | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
 <a name='T-SpyceLibrary-GameComponent-ComponentEvent'></a>
 ## ComponentEvent `type`
 
@@ -443,89 +501,89 @@ Delegate for handling events related to UI components.
 | ---- | ---- | ----------- |
 | component | [T:SpyceLibrary.GameComponent.ComponentEvent](#T-T-SpyceLibrary-GameComponent-ComponentEvent 'T:SpyceLibrary.GameComponent.ComponentEvent') |  |
 
-<a name='T-SpyceLibrary-Debug'></a>
+<a name='T-SpyceLibrary-Debugging-Debug'></a>
 ## Debug `type`
 
 ##### Namespace
 
-SpyceLibrary
+SpyceLibrary.Debugging
 
 ##### Summary
 
 Debugging and performance analysis tools. Singleton to be universally access throughout
 the game project.
 
-<a name='F-SpyceLibrary-Debug-LOGS_FILE_EXTENSION'></a>
+<a name='F-SpyceLibrary-Debugging-Debug-LOGS_FILE_EXTENSION'></a>
 ### LOGS_FILE_EXTENSION `constants`
 
 ##### Summary
 
 The file extension for the logs.
 
-<a name='F-SpyceLibrary-Debug-LOGS_FOLDER'></a>
+<a name='F-SpyceLibrary-Debugging-Debug-LOGS_FOLDER'></a>
 ### LOGS_FOLDER `constants`
 
 ##### Summary
 
 The main folder where all the logs are saved to.
 
-<a name='F-SpyceLibrary-Debug-OnCommandSend'></a>
+<a name='F-SpyceLibrary-Debugging-Debug-OnCommandSend'></a>
 ### OnCommandSend `constants`
 
 ##### Summary
 
 When a line is sent through the command prompt.
 
-<a name='F-SpyceLibrary-Debug-OnLogsCleared'></a>
+<a name='F-SpyceLibrary-Debugging-Debug-OnLogsCleared'></a>
 ### OnLogsCleared `constants`
 
 ##### Summary
 
 When the logs are cleared.
 
-<a name='F-SpyceLibrary-Debug-OnLogsSaved'></a>
+<a name='F-SpyceLibrary-Debugging-Debug-OnLogsSaved'></a>
 ### OnLogsSaved `constants`
 
 ##### Summary
 
 When the logs are saved
 
-<a name='F-SpyceLibrary-Debug-OnNewDebugMessage'></a>
+<a name='F-SpyceLibrary-Debugging-Debug-OnNewDebugMessage'></a>
 ### OnNewDebugMessage `constants`
 
 ##### Summary
 
 When a new message is added to the debug log.
 
-<a name='P-SpyceLibrary-Debug-DrawTime'></a>
+<a name='P-SpyceLibrary-Debugging-Debug-DrawTime'></a>
 ### DrawTime `property`
 
 ##### Summary
 
 The time it takes to run the draw loop.
 
-<a name='P-SpyceLibrary-Debug-Instance'></a>
+<a name='P-SpyceLibrary-Debugging-Debug-Instance'></a>
 ### Instance `property`
 
 ##### Summary
 
 Accessor for the singleton.
 
-<a name='P-SpyceLibrary-Debug-TickSpeed'></a>
+<a name='P-SpyceLibrary-Debugging-Debug-TickSpeed'></a>
 ### TickSpeed `property`
 
 ##### Summary
 
 The measured time (milliseconds) between a draw and update function.
 
-<a name='P-SpyceLibrary-Debug-UpdateTime'></a>
+<a name='P-SpyceLibrary-Debugging-Debug-UpdateTime'></a>
 ### UpdateTime `property`
 
 ##### Summary
 
 The time it takes to run the update loop.
 
-<a name='M-SpyceLibrary-Debug-ClearLogs-System-String-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-ClearLogs-System-String-'></a>
 ### ClearLogs(sender) `method`
 
 ##### Summary
@@ -538,7 +596,7 @@ Clears all the logs.
 | ---- | ---- | ----------- |
 | sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='M-SpyceLibrary-Debug-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
 ### Draw(spriteBatch) `method`
 
 ##### Summary
@@ -551,7 +609,7 @@ Draws debug items to the screen.
 | ---- | ---- | ----------- |
 | spriteBatch | [Microsoft.Xna.Framework.Graphics.SpriteBatch](#T-Microsoft-Xna-Framework-Graphics-SpriteBatch 'Microsoft.Xna.Framework.Graphics.SpriteBatch') |  |
 
-<a name='M-SpyceLibrary-Debug-EndDrawTick'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-EndDrawTick'></a>
 ### EndDrawTick() `method`
 
 ##### Summary
@@ -562,7 +620,7 @@ Ends the counting of the current cycle of the update.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Debug-EndUpdateTick'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-EndUpdateTick'></a>
 ### EndUpdateTick() `method`
 
 ##### Summary
@@ -573,7 +631,7 @@ Ends the counting of the current cycle of the update.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Debug-GetCurrentSceneObjectCount'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-GetCurrentSceneObjectCount'></a>
 ### GetCurrentSceneObjectCount() `method`
 
 ##### Summary
@@ -588,7 +646,7 @@ Gets the number of objects in the current scene.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Debug-Initialize-SpyceLibrary-Engine-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-Initialize-SpyceLibrary-Engine-'></a>
 ### Initialize(engine) `method`
 
 ##### Summary
@@ -601,7 +659,7 @@ Initializes the in-game debugger.
 | ---- | ---- | ----------- |
 | engine | [SpyceLibrary.Engine](#T-SpyceLibrary-Engine 'SpyceLibrary.Engine') |  |
 
-<a name='M-SpyceLibrary-Debug-ParseCommand-System-String,System-String-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-ParseCommand-System-String,System-String-'></a>
 ### ParseCommand(sender,toParse) `method`
 
 ##### Summary
@@ -615,7 +673,7 @@ Parses the given line to the command prompt.
 | sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 | toParse | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='M-SpyceLibrary-Debug-SaveLog-System-String-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-SaveLog-System-String-'></a>
 ### SaveLog(sender) `method`
 
 ##### Summary
@@ -628,7 +686,7 @@ Saves the log to the logs folder as a timestamped file.
 | ---- | ---- | ----------- |
 | sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='M-SpyceLibrary-Debug-SaveLog-System-String,System-String-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-SaveLog-System-String,System-String-'></a>
 ### SaveLog(sender,path) `method`
 
 ##### Summary
@@ -642,7 +700,7 @@ Saves the log to the specified path.
 | sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 | path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='M-SpyceLibrary-Debug-StartDrawTick'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-StartDrawTick'></a>
 ### StartDrawTick() `method`
 
 ##### Summary
@@ -653,7 +711,7 @@ Starts counting the current cycle of the game loop.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Debug-StartUpdateTick'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-StartUpdateTick'></a>
 ### StartUpdateTick() `method`
 
 ##### Summary
@@ -664,7 +722,7 @@ Starts counting the current cycle of the game loop.
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-Debug-WriteLine-System-String,System-String,System-ConsoleColor,System-ConsoleColor-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-WriteLine-System-String,System-String,System-ConsoleColor,System-ConsoleColor-'></a>
 ### WriteLine(sender,message,senderColor,messageColor) `method`
 
 ##### Summary
@@ -680,7 +738,7 @@ Writes a new line to the debug log.
 | senderColor | [System.ConsoleColor](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ConsoleColor 'System.ConsoleColor') |  |
 | messageColor | [System.ConsoleColor](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ConsoleColor 'System.ConsoleColor') |  |
 
-<a name='M-SpyceLibrary-Debug-listObjects-System-String-'></a>
+<a name='M-SpyceLibrary-Debugging-Debug-listObjects-System-String-'></a>
 ### listObjects(sender) `method`
 
 ##### Summary
@@ -693,12 +751,12 @@ Lists all the objects within the current scene.
 | ---- | ---- | ----------- |
 | sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='T-SpyceLibrary-Debug-DebugEvent'></a>
+<a name='T-SpyceLibrary-Debugging-Debug-DebugEvent'></a>
 ## DebugEvent `type`
 
 ##### Namespace
 
-SpyceLibrary.Debug
+SpyceLibrary.Debugging.Debug
 
 ##### Summary
 
@@ -708,7 +766,48 @@ Delegate handler for each event that is relevant to the debug object.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| sender | [T:SpyceLibrary.Debug.DebugEvent](#T-T-SpyceLibrary-Debug-DebugEvent 'T:SpyceLibrary.Debug.DebugEvent') |  |
+| sender | [T:SpyceLibrary.Debugging.Debug.DebugEvent](#T-T-SpyceLibrary-Debugging-Debug-DebugEvent 'T:SpyceLibrary.Debugging.Debug.DebugEvent') |  |
+
+<a name='T-SpyceLibrary-Debugging-Commands-EchoCommand'></a>
+## EchoCommand `type`
+
+##### Namespace
+
+SpyceLibrary.Debugging.Commands
+
+##### Summary
+
+A simple echo command that prints the text after the command.
+
+<a name='M-SpyceLibrary-Debugging-Commands-EchoCommand-Help'></a>
+### Help() `method`
+
+##### Summary
+
+Prints out the syntax for the command.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debugging-Commands-EchoCommand-Run-System-String,System-String[],SpyceLibrary-Initializer-'></a>
+### Run(sender,args,initializer) `method`
+
+##### Summary
+
+Runs the echo command.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| args | [System.String[]](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String[] 'System.String[]') |  |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 
 <a name='T-SpyceLibrary-Engine'></a>
 ## Engine `type`
@@ -1524,6 +1623,47 @@ Delegate handler for game object events.
 | ---- | ---- | ----------- |
 | obj | [T:SpyceLibrary.GameObject.GameObjectEvent](#T-T-SpyceLibrary-GameObject-GameObjectEvent 'T:SpyceLibrary.GameObject.GameObjectEvent') |  |
 
+<a name='T-SpyceLibrary-Debugging-Commands-ICommand'></a>
+## ICommand `type`
+
+##### Namespace
+
+SpyceLibrary.Debugging.Commands
+
+##### Summary
+
+Base class for all console commands.
+
+<a name='M-SpyceLibrary-Debugging-Commands-ICommand-Help'></a>
+### Help() `method`
+
+##### Summary
+
+The summary and syntax for what this command.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debugging-Commands-ICommand-Run-System-String,System-String[],SpyceLibrary-Initializer-'></a>
+### Run(sender,args,initializer) `method`
+
+##### Summary
+
+Executes the command with the given arguments
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| args | [System.String[]](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String[] 'System.String[]') |  |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
 <a name='T-SpyceLibrary-IDrawn'></a>
 ## IDrawn `type`
 
@@ -1864,28 +2004,69 @@ Delegate handler for events from keyboards.
 | ---- | ---- | ----------- |
 | key | [T:SpyceLibrary.InputManager.KeyboardEventHandler](#T-T-SpyceLibrary-InputManager-KeyboardEventHandler 'T:SpyceLibrary.InputManager.KeyboardEventHandler') |  |
 
-<a name='T-SpyceLibrary-LogEntry'></a>
+<a name='T-SpyceLibrary-Debugging-Commands-ListCommand'></a>
+## ListCommand `type`
+
+##### Namespace
+
+SpyceLibrary.Debugging.Commands
+
+##### Summary
+
+Lists specific things in the game.
+
+<a name='M-SpyceLibrary-Debugging-Commands-ListCommand-Help'></a>
+### Help() `method`
+
+##### Summary
+
+Gets the syntax for the command.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-Debugging-Commands-ListCommand-Run-System-String,System-String[],SpyceLibrary-Initializer-'></a>
+### Run(sender,args,initializer) `method`
+
+##### Summary
+
+Runs the list command.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| args | [System.String[]](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String[] 'System.String[]') |  |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='T-SpyceLibrary-Debugging-LogEntry'></a>
 ## LogEntry `type`
 
 ##### Namespace
 
-SpyceLibrary
+SpyceLibrary.Debugging
 
-<a name='F-SpyceLibrary-LogEntry-Message'></a>
+<a name='F-SpyceLibrary-Debugging-LogEntry-Message'></a>
 ### Message `constants`
 
 ##### Summary
 
 The content of the message.
 
-<a name='F-SpyceLibrary-LogEntry-Sender'></a>
+<a name='F-SpyceLibrary-Debugging-LogEntry-Sender'></a>
 ### Sender `constants`
 
 ##### Summary
 
 The name of the sender.
 
-<a name='F-SpyceLibrary-LogEntry-Time'></a>
+<a name='F-SpyceLibrary-Debugging-LogEntry-Time'></a>
 ### Time `constants`
 
 ##### Summary

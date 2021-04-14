@@ -43,82 +43,162 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:SpyceLibrary.Debug">
+        <member name="T:SpyceLibrary.Debugging.Commands.CommandHandler">
+            <summary>
+            Takes in full command lines and parses it into a command form.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Debugging.Commands.CommandHandler.Instance">
+            <summary>
+            Singleton access to the command handler.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.CommandHandler.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the command handler.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.CommandHandler.ParseCommand(System.String,System.String)">
+            <summary>
+            Parses the arguments and executes the command.
+            </summary>
+            <param name="sender"></param>
+            <param name="command"></param>
+        </member>
+        <member name="T:SpyceLibrary.Debugging.Commands.EchoCommand">
+            <summary>
+            A simple echo command that prints the text after the command.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.EchoCommand.Run(System.String,System.String[],SpyceLibrary.Initializer)">
+            <summary>
+            Runs the echo command.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.EchoCommand.Help">
+            <summary>
+            Prints out the syntax for the command.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Debugging.Commands.ICommand">
+            <summary>
+            Base class for all console commands.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.ICommand.Run(System.String,System.String[],SpyceLibrary.Initializer)">
+            <summary>
+            Executes the command with the given arguments
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.ICommand.Help">
+            <summary>
+            The summary and syntax for what this command.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Debugging.Commands.ListCommand">
+            <summary>
+            Lists specific things in the game.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.ListCommand.Run(System.String,System.String[],SpyceLibrary.Initializer)">
+            <summary>
+            Runs the list command.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Commands.ListCommand.Help">
+            <summary>
+            Gets the syntax for the command.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Debugging.Debug">
             <summary>
             Debugging and performance analysis tools. Singleton to be universally access throughout
             the game project.
             </summary>
         </member>
-        <member name="T:SpyceLibrary.Debug.DebugEvent">
+        <member name="T:SpyceLibrary.Debugging.Debug.DebugEvent">
             <summary>
             Delegate handler for each event that is relevant to the debug object.
             </summary>
             <param name="sender"></param>
             <param name="contents"></param>
         </member>
-        <member name="F:SpyceLibrary.Debug.OnNewDebugMessage">
+        <member name="F:SpyceLibrary.Debugging.Debug.OnNewDebugMessage">
             <summary>
             When a new message is added to the debug log.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.Debug.OnCommandSend">
+        <member name="F:SpyceLibrary.Debugging.Debug.OnCommandSend">
             <summary>
             When a line is sent through the command prompt.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.Debug.OnLogsCleared">
+        <member name="F:SpyceLibrary.Debugging.Debug.OnLogsCleared">
             <summary>
             When the logs are cleared.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.Debug.OnLogsSaved">
+        <member name="F:SpyceLibrary.Debugging.Debug.OnLogsSaved">
             <summary>
             When the logs are saved
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Debug.Instance">
+        <member name="P:SpyceLibrary.Debugging.Debug.Instance">
             <summary>
             Accessor for the singleton.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Debug.TickSpeed">
+        <member name="P:SpyceLibrary.Debugging.Debug.TickSpeed">
             <summary>
             The measured time (milliseconds) between a draw and update function.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Debug.UpdateTime">
+        <member name="P:SpyceLibrary.Debugging.Debug.UpdateTime">
             <summary>
             The time it takes to run the update loop.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Debug.DrawTime">
+        <member name="P:SpyceLibrary.Debugging.Debug.DrawTime">
             <summary>
             The time it takes to run the draw loop.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.Debug.LOGS_FOLDER">
+        <member name="F:SpyceLibrary.Debugging.Debug.LOGS_FOLDER">
             <summary>
             The main folder where all the logs are saved to.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.Debug.LOGS_FILE_EXTENSION">
+        <member name="F:SpyceLibrary.Debugging.Debug.LOGS_FILE_EXTENSION">
             <summary>
             The file extension for the logs.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Debug.Initialize(SpyceLibrary.Engine)">
+        <member name="M:SpyceLibrary.Debugging.Debug.Initialize(SpyceLibrary.Engine)">
             <summary>
             Initializes the in-game debugger.
             </summary>
             <param name="engine"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.ClearLogs(System.String)">
+        <member name="M:SpyceLibrary.Debugging.Debug.ClearLogs(System.String)">
             <summary>
             Clears all the logs.
             </summary>
             <param name="sender"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)">
+        <member name="M:SpyceLibrary.Debugging.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)">
             <summary>
             Writes a new line to the debug log.
             </summary>
@@ -127,75 +207,75 @@
             <param name="senderColor"></param>
             <param name="messageColor"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.SaveLog(System.String)">
+        <member name="M:SpyceLibrary.Debugging.Debug.SaveLog(System.String)">
             <summary>
             Saves the log to the logs folder as a timestamped file.
             </summary>
             <param name="sender"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.SaveLog(System.String,System.String)">
+        <member name="M:SpyceLibrary.Debugging.Debug.SaveLog(System.String,System.String)">
             <summary>
             Saves the log to the specified path.
             </summary>
             <param name="sender"></param>
             <param name="path"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.ParseCommand(System.String,System.String)">
+        <member name="M:SpyceLibrary.Debugging.Debug.ParseCommand(System.String,System.String)">
             <summary>
             Parses the given line to the command prompt.
             </summary>
             <param name="sender"></param>
             <param name="toParse"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.StartUpdateTick">
+        <member name="M:SpyceLibrary.Debugging.Debug.StartUpdateTick">
             <summary>
             Starts counting the current cycle of the game loop.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Debug.EndUpdateTick">
+        <member name="M:SpyceLibrary.Debugging.Debug.EndUpdateTick">
             <summary>
             Ends the counting of the current cycle of the update.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Debug.StartDrawTick">
+        <member name="M:SpyceLibrary.Debugging.Debug.StartDrawTick">
             <summary>
             Starts counting the current cycle of the game loop.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Debug.EndDrawTick">
+        <member name="M:SpyceLibrary.Debugging.Debug.EndDrawTick">
             <summary>
             Ends the counting of the current cycle of the update.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Debug.listObjects(System.String)">
+        <member name="M:SpyceLibrary.Debugging.Debug.listObjects(System.String)">
             <summary>
             Lists all the objects within the current scene.
             </summary>
             <param name="sender"></param>
         </member>
-        <member name="M:SpyceLibrary.Debug.GetCurrentSceneObjectCount">
+        <member name="M:SpyceLibrary.Debugging.Debug.GetCurrentSceneObjectCount">
             <summary>
             Gets the number of objects in the current scene.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SpyceLibrary.Debug.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+        <member name="M:SpyceLibrary.Debugging.Debug.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
             <summary>
             Draws debug items to the screen.
             </summary>
             <param name="spriteBatch"></param>
         </member>
-        <member name="F:SpyceLibrary.LogEntry.Sender">
+        <member name="F:SpyceLibrary.Debugging.LogEntry.Sender">
             <summary>
             The name of the sender.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.LogEntry.Message">
+        <member name="F:SpyceLibrary.Debugging.LogEntry.Message">
             <summary>
             The content of the message.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.LogEntry.Time">
+        <member name="F:SpyceLibrary.Debugging.LogEntry.Time">
             <summary>
             The time the message was created.
             </summary>

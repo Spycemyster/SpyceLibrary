@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SpyceLibrary.Debugging.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace SpyceLibrary
+namespace SpyceLibrary.Debugging
 {
     /// <summary>
     /// Debugging and performance analysis tools. Singleton to be universally access throughout
@@ -98,7 +99,7 @@ namespace SpyceLibrary
         public const string LOGS_FILE_EXTENSION = ".txt";
         private const string SENDER = "DEBUG";
         private readonly List<LogEntry> logs;
-        private Stopwatch tickMeasurer;
+        private readonly Stopwatch tickMeasurer;
         private long drawTickSpeed, updateTickSpeed;
         private Engine engine;
         private SpriteFont font;
@@ -121,6 +122,9 @@ namespace SpyceLibrary
         {
             this.engine = engine;
             font = engine.Content.Load<SpriteFont>("System/DebugFont");
+
+            // TEMP
+            CommandHandler.Instance.Initialize(null);
         }
 
         /// <summary>
@@ -218,31 +222,32 @@ namespace SpyceLibrary
         public void ParseCommand(string sender, string toParse)
         {
             OnCommandSend?.Invoke(sender, toParse);
+            CommandHandler.Instance.ParseCommand(sender, toParse);
 
-            // separate the command into its arguments
-            string[] args = toParse.Split(' ');
+            //// separate the command into its arguments
+            //string[] args = toParse.Split(' ');
 
-            // empty command, don't do anything
-            if (args.Length == 0)
-            {
-                return;
-            }
-            WriteLine(sender, $"Executing command '{toParse}'");
-            // command name
-            string command = args[0].ToLower();
-            // TEMPORARY
-            switch(command)
-            {
-                case "listobjects":
-                    listObjects(sender);
-                    break;
-                case "quit":
-                    engine.Exit();
-                    break;
-                default:
-                    WriteLine(sender, $"Command '{command}' not found...");
-                    break;
-            }
+            //// empty command, don't do anything
+            //if (args.Length == 0)
+            //{
+            //    return;
+            //}
+            //WriteLine(sender, $"Executing command '{toParse}'");
+            //// command name
+            //string command = args[0].ToLower();
+            //// TEMPORARY
+            //switch(command)
+            //{
+            //    case "listobjects":
+            //        listObjects(sender);
+            //        break;
+            //    case "quit":
+            //        engine.Exit();
+            //        break;
+            //    default:
+            //        WriteLine(sender, $"Command '{command}' not found...");
+            //        break;
+            //}
         }
 
         /// <summary>

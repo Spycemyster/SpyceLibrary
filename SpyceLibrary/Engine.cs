@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpyceLibrary.Scenes;
+using SpyceLibrary.Debugging;
 using System;
 
 namespace SpyceLibrary
