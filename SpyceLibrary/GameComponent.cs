@@ -167,5 +167,17 @@ namespace SpyceLibrary
         /// </summary>
         public void Draw();
     }
+
+    /// <summary>
+    /// An object that processes user input.
+    /// </summary>
+    public interface IInput
+    {
+        /// <summary>
+        /// Processes the user input.
+        /// </summary>
+        /// <param name="input"></param>
+        public void ProcessInput(InputManager input);
+    }
     #endregion
 }

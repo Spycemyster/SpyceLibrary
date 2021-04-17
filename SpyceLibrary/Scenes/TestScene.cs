@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using SpyceLibrary.UI;
 
 namespace SpyceLibrary.Scenes
 {
@@ -76,14 +77,28 @@ namespace SpyceLibrary.Scenes
             SceneManager.Instance.SetFrameDimension(WINDOW_WIDTH, WINDOW_HEIGHT);
             SetScreenRectangleBounds(WINDOW_WIDTH, WINDOW_HEIGHT);
             SetInterval(PrintTickSpeed, 3, 3);
+
+            PushUI(new HUD(this));
+
             GameObject player = CreateTestPlayer();
             AddObject(player);
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
-            //    obj.RelativeTransform.SetPosition(random.Next(0, 1000), random.Next(0, 1000));
-            //    AddObject(obj);
-            //}
+            //GameObject obj1 = CreateBlankSprite(25, 25);
+            //obj1.RelativeTransform.SetPosition(50, 50);
+            //GameObject obj2 = CreateBlankSprite(25, 25);
+            //obj2.RelativeTransform.SetPosition(100, 50);
+            //GameObject obj3 = CreateBlankSprite(25, 100);
+            //obj3.RelativeTransform.SetPosition(75, 80);
+
+            //AddObject(obj1);
+            //AddObject(obj2);
+            //AddObject(obj3);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
+                obj.RelativeTransform.SetPosition(random.Next(0, 1000), random.Next(0, 1000));
+                AddObject(obj);
+            }
 
             mainCamera.FixViewOn(player);
             mainCamera.SetViewOffsetPercent(new Vector2(0.5f, 0.5f));
@@ -109,7 +124,7 @@ namespace SpyceLibrary.Scenes
             PhysicsBody body = new PhysicsBody();
             body.IsCollidable = true;
             obj.AddComponent(body);
-            //obj.AddComponent(new TestComponent2());
+            obj.AddComponent(new TestComponent2());
             BoxCollider collider = new BoxCollider();
             obj.AddComponent(collider);
             collider.SetBounds(new Point(width, height));
@@ -178,6 +193,7 @@ namespace SpyceLibrary.Scenes
             spriteBatch.End();
 
             spriteBatch.Begin();
+            DrawUI();
             Debug.Instance.Draw(spriteBatch);
             spriteBatch.End();
         }

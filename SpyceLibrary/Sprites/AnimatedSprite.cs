@@ -44,6 +44,21 @@ namespace SpyceLibrary.Sprites
         private float timer;
 
         /// <summary>
+        /// Calculates the total time it takes to complete a full animation cycle.
+        /// </summary>
+        /// <returns></returns>
+        public float GetFullTime()
+        {
+            float time = 0;
+            for (int i = 0; i < FrameData.Length; i++)
+            {
+                time += FrameData[i].Time;
+            }
+
+            return time;
+        }
+
+        /// <summary>
         /// Updates the state of the animated sprite.
         /// </summary>
         /// <param name="gameTime"></param>

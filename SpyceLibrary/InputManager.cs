@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -75,6 +76,15 @@ namespace SpyceLibrary
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Gets the current position of the mouse.
+        /// </summary>
+        /// <returns></returns>
+        public Point GetMousePosition()
+        {
+            return currentMouseState.Position;
+        }
+
         /// <summary>
         /// Determines if the mouse is scrolled up.
         /// </summary>
@@ -159,15 +169,30 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Determines whether the key(s) have been pressed.
+        /// Determines whether the key(s) have been just pressed.
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public bool IsKeyPressed(params Keys[] keys)
+        public bool IsKeyJustPressed(params Keys[] keys)
         {
             foreach (Keys key in keys)
             {
                 if (currentKeyState.IsKeyDown(key) && prevKeyState.IsKeyUp(key))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the key(s) have been just released.
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public bool IsKeyJustReleased(params Keys[] keys)
+        {
+            foreach (Keys key in keys)
+            {
+                if (prevKeyState.IsKeyDown(key) && currentKeyState.IsKeyUp(key))
                     return true;
             }
             return false;

@@ -76,7 +76,9 @@ namespace SpyceLibrary
         }
         private readonly List<IDrawn> drawnComponents;
         private readonly List<IUpdated> updatedComponents;
+        private readonly List<IInput> inputComponents;
         private readonly List<GameComponent> components;
+        private readonly Dictionary<string, object> properties;
         private readonly SortedSet<string> tags;
         private readonly List<GameObject> children;
         private bool isActive;
@@ -94,8 +96,10 @@ namespace SpyceLibrary
             tags = new SortedSet<string>();
             drawnComponents = new List<IDrawn>();
             updatedComponents = new List<IUpdated>();
+            inputComponents = new List<IInput>();
             components = new List<GameComponent>();
             children = new List<GameObject>();
+            properties = new Dictionary<string, object>();
             relativeTransform = Transform.Identity;
             isActive = true;
         }
@@ -112,7 +116,7 @@ namespace SpyceLibrary
                 o.parent = null;
             }
 
-            foreach(GameComponent c in components)
+            foreach (GameComponent c in components)
             {
                 c.Unload();
             }
@@ -143,10 +147,21 @@ namespace SpyceLibrary
         /// <param name="init"></param>
         public void Load(Initializer init)
         {
-
             foreach (GameComponent c in components)
             {
                 c.Load(init, this);
+            }
+        }
+
+        /// <summary>
+        /// Processes the input for the game components.
+        /// </summary>
+        /// <param name="input"></param>
+        public virtual void ProcessInput(InputManager input)
+        {
+            foreach (IInput i in inputComponents)
+            {
+                i.ProcessInput(input);
             }
         }
 
@@ -161,13 +176,13 @@ namespace SpyceLibrary
                 comp.Update(gameTime);
             }
         }
-        
+
         /// <summary>
         /// Draws all the drawable components.
         /// </summary>
         public virtual void Draw()
         {
-            foreach(IDrawn comp in drawnComponents)
+            foreach (IDrawn comp in drawnComponents)
             {
                 comp.Draw();
             }
@@ -189,6 +204,11 @@ namespace SpyceLibrary
             if (component is IDrawn drawable)
             {
                 drawnComponents.Add(drawable);
+            }
+
+            if (component is IInput inputable)
+            {
+                inputComponents.Add(inputable);
             }
         }
 
@@ -354,6 +374,28 @@ namespace SpyceLibrary
         public bool IsDirectChild(GameObject parent, GameObject child)
         {
             return child.parent == parent;
+        }
+        #endregion
+
+        #region Operator Overloading
+        /// <summary>
+        /// Access a property of this object.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public object this[string key]
+        {
+            get
+            {
+                if (properties.ContainsKey(key))
+                    return properties[key];
+
+                return default;
+            }
+            set
+            {
+                properties[key] = value;
+            }
         }
         #endregion
     }

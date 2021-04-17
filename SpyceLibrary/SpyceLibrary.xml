@@ -446,6 +446,17 @@
             Draws the object to the screen.
             </summary>
         </member>
+        <member name="T:SpyceLibrary.IInput">
+            <summary>
+            An object that processes user input.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.IInput.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes the user input.
+            </summary>
+            <param name="input"></param>
+        </member>
         <member name="T:SpyceLibrary.GameObject">
             <summary>
             Represents an abstract game object within the game.
@@ -524,6 +535,12 @@
             </summary>
             <param name="init"></param>
         </member>
+        <member name="M:SpyceLibrary.GameObject.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes the input for the game components.
+            </summary>
+            <param name="input"></param>
+        </member>
         <member name="M:SpyceLibrary.GameObject.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the state of the game object, components, and children.
@@ -591,6 +608,13 @@
             </summary>
             <param name="parent"></param>
             <param name="child"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.Item(System.String)">
+            <summary>
+            Access a property of this object.
+            </summary>
+            <param name="key"></param>
             <returns></returns>
         </member>
         <member name="T:SpyceLibrary.Initializer">
@@ -670,6 +694,12 @@
             When the scroll wheel has just been scrolled.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.InputManager.GetMousePosition">
+            <summary>
+            Gets the current position of the mouse.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.InputManager.IsScrolledUp">
             <summary>
             Determines if the mouse is scrolled up.
@@ -709,9 +739,16 @@
             <param name="button"></param>
             <returns></returns>
         </member>
-        <member name="M:SpyceLibrary.InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys[])">
+        <member name="M:SpyceLibrary.InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys[])">
             <summary>
-            Determines whether the key(s) have been pressed.
+            Determines whether the key(s) have been just pressed.
+            </summary>
+            <param name="keys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.InputManager.IsKeyJustReleased(Microsoft.Xna.Framework.Input.Keys[])">
+            <summary>
+            Determines whether the key(s) have been just released.
             </summary>
             <param name="keys"></param>
             <returns></returns>
@@ -761,6 +798,11 @@
         <member name="F:SpyceLibrary.MouseButton.MIDDLE">
             <summary>
             The middle mouse button
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.Physics.BoxCollider">
+            <summary>
+            Represents a rectangular hitbox.
             </summary>
         </member>
         <member name="P:SpyceLibrary.Physics.BoxCollider.Size">
@@ -908,9 +950,33 @@
             <param name="init"></param>
             <param name="holder"></param>
         </member>
+        <member name="M:SpyceLibrary.Physics.TestComponent.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Check for user input.
+            </summary>
+            <param name="input"></param>
+        </member>
         <member name="M:SpyceLibrary.Physics.TestComponent.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the state of the player controller.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.TestComponent2">
+            <summary>
+            A test component (2).
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestComponent2.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the assets of the test component.
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestComponent2.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the game.
             </summary>
             <param name="gameTime"></param>
         </member>
@@ -954,6 +1020,24 @@
             <summary>
             Creates a new instance of the game scene.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.SetState(SpyceLibrary.UI.UIState)">
+            <summary>
+            Sets the state of the scene.
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.PushUI(SpyceLibrary.UI.UIScreen)">
+            <summary>
+            Pushes a new UI menu to the UI stack.
+            </summary>
+            <param name="ui"></param>
+        </member>
+        <member name="M:SpyceLibrary.Scene.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates all the game objects in this scene.
+            </summary>
+            <param name="gameTime"></param>
         </member>
         <member name="M:SpyceLibrary.Scene.SetScreenRectangleBounds(System.Int32,System.Int32)">
             <summary>
@@ -1043,15 +1127,14 @@
             </summary>
             <param name="initializer"></param>
         </member>
-        <member name="M:SpyceLibrary.Scene.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates all the game objects in this scene.
-            </summary>
-            <param name="gameTime"></param>
-        </member>
         <member name="M:SpyceLibrary.Scene.Draw">
             <summary>
             Calls draw on each of the objects in the scene.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Scene.DrawUI">
+            <summary>
+            Draws the user interface of the scene.
             </summary>
         </member>
         <member name="T:SpyceLibrary.SceneManager">
@@ -1212,6 +1295,12 @@
             The current frame being displayed.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Sprites.SpriteAnimation.GetFullTime">
+            <summary>
+            Calculates the total time it takes to complete a full animation cycle.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.Sprites.SpriteAnimation.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the state of the animated sprite.
@@ -1340,6 +1429,11 @@
             The gametime field from the update cycle.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.Time.Timestep">
+            <summary>
+            The time multiplier of the calculated delta time.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Time.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the state of the time manager.
@@ -1391,43 +1485,213 @@
             <param name="x"></param>
             <param name="y"></param>
         </member>
-        <member name="T:SpyceLibrary.UI.UIElement">
+        <member name="M:SpyceLibrary.UI.HUD.#ctor(SpyceLibrary.Scene)">
             <summary>
-            Abstract class for various user interface elements.
+            Creates a new instance of the HUD.
+            </summary>
+            <param name="currentScene"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.HUD.Close">
+            <summary>
+            Closes the UI.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.UI.UIElement.#ctor">
+        <member name="M:SpyceLibrary.UI.HUD.Initialize(SpyceLibrary.Initializer)">
             <summary>
-            Creates a new instance of the UI element.
+            Initializes the HUD.
             </summary>
+            <param name="initializer"></param>
         </member>
-        <member name="M:SpyceLibrary.UI.UIElement.EnableCameraOffset(SpyceLibrary.Camera)">
+        <member name="M:SpyceLibrary.UI.HUD.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
-            Performs UI events based off the camera transformation.
-            </summary>
-            <param name="camera"></param>
-        </member>
-        <member name="M:SpyceLibrary.UI.UIElement.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
-            <summary>
-            Loads the necessary assets for the UI element.
-            </summary>
-            <param name="init"></param>
-            <param name="holder"></param>
-        </member>
-        <member name="M:SpyceLibrary.UI.UIElement.Unload">
-            <summary>
-            Unregisters all the events.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.UI.UIElement.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates the state of each UI element.
+            Updates the state of the HUD.
             </summary>
             <param name="gameTime"></param>
         </member>
-        <member name="M:SpyceLibrary.UI.UIElement.GiveFocus">
+        <member name="M:SpyceLibrary.UI.HUD.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
             <summary>
-            Marks the element this tick for having focus.
+            Draws the HUD to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.HUD.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes the input for the ui.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.#ctor(SpyceLibrary.Scene)">
+            <summary>
+            Creates a new instance of the pause menu.
+            </summary>
+            <param name="currentScene"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the pause menu.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the pause menu.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the pause menu
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIButton.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
+            <summary>
+            Creates a new instance of the UI button.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UIComponent">
+            <summary>
+            Abstract class of a user interface component.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
+            <summary>
+            Creates a new instance of the ui component.
+            </summary>
+            <param name="font"></param>
+            <param name="texture"></param>
+            <param name="text"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.GetMiddlePosition(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Gets the position in the middle of the screen relative to the size of the object
+            to be centers.
+            </summary>
+            <param name="objSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.GetMiddlePosition(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Gets the position in the middle of the given region to the size of the object
+            to be centers.
+            </summary>
+            <param name="regionSize"></param>
+            <param name="objSize"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIScreen">
+            <summary>
+            Handles the user interface for a screen.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIScreen.title">
+            <summary>
+            The displayed title of the ui.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIScreen.color">
+            <summary>
+            The color of the title text.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIScreen.titlePos">
+            <summary>
+            The position of the title text.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIScreen.font">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.#ctor(SpyceLibrary.Scene)">
+            <summary>
+            Creates a new instance of the ui screen.
+            </summary>
+            <param name="currentScene"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the ui screen.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the UI state.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the UI elements to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.DrawTitle(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Displays the title of the UI to the top of the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.GetMiddlePosition(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Gets the position in the middle of the screen relative to the size of the object
+            to be centers.
+            </summary>
+            <param name="objSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.GetMiddlePosition(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Gets the position in the middle of the given region to the size of the object
+            to be centers.
+            </summary>
+            <param name="regionSize"></param>
+            <param name="objSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.Close">
+            <summary>
+            Sets the state to closing
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.SetTitle(System.String,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Sets the title for the screen.
+            </summary>
+            <param name="text"></param>
+            <param name="color"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIScreen.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes the input for the ui.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIState">
+            <summary>
+            Determines the state of the user interface window on the current scene.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIState.Active">
+            <summary>
+            The current ui is actively being focused and updated.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIState.Closed">
+            <summary>
+            The current ui is closed.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIState.Parallel">
+            <summary>
+            The current ui is run in parallel with the gameplay.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIState.Gameplay">
+            <summary>
+            The game is currently in "gameplay" mode.
             </summary>
         </member>
         <member name="M:FastNoiseLite.#ctor(System.Int32)">

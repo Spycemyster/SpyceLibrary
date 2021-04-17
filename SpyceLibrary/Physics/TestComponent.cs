@@ -9,7 +9,7 @@ namespace SpyceLibrary.Physics
     /// <summary>
     /// A component for testing means.
     /// </summary>
-    public class TestComponent : GameComponent, IUpdated
+    public class TestComponent : GameComponent, IUpdated, IInput
     {
         #region Fields
         private PhysicsBody body;
@@ -38,10 +38,10 @@ namespace SpyceLibrary.Physics
         }
 
         /// <summary>
-        /// Updates the state of the player controller.
+        /// Check for user input.
         /// </summary>
-        /// <param name="gameTime"></param>
-        public void Update(GameTime gameTime)
+        /// <param name="input"></param>
+        public void ProcessInput(InputManager input)
         {
             float speed = 200; //* Time.Instance.DeltaTime;
             Vector2 velocity = Vector2.Zero;
@@ -66,28 +66,56 @@ namespace SpyceLibrary.Physics
                 velocity.Normalize();
                 body.Velocity = velocity * speed;
             }
-            //Holder.RelativeTransform.Position += velocity;
+        }
+
+        /// <summary>
+        /// Updates the state of the player controller.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void Update(GameTime gameTime)
+        {
         }
         #endregion
     }
 
+    /// <summary>
+    /// A test component (2).
+    /// </summary>
     public class TestComponent2 : GameComponent, IUpdated
     {
+        #region Fields
         private PhysicsBody body;
         private float timer;
+        private Random rand;
+        private float x, y;
+        #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Loads the assets of the test component.
+        /// </summary>
+        /// <param name="init"></param>
+        /// <param name="holder"></param>
         public override void Load(Initializer init, GameObject holder)
         {
             base.Load(init, holder);
             body = RequireComponent<PhysicsBody>();
+            rand = new Random();
+            x = (float)(rand.NextDouble() * 100) + 1;
+            y = (float)(rand.NextDouble() * 100) + 1;
         }
 
+        /// <summary>
+        /// Updates the state of the game.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
             timer += Time.Instance.DeltaTime;
 
-            Vector2 velocity = new Vector2((float)Math.Cos(timer), (float)Math.Sin(timer));
-            body.Velocity = velocity;
+            Vector2 velocity = new Vector2((float)Math.Cos(timer) * x, (float)Math.Sin(timer) * y);
+            body.Velocity += velocity * 10;
         }
+        #endregion
     }
 }

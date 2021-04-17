@@ -20,6 +20,7 @@ namespace SpyceLibrary.Physics
         private readonly Dictionary<Point, List<PhysicsBody>> bodyQuad;
         private Initializer initializer;
         private Texture2D blank;
+        private Random rand;
         private const string DEBUG_NAME = "PHYSICS";
         #endregion
 
@@ -31,6 +32,7 @@ namespace SpyceLibrary.Physics
         {
             bodies = new Dictionary<GameObject, PhysicsBody>();
             bodyQuad = new Dictionary<Point, List<PhysicsBody>>();
+            rand = new Random();
         }
 
         #endregion
@@ -148,8 +150,10 @@ namespace SpyceLibrary.Physics
             {
                 if (body.IsCollidable)
                 {
+                    //Color c = new Color(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
+                    Color c = Color.Red;
                     Rectangle collisionRect = body.Collider.ConstructRectangleAt(body.Position);
-                    initializer.SpriteBatch.Draw(blank, collisionRect, Color.Red * 0.5f);
+                    initializer.SpriteBatch.Draw(blank, collisionRect, c * 0.5f);
                 }
             }
         }

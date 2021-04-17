@@ -105,6 +105,7 @@
   - [Components](#P-SpyceLibrary-GameObject-Components 'SpyceLibrary.GameObject.Components')
   - [ID](#P-SpyceLibrary-GameObject-ID 'SpyceLibrary.GameObject.ID')
   - [IsActive](#P-SpyceLibrary-GameObject-IsActive 'SpyceLibrary.GameObject.IsActive')
+  - [Item](#P-SpyceLibrary-GameObject-Item-System-String- 'SpyceLibrary.GameObject.Item(System.String)')
   - [RelativeTransform](#P-SpyceLibrary-GameObject-RelativeTransform 'SpyceLibrary.GameObject.RelativeTransform')
   - [AddComponent(component)](#M-SpyceLibrary-GameObject-AddComponent-SpyceLibrary-GameComponent- 'SpyceLibrary.GameObject.AddComponent(SpyceLibrary.GameComponent)')
   - [AddTags(addTags)](#M-SpyceLibrary-GameObject-AddTags-System-String[]- 'SpyceLibrary.GameObject.AddTags(System.String[])')
@@ -116,12 +117,20 @@
   - [HasTag(tag)](#M-SpyceLibrary-GameObject-HasTag-System-String- 'SpyceLibrary.GameObject.HasTag(System.String)')
   - [IsDirectChild(parent,child)](#M-SpyceLibrary-GameObject-IsDirectChild-SpyceLibrary-GameObject,SpyceLibrary-GameObject- 'SpyceLibrary.GameObject.IsDirectChild(SpyceLibrary.GameObject,SpyceLibrary.GameObject)')
   - [Load(init)](#M-SpyceLibrary-GameObject-Load-SpyceLibrary-Initializer- 'SpyceLibrary.GameObject.Load(SpyceLibrary.Initializer)')
+  - [ProcessInput(input)](#M-SpyceLibrary-GameObject-ProcessInput-SpyceLibrary-InputManager- 'SpyceLibrary.GameObject.ProcessInput(SpyceLibrary.InputManager)')
   - [SetActive(active)](#M-SpyceLibrary-GameObject-SetActive-System-Boolean- 'SpyceLibrary.GameObject.SetActive(System.Boolean)')
   - [SetParent(parent)](#M-SpyceLibrary-GameObject-SetParent-SpyceLibrary-GameObject- 'SpyceLibrary.GameObject.SetParent(SpyceLibrary.GameObject)')
   - [SetRelativeTransform(transform)](#M-SpyceLibrary-GameObject-SetRelativeTransform-SpyceLibrary-Transform- 'SpyceLibrary.GameObject.SetRelativeTransform(SpyceLibrary.Transform)')
   - [ToString()](#M-SpyceLibrary-GameObject-ToString 'SpyceLibrary.GameObject.ToString')
   - [Update(gameTime)](#M-SpyceLibrary-GameObject-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.GameObject.Update(Microsoft.Xna.Framework.GameTime)')
 - [GameObjectEvent](#T-SpyceLibrary-GameObject-GameObjectEvent 'SpyceLibrary.GameObject.GameObjectEvent')
+- [HUD](#T-SpyceLibrary-UI-HUD 'SpyceLibrary.UI.HUD')
+  - [#ctor(currentScene)](#M-SpyceLibrary-UI-HUD-#ctor-SpyceLibrary-Scene- 'SpyceLibrary.UI.HUD.#ctor(SpyceLibrary.Scene)')
+  - [Close()](#M-SpyceLibrary-UI-HUD-Close 'SpyceLibrary.UI.HUD.Close')
+  - [Draw(spriteBatch)](#M-SpyceLibrary-UI-HUD-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.UI.HUD.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
+  - [Initialize(initializer)](#M-SpyceLibrary-UI-HUD-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.UI.HUD.Initialize(SpyceLibrary.Initializer)')
+  - [ProcessInput(input)](#M-SpyceLibrary-UI-HUD-ProcessInput-SpyceLibrary-InputManager- 'SpyceLibrary.UI.HUD.ProcessInput(SpyceLibrary.InputManager)')
+  - [Update(gameTime)](#M-SpyceLibrary-UI-HUD-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.UI.HUD.Update(Microsoft.Xna.Framework.GameTime)')
 - [ICommand](#T-SpyceLibrary-Debugging-Commands-ICommand 'SpyceLibrary.Debugging.Commands.ICommand')
   - [Help()](#M-SpyceLibrary-Debugging-Commands-ICommand-Help 'SpyceLibrary.Debugging.Commands.ICommand.Help')
   - [Run(sender,args,initializer)](#M-SpyceLibrary-Debugging-Commands-ICommand-Run-System-String,System-String[],SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.ICommand.Run(System.String,System.String[],SpyceLibrary.Initializer)')
@@ -130,6 +139,8 @@
   - [Draw()](#M-SpyceLibrary-IDrawn-Draw 'SpyceLibrary.IDrawn.Draw')
   - [DrawOrder()](#M-SpyceLibrary-IDrawn-DrawOrder 'SpyceLibrary.IDrawn.DrawOrder')
   - [GetDrawRectangle()](#M-SpyceLibrary-IDrawn-GetDrawRectangle 'SpyceLibrary.IDrawn.GetDrawRectangle')
+- [IInput](#T-SpyceLibrary-IInput 'SpyceLibrary.IInput')
+  - [ProcessInput(input)](#M-SpyceLibrary-IInput-ProcessInput-SpyceLibrary-InputManager- 'SpyceLibrary.IInput.ProcessInput(SpyceLibrary.InputManager)')
 - [IUpdated](#T-SpyceLibrary-IUpdated 'SpyceLibrary.IUpdated')
   - [Update(gameTime)](#M-SpyceLibrary-IUpdated-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.IUpdated.Update(Microsoft.Xna.Framework.GameTime)')
 - [Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer')
@@ -140,8 +151,10 @@
   - [Window](#F-SpyceLibrary-Initializer-Window 'SpyceLibrary.Initializer.Window')
 - [InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager')
   - [Instance](#P-SpyceLibrary-InputManager-Instance 'SpyceLibrary.InputManager.Instance')
+  - [GetMousePosition()](#M-SpyceLibrary-InputManager-GetMousePosition 'SpyceLibrary.InputManager.GetMousePosition')
   - [IsKeyDown(keys)](#M-SpyceLibrary-InputManager-IsKeyDown-Microsoft-Xna-Framework-Input-Keys[]- 'SpyceLibrary.InputManager.IsKeyDown(Microsoft.Xna.Framework.Input.Keys[])')
-  - [IsKeyPressed(keys)](#M-SpyceLibrary-InputManager-IsKeyPressed-Microsoft-Xna-Framework-Input-Keys[]- 'SpyceLibrary.InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys[])')
+  - [IsKeyJustPressed(keys)](#M-SpyceLibrary-InputManager-IsKeyJustPressed-Microsoft-Xna-Framework-Input-Keys[]- 'SpyceLibrary.InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys[])')
+  - [IsKeyJustReleased(keys)](#M-SpyceLibrary-InputManager-IsKeyJustReleased-Microsoft-Xna-Framework-Input-Keys[]- 'SpyceLibrary.InputManager.IsKeyJustReleased(Microsoft.Xna.Framework.Input.Keys[])')
   - [IsKeyReleased(keys)](#M-SpyceLibrary-InputManager-IsKeyReleased-Microsoft-Xna-Framework-Input-Keys[]- 'SpyceLibrary.InputManager.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys[])')
   - [IsMouseClicked(button)](#M-SpyceLibrary-InputManager-IsMouseClicked-SpyceLibrary-MouseButton- 'SpyceLibrary.InputManager.IsMouseClicked(SpyceLibrary.MouseButton)')
   - [IsMouseDown(button)](#M-SpyceLibrary-InputManager-IsMouseDown-SpyceLibrary-MouseButton- 'SpyceLibrary.InputManager.IsMouseDown(SpyceLibrary.MouseButton)')
@@ -164,6 +177,11 @@
   - [MIDDLE](#F-SpyceLibrary-MouseButton-MIDDLE 'SpyceLibrary.MouseButton.MIDDLE')
   - [RIGHT](#F-SpyceLibrary-MouseButton-RIGHT 'SpyceLibrary.MouseButton.RIGHT')
 - [MouseEventHandler](#T-SpyceLibrary-InputManager-MouseEventHandler 'SpyceLibrary.InputManager.MouseEventHandler')
+- [PauseMenu](#T-SpyceLibrary-UI-PauseMenu 'SpyceLibrary.UI.PauseMenu')
+  - [#ctor(currentScene)](#M-SpyceLibrary-UI-PauseMenu-#ctor-SpyceLibrary-Scene- 'SpyceLibrary.UI.PauseMenu.#ctor(SpyceLibrary.Scene)')
+  - [Draw(spriteBatch)](#M-SpyceLibrary-UI-PauseMenu-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.UI.PauseMenu.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
+  - [Initialize(initializer)](#M-SpyceLibrary-UI-PauseMenu-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.UI.PauseMenu.Initialize(SpyceLibrary.Initializer)')
+  - [Update(gameTime)](#M-SpyceLibrary-UI-PauseMenu-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.UI.PauseMenu.Update(Microsoft.Xna.Framework.GameTime)')
 - [PhysicsBody](#T-SpyceLibrary-Physics-PhysicsBody 'SpyceLibrary.Physics.PhysicsBody')
   - [#ctor()](#M-SpyceLibrary-Physics-PhysicsBody-#ctor 'SpyceLibrary.Physics.PhysicsBody.#ctor')
   - [Collider](#P-SpyceLibrary-Physics-PhysicsBody-Collider 'SpyceLibrary.Physics.PhysicsBody.Collider')
@@ -191,18 +209,21 @@
   - [ScreenRectangle](#P-SpyceLibrary-Scene-ScreenRectangle 'SpyceLibrary.Scene.ScreenRectangle')
   - [AddObject(obj)](#M-SpyceLibrary-Scene-AddObject-SpyceLibrary-GameObject- 'SpyceLibrary.Scene.AddObject(SpyceLibrary.GameObject)')
   - [Draw()](#M-SpyceLibrary-Scene-Draw 'SpyceLibrary.Scene.Draw')
+  - [DrawUI()](#M-SpyceLibrary-Scene-DrawUI 'SpyceLibrary.Scene.DrawUI')
   - [GetDebugName()](#M-SpyceLibrary-Scene-GetDebugName 'SpyceLibrary.Scene.GetDebugName')
   - [Initialize(initializer)](#M-SpyceLibrary-Scene-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.Scene.Initialize(SpyceLibrary.Initializer)')
   - [Load(initializer)](#M-SpyceLibrary-Scene-Load-SpyceLibrary-Initializer- 'SpyceLibrary.Scene.Load(SpyceLibrary.Initializer)')
   - [LoadObject(path)](#M-SpyceLibrary-Scene-LoadObject-System-String- 'SpyceLibrary.Scene.LoadObject(System.String)')
   - [OnObjectDestruction(obj)](#M-SpyceLibrary-Scene-OnObjectDestruction-SpyceLibrary-GameObject- 'SpyceLibrary.Scene.OnObjectDestruction(SpyceLibrary.GameObject)')
   - [PrintTickSpeed()](#M-SpyceLibrary-Scene-PrintTickSpeed 'SpyceLibrary.Scene.PrintTickSpeed')
+  - [PushUI(ui)](#M-SpyceLibrary-Scene-PushUI-SpyceLibrary-UI-UIScreen- 'SpyceLibrary.Scene.PushUI(SpyceLibrary.UI.UIScreen)')
   - [RemoveInterval(action)](#M-SpyceLibrary-Scene-RemoveInterval-System-Action- 'SpyceLibrary.Scene.RemoveInterval(System.Action)')
   - [RemoveObject(id)](#M-SpyceLibrary-Scene-RemoveObject-System-Guid- 'SpyceLibrary.Scene.RemoveObject(System.Guid)')
   - [SaveObject(obj,path)](#M-SpyceLibrary-Scene-SaveObject-SpyceLibrary-GameObject,System-String- 'SpyceLibrary.Scene.SaveObject(SpyceLibrary.GameObject,System.String)')
   - [SetInterval(action,interval,time)](#M-SpyceLibrary-Scene-SetInterval-System-Action,System-Single,System-Single- 'SpyceLibrary.Scene.SetInterval(System.Action,System.Single,System.Single)')
   - [SetScreenRectangleBounds(width,height)](#M-SpyceLibrary-Scene-SetScreenRectangleBounds-System-Int32,System-Int32- 'SpyceLibrary.Scene.SetScreenRectangleBounds(System.Int32,System.Int32)')
   - [SetScreenRectangleLocation(x,y)](#M-SpyceLibrary-Scene-SetScreenRectangleLocation-System-Int32,System-Int32- 'SpyceLibrary.Scene.SetScreenRectangleLocation(System.Int32,System.Int32)')
+  - [SetState(state)](#M-SpyceLibrary-Scene-SetState-SpyceLibrary-UI-UIState- 'SpyceLibrary.Scene.SetState(SpyceLibrary.UI.UIState)')
   - [Unload()](#M-SpyceLibrary-Scene-Unload 'SpyceLibrary.Scene.Unload')
   - [Update(gameTime)](#M-SpyceLibrary-Scene-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Scene.Update(Microsoft.Xna.Framework.GameTime)')
 - [SceneManager](#T-SpyceLibrary-SceneManager 'SpyceLibrary.SceneManager')
@@ -233,12 +254,17 @@
 - [SpriteAnimation](#T-SpyceLibrary-Sprites-SpriteAnimation 'SpyceLibrary.Sprites.SpriteAnimation')
   - [CurrentFrame](#P-SpyceLibrary-Sprites-SpriteAnimation-CurrentFrame 'SpyceLibrary.Sprites.SpriteAnimation.CurrentFrame')
   - [FrameData](#P-SpyceLibrary-Sprites-SpriteAnimation-FrameData 'SpyceLibrary.Sprites.SpriteAnimation.FrameData')
+  - [GetFullTime()](#M-SpyceLibrary-Sprites-SpriteAnimation-GetFullTime 'SpyceLibrary.Sprites.SpriteAnimation.GetFullTime')
   - [SetCurrentFrame(frame)](#M-SpyceLibrary-Sprites-SpriteAnimation-SetCurrentFrame-System-Int32- 'SpyceLibrary.Sprites.SpriteAnimation.SetCurrentFrame(System.Int32)')
   - [Update(gameTime)](#M-SpyceLibrary-Sprites-SpriteAnimation-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Sprites.SpriteAnimation.Update(Microsoft.Xna.Framework.GameTime)')
 - [TestComponent](#T-SpyceLibrary-Physics-TestComponent 'SpyceLibrary.Physics.TestComponent')
   - [#ctor()](#M-SpyceLibrary-Physics-TestComponent-#ctor 'SpyceLibrary.Physics.TestComponent.#ctor')
   - [Load(init,holder)](#M-SpyceLibrary-Physics-TestComponent-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Physics.TestComponent.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [ProcessInput(input)](#M-SpyceLibrary-Physics-TestComponent-ProcessInput-SpyceLibrary-InputManager- 'SpyceLibrary.Physics.TestComponent.ProcessInput(SpyceLibrary.InputManager)')
   - [Update(gameTime)](#M-SpyceLibrary-Physics-TestComponent-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Physics.TestComponent.Update(Microsoft.Xna.Framework.GameTime)')
+- [TestComponent2](#T-SpyceLibrary-Physics-TestComponent2 'SpyceLibrary.Physics.TestComponent2')
+  - [Load(init,holder)](#M-SpyceLibrary-Physics-TestComponent2-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Physics.TestComponent2.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [Update(gameTime)](#M-SpyceLibrary-Physics-TestComponent2-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Physics.TestComponent2.Update(Microsoft.Xna.Framework.GameTime)')
 - [TestScene](#T-SpyceLibrary-Scenes-TestScene 'SpyceLibrary.Scenes.TestScene')
   - [#ctor()](#M-SpyceLibrary-Scenes-TestScene-#ctor 'SpyceLibrary.Scenes.TestScene.#ctor')
   - [NAME](#F-SpyceLibrary-Scenes-TestScene-NAME 'SpyceLibrary.Scenes.TestScene.NAME')
@@ -254,6 +280,7 @@
   - [GameTime](#P-SpyceLibrary-Time-GameTime 'SpyceLibrary.Time.GameTime')
   - [Instance](#P-SpyceLibrary-Time-Instance 'SpyceLibrary.Time.Instance')
   - [RawDeltaTime](#P-SpyceLibrary-Time-RawDeltaTime 'SpyceLibrary.Time.RawDeltaTime')
+  - [Timestep](#P-SpyceLibrary-Time-Timestep 'SpyceLibrary.Time.Timestep')
   - [Update(gameTime)](#M-SpyceLibrary-Time-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Time.Update(Microsoft.Xna.Framework.GameTime)')
 - [Transform](#T-SpyceLibrary-Transform 'SpyceLibrary.Transform')
   - [Position](#F-SpyceLibrary-Transform-Position 'SpyceLibrary.Transform.Position')
@@ -263,13 +290,32 @@
   - [SetPosition(position)](#M-SpyceLibrary-Transform-SetPosition-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Transform.SetPosition(Microsoft.Xna.Framework.Vector2)')
   - [SetPosition(x,y)](#M-SpyceLibrary-Transform-SetPosition-System-Single,System-Single- 'SpyceLibrary.Transform.SetPosition(System.Single,System.Single)')
   - [SetScale(scale)](#M-SpyceLibrary-Transform-SetScale-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Transform.SetScale(Microsoft.Xna.Framework.Vector2)')
-- [UIElement](#T-SpyceLibrary-UI-UIElement 'SpyceLibrary.UI.UIElement')
-  - [#ctor()](#M-SpyceLibrary-UI-UIElement-#ctor 'SpyceLibrary.UI.UIElement.#ctor')
-  - [EnableCameraOffset(camera)](#M-SpyceLibrary-UI-UIElement-EnableCameraOffset-SpyceLibrary-Camera- 'SpyceLibrary.UI.UIElement.EnableCameraOffset(SpyceLibrary.Camera)')
-  - [GiveFocus()](#M-SpyceLibrary-UI-UIElement-GiveFocus 'SpyceLibrary.UI.UIElement.GiveFocus')
-  - [Load(init,holder)](#M-SpyceLibrary-UI-UIElement-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.UI.UIElement.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
-  - [Unload()](#M-SpyceLibrary-UI-UIElement-Unload 'SpyceLibrary.UI.UIElement.Unload')
-  - [Update(gameTime)](#M-SpyceLibrary-UI-UIElement-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.UI.UIElement.Update(Microsoft.Xna.Framework.GameTime)')
+- [UIButton](#T-SpyceLibrary-UI-UIComponents-UIButton 'SpyceLibrary.UI.UIComponents.UIButton')
+  - [#ctor()](#M-SpyceLibrary-UI-UIComponents-UIButton-#ctor-Microsoft-Xna-Framework-Graphics-SpriteFont,Microsoft-Xna-Framework-Graphics-Texture2D,System-String- 'SpyceLibrary.UI.UIComponents.UIButton.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)')
+- [UIComponent](#T-SpyceLibrary-UI-UIComponents-UIComponent 'SpyceLibrary.UI.UIComponents.UIComponent')
+  - [#ctor(font,texture,text)](#M-SpyceLibrary-UI-UIComponents-UIComponent-#ctor-Microsoft-Xna-Framework-Graphics-SpriteFont,Microsoft-Xna-Framework-Graphics-Texture2D,System-String- 'SpyceLibrary.UI.UIComponents.UIComponent.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)')
+  - [GetMiddlePosition(objSize)](#M-SpyceLibrary-UI-UIComponents-UIComponent-GetMiddlePosition-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.UI.UIComponents.UIComponent.GetMiddlePosition(Microsoft.Xna.Framework.Vector2)')
+  - [GetMiddlePosition(regionSize,objSize)](#M-SpyceLibrary-UI-UIComponents-UIComponent-GetMiddlePosition-Microsoft-Xna-Framework-Vector2,Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.UI.UIComponents.UIComponent.GetMiddlePosition(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)')
+- [UIScreen](#T-SpyceLibrary-UI-UIScreen 'SpyceLibrary.UI.UIScreen')
+  - [#ctor(currentScene)](#M-SpyceLibrary-UI-UIScreen-#ctor-SpyceLibrary-Scene- 'SpyceLibrary.UI.UIScreen.#ctor(SpyceLibrary.Scene)')
+  - [color](#F-SpyceLibrary-UI-UIScreen-color 'SpyceLibrary.UI.UIScreen.color')
+  - [font](#F-SpyceLibrary-UI-UIScreen-font 'SpyceLibrary.UI.UIScreen.font')
+  - [title](#F-SpyceLibrary-UI-UIScreen-title 'SpyceLibrary.UI.UIScreen.title')
+  - [titlePos](#F-SpyceLibrary-UI-UIScreen-titlePos 'SpyceLibrary.UI.UIScreen.titlePos')
+  - [Close()](#M-SpyceLibrary-UI-UIScreen-Close 'SpyceLibrary.UI.UIScreen.Close')
+  - [Draw(spriteBatch)](#M-SpyceLibrary-UI-UIScreen-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.UI.UIScreen.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
+  - [DrawTitle(spriteBatch)](#M-SpyceLibrary-UI-UIScreen-DrawTitle-Microsoft-Xna-Framework-Graphics-SpriteBatch- 'SpyceLibrary.UI.UIScreen.DrawTitle(Microsoft.Xna.Framework.Graphics.SpriteBatch)')
+  - [GetMiddlePosition(objSize)](#M-SpyceLibrary-UI-UIScreen-GetMiddlePosition-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.UI.UIScreen.GetMiddlePosition(Microsoft.Xna.Framework.Vector2)')
+  - [GetMiddlePosition(regionSize,objSize)](#M-SpyceLibrary-UI-UIScreen-GetMiddlePosition-Microsoft-Xna-Framework-Vector2,Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.UI.UIScreen.GetMiddlePosition(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)')
+  - [Initialize(initializer)](#M-SpyceLibrary-UI-UIScreen-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.UI.UIScreen.Initialize(SpyceLibrary.Initializer)')
+  - [ProcessInput(input)](#M-SpyceLibrary-UI-UIScreen-ProcessInput-SpyceLibrary-InputManager- 'SpyceLibrary.UI.UIScreen.ProcessInput(SpyceLibrary.InputManager)')
+  - [SetTitle(text,color)](#M-SpyceLibrary-UI-UIScreen-SetTitle-System-String,Microsoft-Xna-Framework-Color- 'SpyceLibrary.UI.UIScreen.SetTitle(System.String,Microsoft.Xna.Framework.Color)')
+  - [Update(gameTime)](#M-SpyceLibrary-UI-UIScreen-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.UI.UIScreen.Update(Microsoft.Xna.Framework.GameTime)')
+- [UIState](#T-SpyceLibrary-UI-UIState 'SpyceLibrary.UI.UIState')
+  - [Active](#F-SpyceLibrary-UI-UIState-Active 'SpyceLibrary.UI.UIState.Active')
+  - [Closed](#F-SpyceLibrary-UI-UIState-Closed 'SpyceLibrary.UI.UIState.Closed')
+  - [Gameplay](#F-SpyceLibrary-UI-UIState-Gameplay 'SpyceLibrary.UI.UIState.Gameplay')
+  - [Parallel](#F-SpyceLibrary-UI-UIState-Parallel 'SpyceLibrary.UI.UIState.Parallel')
 
 <a name='T-SpyceLibrary-Sprites-AnimatedSprite'></a>
 ## AnimatedSprite `type`
@@ -299,6 +345,10 @@ This constructor has no parameters.
 ##### Namespace
 
 SpyceLibrary.Physics
+
+##### Summary
+
+Represents a rectangular hitbox.
 
 <a name='M-SpyceLibrary-Physics-BoxCollider-#ctor'></a>
 ### #ctor() `constructor`
@@ -1464,6 +1514,23 @@ The unique ID of this game object.
 
 Whether this object currently has behavior.
 
+<a name='P-SpyceLibrary-GameObject-Item-System-String-'></a>
+### Item `property`
+
+##### Summary
+
+Access a property of this object.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| key | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
 <a name='P-SpyceLibrary-GameObject-RelativeTransform'></a>
 ### RelativeTransform `property`
 
@@ -1614,6 +1681,19 @@ Initializes the game object and loads all necessary assets.
 | ---- | ---- | ----------- |
 | init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 
+<a name='M-SpyceLibrary-GameObject-ProcessInput-SpyceLibrary-InputManager-'></a>
+### ProcessInput(input) `method`
+
+##### Summary
+
+Processes the input for the game components.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| input | [SpyceLibrary.InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager') |  |
+
 <a name='M-SpyceLibrary-GameObject-SetActive-System-Boolean-'></a>
 ### SetActive(active) `method`
 
@@ -1697,6 +1777,89 @@ Delegate handler for game object events.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | obj | [T:SpyceLibrary.GameObject.GameObjectEvent](#T-T-SpyceLibrary-GameObject-GameObjectEvent 'T:SpyceLibrary.GameObject.GameObjectEvent') |  |
+
+<a name='T-SpyceLibrary-UI-HUD'></a>
+## HUD `type`
+
+##### Namespace
+
+SpyceLibrary.UI
+
+<a name='M-SpyceLibrary-UI-HUD-#ctor-SpyceLibrary-Scene-'></a>
+### #ctor(currentScene) `constructor`
+
+##### Summary
+
+Creates a new instance of the HUD.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| currentScene | [SpyceLibrary.Scene](#T-SpyceLibrary-Scene 'SpyceLibrary.Scene') |  |
+
+<a name='M-SpyceLibrary-UI-HUD-Close'></a>
+### Close() `method`
+
+##### Summary
+
+Closes the UI.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-SpyceLibrary-UI-HUD-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
+### Draw(spriteBatch) `method`
+
+##### Summary
+
+Draws the HUD to the screen.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| spriteBatch | [Microsoft.Xna.Framework.Graphics.SpriteBatch](#T-Microsoft-Xna-Framework-Graphics-SpriteBatch 'Microsoft.Xna.Framework.Graphics.SpriteBatch') |  |
+
+<a name='M-SpyceLibrary-UI-HUD-Initialize-SpyceLibrary-Initializer-'></a>
+### Initialize(initializer) `method`
+
+##### Summary
+
+Initializes the HUD.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='M-SpyceLibrary-UI-HUD-ProcessInput-SpyceLibrary-InputManager-'></a>
+### ProcessInput(input) `method`
+
+##### Summary
+
+Processes the input for the ui.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| input | [SpyceLibrary.InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager') |  |
+
+<a name='M-SpyceLibrary-UI-HUD-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of the HUD.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
 
 <a name='T-SpyceLibrary-Debugging-Commands-ICommand'></a>
 ## ICommand `type`
@@ -1798,6 +1961,30 @@ The visible rectangle on the game world.
 
 This method has no parameters.
 
+<a name='T-SpyceLibrary-IInput'></a>
+## IInput `type`
+
+##### Namespace
+
+SpyceLibrary
+
+##### Summary
+
+An object that processes user input.
+
+<a name='M-SpyceLibrary-IInput-ProcessInput-SpyceLibrary-InputManager-'></a>
+### ProcessInput(input) `method`
+
+##### Summary
+
+Processes the user input.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| input | [SpyceLibrary.InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager') |  |
+
 <a name='T-SpyceLibrary-IUpdated'></a>
 ## IUpdated `type`
 
@@ -1886,6 +2073,21 @@ A singleton class that handles user input.
 
 Singleton access to the input manager.
 
+<a name='M-SpyceLibrary-InputManager-GetMousePosition'></a>
+### GetMousePosition() `method`
+
+##### Summary
+
+Gets the current position of the mouse.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-SpyceLibrary-InputManager-IsKeyDown-Microsoft-Xna-Framework-Input-Keys[]-'></a>
 ### IsKeyDown(keys) `method`
 
@@ -1903,12 +2105,29 @@ Determines whether the key(s) are down.
 | ---- | ---- | ----------- |
 | keys | [Microsoft.Xna.Framework.Input.Keys[]](#T-Microsoft-Xna-Framework-Input-Keys[] 'Microsoft.Xna.Framework.Input.Keys[]') |  |
 
-<a name='M-SpyceLibrary-InputManager-IsKeyPressed-Microsoft-Xna-Framework-Input-Keys[]-'></a>
-### IsKeyPressed(keys) `method`
+<a name='M-SpyceLibrary-InputManager-IsKeyJustPressed-Microsoft-Xna-Framework-Input-Keys[]-'></a>
+### IsKeyJustPressed(keys) `method`
 
 ##### Summary
 
-Determines whether the key(s) have been pressed.
+Determines whether the key(s) have been just pressed.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| keys | [Microsoft.Xna.Framework.Input.Keys[]](#T-Microsoft-Xna-Framework-Input-Keys[] 'Microsoft.Xna.Framework.Input.Keys[]') |  |
+
+<a name='M-SpyceLibrary-InputManager-IsKeyJustReleased-Microsoft-Xna-Framework-Input-Keys[]-'></a>
+### IsKeyJustReleased(keys) `method`
+
+##### Summary
+
+Determines whether the key(s) have been just released.
 
 ##### Returns
 
@@ -2197,6 +2416,65 @@ Delegate handlder for events from them mouse.
 | ---- | ---- | ----------- |
 | button | [T:SpyceLibrary.InputManager.MouseEventHandler](#T-T-SpyceLibrary-InputManager-MouseEventHandler 'T:SpyceLibrary.InputManager.MouseEventHandler') |  |
 
+<a name='T-SpyceLibrary-UI-PauseMenu'></a>
+## PauseMenu `type`
+
+##### Namespace
+
+SpyceLibrary.UI
+
+<a name='M-SpyceLibrary-UI-PauseMenu-#ctor-SpyceLibrary-Scene-'></a>
+### #ctor(currentScene) `constructor`
+
+##### Summary
+
+Creates a new instance of the pause menu.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| currentScene | [SpyceLibrary.Scene](#T-SpyceLibrary-Scene 'SpyceLibrary.Scene') |  |
+
+<a name='M-SpyceLibrary-UI-PauseMenu-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
+### Draw(spriteBatch) `method`
+
+##### Summary
+
+Draws the pause menu
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| spriteBatch | [Microsoft.Xna.Framework.Graphics.SpriteBatch](#T-Microsoft-Xna-Framework-Graphics-SpriteBatch 'Microsoft.Xna.Framework.Graphics.SpriteBatch') |  |
+
+<a name='M-SpyceLibrary-UI-PauseMenu-Initialize-SpyceLibrary-Initializer-'></a>
+### Initialize(initializer) `method`
+
+##### Summary
+
+Initializes the pause menu.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='M-SpyceLibrary-UI-PauseMenu-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of the pause menu.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
 <a name='T-SpyceLibrary-Physics-PhysicsBody'></a>
 ## PhysicsBody `type`
 
@@ -2480,6 +2758,17 @@ Calls draw on each of the objects in the scene.
 
 This method has no parameters.
 
+<a name='M-SpyceLibrary-Scene-DrawUI'></a>
+### DrawUI() `method`
+
+##### Summary
+
+Draws the user interface of the scene.
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-SpyceLibrary-Scene-GetDebugName'></a>
 ### GetDebugName() `method`
 
@@ -2561,6 +2850,19 @@ Prints the current tick speed and FPS to the debug console.
 ##### Parameters
 
 This method has no parameters.
+
+<a name='M-SpyceLibrary-Scene-PushUI-SpyceLibrary-UI-UIScreen-'></a>
+### PushUI(ui) `method`
+
+##### Summary
+
+Pushes a new UI menu to the UI stack.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| ui | [SpyceLibrary.UI.UIScreen](#T-SpyceLibrary-UI-UIScreen 'SpyceLibrary.UI.UIScreen') |  |
 
 <a name='M-SpyceLibrary-Scene-RemoveInterval-System-Action-'></a>
 ### RemoveInterval(action) `method`
@@ -2644,6 +2946,19 @@ Sets the position of the screen rectangle.
 | ---- | ---- | ----------- |
 | x | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
 | y | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
+
+<a name='M-SpyceLibrary-Scene-SetState-SpyceLibrary-UI-UIState-'></a>
+### SetState(state) `method`
+
+##### Summary
+
+Sets the state of the scene.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| state | [SpyceLibrary.UI.UIState](#T-SpyceLibrary-UI-UIState 'SpyceLibrary.UI.UIState') |  |
 
 <a name='M-SpyceLibrary-Scene-Unload'></a>
 ### Unload() `method`
@@ -3002,6 +3317,21 @@ The current frame being displayed.
 
 The list of frame data in the animated sprite.
 
+<a name='M-SpyceLibrary-Sprites-SpriteAnimation-GetFullTime'></a>
+### GetFullTime() `method`
+
+##### Summary
+
+Calculates the total time it takes to complete a full animation cycle.
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-SpyceLibrary-Sprites-SpriteAnimation-SetCurrentFrame-System-Int32-'></a>
 ### SetCurrentFrame(frame) `method`
 
@@ -3064,12 +3394,63 @@ Loads the test component.
 | init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
 | holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
 
+<a name='M-SpyceLibrary-Physics-TestComponent-ProcessInput-SpyceLibrary-InputManager-'></a>
+### ProcessInput(input) `method`
+
+##### Summary
+
+Check for user input.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| input | [SpyceLibrary.InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager') |  |
+
 <a name='M-SpyceLibrary-Physics-TestComponent-Update-Microsoft-Xna-Framework-GameTime-'></a>
 ### Update(gameTime) `method`
 
 ##### Summary
 
 Updates the state of the player controller.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T-SpyceLibrary-Physics-TestComponent2'></a>
+## TestComponent2 `type`
+
+##### Namespace
+
+SpyceLibrary.Physics
+
+##### Summary
+
+A test component (2).
+
+<a name='M-SpyceLibrary-Physics-TestComponent2-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
+### Load(init,holder) `method`
+
+##### Summary
+
+Loads the assets of the test component.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+| holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+
+<a name='M-SpyceLibrary-Physics-TestComponent2-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of the game.
 
 ##### Parameters
 
@@ -3220,6 +3601,13 @@ Singleton instance of the time.
 
 The actual amount of elapsed time from the last update call.
 
+<a name='P-SpyceLibrary-Time-Timestep'></a>
+### Timestep `property`
+
+##### Summary
+
+The time multiplier of the calculated delta time.
+
 <a name='M-SpyceLibrary-Time-Update-Microsoft-Xna-Framework-GameTime-'></a>
 ### Update(gameTime) `method`
 
@@ -3313,8 +3701,89 @@ Sets the scale of the transform.
 | ---- | ---- | ----------- |
 | scale | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
 
-<a name='T-SpyceLibrary-UI-UIElement'></a>
-## UIElement `type`
+<a name='T-SpyceLibrary-UI-UIComponents-UIButton'></a>
+## UIButton `type`
+
+##### Namespace
+
+SpyceLibrary.UI.UIComponents
+
+<a name='M-SpyceLibrary-UI-UIComponents-UIButton-#ctor-Microsoft-Xna-Framework-Graphics-SpriteFont,Microsoft-Xna-Framework-Graphics-Texture2D,System-String-'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Creates a new instance of the UI button.
+
+##### Parameters
+
+This constructor has no parameters.
+
+<a name='T-SpyceLibrary-UI-UIComponents-UIComponent'></a>
+## UIComponent `type`
+
+##### Namespace
+
+SpyceLibrary.UI.UIComponents
+
+##### Summary
+
+Abstract class of a user interface component.
+
+<a name='M-SpyceLibrary-UI-UIComponents-UIComponent-#ctor-Microsoft-Xna-Framework-Graphics-SpriteFont,Microsoft-Xna-Framework-Graphics-Texture2D,System-String-'></a>
+### #ctor(font,texture,text) `constructor`
+
+##### Summary
+
+Creates a new instance of the ui component.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| font | [Microsoft.Xna.Framework.Graphics.SpriteFont](#T-Microsoft-Xna-Framework-Graphics-SpriteFont 'Microsoft.Xna.Framework.Graphics.SpriteFont') |  |
+| texture | [Microsoft.Xna.Framework.Graphics.Texture2D](#T-Microsoft-Xna-Framework-Graphics-Texture2D 'Microsoft.Xna.Framework.Graphics.Texture2D') |  |
+| text | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-SpyceLibrary-UI-UIComponents-UIComponent-GetMiddlePosition-Microsoft-Xna-Framework-Vector2-'></a>
+### GetMiddlePosition(objSize) `method`
+
+##### Summary
+
+Gets the position in the middle of the screen relative to the size of the object
+to be centers.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| objSize | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-UI-UIComponents-UIComponent-GetMiddlePosition-Microsoft-Xna-Framework-Vector2,Microsoft-Xna-Framework-Vector2-'></a>
+### GetMiddlePosition(regionSize,objSize) `method`
+
+##### Summary
+
+Gets the position in the middle of the given region to the size of the object
+to be centers.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| regionSize | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+| objSize | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='T-SpyceLibrary-UI-UIScreen'></a>
+## UIScreen `type`
 
 ##### Namespace
 
@@ -3322,77 +3791,211 @@ SpyceLibrary.UI
 
 ##### Summary
 
-Abstract class for various user interface elements.
+Handles the user interface for a screen.
 
-<a name='M-SpyceLibrary-UI-UIElement-#ctor'></a>
-### #ctor() `constructor`
-
-##### Summary
-
-Creates a new instance of the UI element.
-
-##### Parameters
-
-This constructor has no parameters.
-
-<a name='M-SpyceLibrary-UI-UIElement-EnableCameraOffset-SpyceLibrary-Camera-'></a>
-### EnableCameraOffset(camera) `method`
+<a name='M-SpyceLibrary-UI-UIScreen-#ctor-SpyceLibrary-Scene-'></a>
+### #ctor(currentScene) `constructor`
 
 ##### Summary
 
-Performs UI events based off the camera transformation.
+Creates a new instance of the ui screen.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| camera | [SpyceLibrary.Camera](#T-SpyceLibrary-Camera 'SpyceLibrary.Camera') |  |
+| currentScene | [SpyceLibrary.Scene](#T-SpyceLibrary-Scene 'SpyceLibrary.Scene') |  |
 
-<a name='M-SpyceLibrary-UI-UIElement-GiveFocus'></a>
-### GiveFocus() `method`
+<a name='F-SpyceLibrary-UI-UIScreen-color'></a>
+### color `constants`
 
 ##### Summary
 
-Marks the element this tick for having focus.
+The color of the title text.
+
+<a name='F-SpyceLibrary-UI-UIScreen-font'></a>
+### font `constants`
+
+##### Summary
+
+
+
+<a name='F-SpyceLibrary-UI-UIScreen-title'></a>
+### title `constants`
+
+##### Summary
+
+The displayed title of the ui.
+
+<a name='F-SpyceLibrary-UI-UIScreen-titlePos'></a>
+### titlePos `constants`
+
+##### Summary
+
+The position of the title text.
+
+<a name='M-SpyceLibrary-UI-UIScreen-Close'></a>
+### Close() `method`
+
+##### Summary
+
+Sets the state to closing
 
 ##### Parameters
 
 This method has no parameters.
 
-<a name='M-SpyceLibrary-UI-UIElement-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
-### Load(init,holder) `method`
+<a name='M-SpyceLibrary-UI-UIScreen-Draw-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
+### Draw(spriteBatch) `method`
 
 ##### Summary
 
-Loads the necessary assets for the UI element.
+Draws the UI elements to the screen.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
-| holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+| spriteBatch | [Microsoft.Xna.Framework.Graphics.SpriteBatch](#T-Microsoft-Xna-Framework-Graphics-SpriteBatch 'Microsoft.Xna.Framework.Graphics.SpriteBatch') |  |
 
-<a name='M-SpyceLibrary-UI-UIElement-Unload'></a>
-### Unload() `method`
+<a name='M-SpyceLibrary-UI-UIScreen-DrawTitle-Microsoft-Xna-Framework-Graphics-SpriteBatch-'></a>
+### DrawTitle(spriteBatch) `method`
 
 ##### Summary
 
-Unregisters all the events.
+Displays the title of the UI to the top of the screen.
 
 ##### Parameters
 
-This method has no parameters.
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| spriteBatch | [Microsoft.Xna.Framework.Graphics.SpriteBatch](#T-Microsoft-Xna-Framework-Graphics-SpriteBatch 'Microsoft.Xna.Framework.Graphics.SpriteBatch') |  |
 
-<a name='M-SpyceLibrary-UI-UIElement-Update-Microsoft-Xna-Framework-GameTime-'></a>
+<a name='M-SpyceLibrary-UI-UIScreen-GetMiddlePosition-Microsoft-Xna-Framework-Vector2-'></a>
+### GetMiddlePosition(objSize) `method`
+
+##### Summary
+
+Gets the position in the middle of the screen relative to the size of the object
+to be centers.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| objSize | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-UI-UIScreen-GetMiddlePosition-Microsoft-Xna-Framework-Vector2,Microsoft-Xna-Framework-Vector2-'></a>
+### GetMiddlePosition(regionSize,objSize) `method`
+
+##### Summary
+
+Gets the position in the middle of the given region to the size of the object
+to be centers.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| regionSize | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+| objSize | [Microsoft.Xna.Framework.Vector2](#T-Microsoft-Xna-Framework-Vector2 'Microsoft.Xna.Framework.Vector2') |  |
+
+<a name='M-SpyceLibrary-UI-UIScreen-Initialize-SpyceLibrary-Initializer-'></a>
+### Initialize(initializer) `method`
+
+##### Summary
+
+Initializes the ui screen.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initializer | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+
+<a name='M-SpyceLibrary-UI-UIScreen-ProcessInput-SpyceLibrary-InputManager-'></a>
+### ProcessInput(input) `method`
+
+##### Summary
+
+Processes the input for the ui.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| input | [SpyceLibrary.InputManager](#T-SpyceLibrary-InputManager 'SpyceLibrary.InputManager') |  |
+
+<a name='M-SpyceLibrary-UI-UIScreen-SetTitle-System-String,Microsoft-Xna-Framework-Color-'></a>
+### SetTitle(text,color) `method`
+
+##### Summary
+
+Sets the title for the screen.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| text | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| color | [Microsoft.Xna.Framework.Color](#T-Microsoft-Xna-Framework-Color 'Microsoft.Xna.Framework.Color') |  |
+
+<a name='M-SpyceLibrary-UI-UIScreen-Update-Microsoft-Xna-Framework-GameTime-'></a>
 ### Update(gameTime) `method`
 
 ##### Summary
 
-Updates the state of each UI element.
+Updates the state of the UI state.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
+
+<a name='T-SpyceLibrary-UI-UIState'></a>
+## UIState `type`
+
+##### Namespace
+
+SpyceLibrary.UI
+
+##### Summary
+
+Determines the state of the user interface window on the current scene.
+
+<a name='F-SpyceLibrary-UI-UIState-Active'></a>
+### Active `constants`
+
+##### Summary
+
+The current ui is actively being focused and updated.
+
+<a name='F-SpyceLibrary-UI-UIState-Closed'></a>
+### Closed `constants`
+
+##### Summary
+
+The current ui is closed.
+
+<a name='F-SpyceLibrary-UI-UIState-Gameplay'></a>
+### Gameplay `constants`
+
+##### Summary
+
+The game is currently in "gameplay" mode.
+
+<a name='F-SpyceLibrary-UI-UIState-Parallel'></a>
+### Parallel `constants`
+
+##### Summary
+
+The current ui is run in parallel with the gameplay.

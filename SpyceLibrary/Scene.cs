@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using SpyceLibrary.Debugging;
+using SpyceLibrary.UI;
 
 namespace SpyceLibrary
 {
@@ -30,9 +31,17 @@ namespace SpyceLibrary
             get { return screenRect; }
         }
 
+        public List<UIScreen> UIs
+        {
+            get { return uiStack; }
+        }
+
         private readonly Dictionary<Guid, GameObject> objects;
         private readonly List<FunctionCall> repeatFunctions;
         private Initializer initializer;
+        private List<UIScreen> uiStack;
+
+        private UIState uiState;
         private Rectangle screenRect;
         #endregion
 
@@ -44,6 +53,8 @@ namespace SpyceLibrary
         {
             objects = new Dictionary<Guid, GameObject>();
             repeatFunctions = new List<FunctionCall>();
+            uiStack = new List<UIScreen>();
+            uiState = UIState.Gameplay;
         }
         #endregion
 
@@ -58,6 +69,79 @@ namespace SpyceLibrary
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Sets the state of the scene.
+        /// </summary>
+        /// <param name="state"></param>
+        public void SetState(UIState state)
+        {
+            uiState = state;
+        }
+
+        /// <summary>
+        /// Pushes a new UI menu to the UI stack.
+        /// </summary>
+        /// <param name="ui"></param>
+        public void PushUI(UIScreen ui)
+        {
+            ui.Initialize(initializer);
+            uiStack.Add(ui);
+        }
+
+        /// <summary>
+        /// Updates all the game objects in this scene.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public virtual void Update(GameTime gameTime)
+        {
+            for (int i = 0; i < repeatFunctions.Count; i++)
+            {
+                FunctionCall c = repeatFunctions[i];
+                c.Timer -= Time.Instance.DeltaTime;
+
+                if (c.Timer <= 0)
+                {
+                    c.Action.Invoke();
+                    if (c.isRepeating)
+                    {
+                        c.Timer = c.Interval;
+                    }
+                    else
+                    {
+                        repeatFunctions.RemoveAt(i--);
+                    }
+                }
+            }
+
+            foreach (GameObject obj in objects.Values)
+            {
+                if (obj.IsActive)
+                {
+                    obj.Update(gameTime);
+
+                    if (uiState == UIState.Gameplay || uiState == UIState.Parallel || uiState == UIState.Closed)
+                    {
+                        obj.ProcessInput(InputManager.Instance);
+                    }
+                }
+            }
+
+            foreach (UIScreen ui in uiStack)
+            {
+                ui.Update(gameTime);
+            }
+
+            if (uiState != UIState.Closed && uiStack.Count != 0)
+            {
+                ProcessInputUI();
+            }
+        }
+
+        private void ProcessInputUI()
+        {
+            uiStack[^1].ProcessInput(InputManager.Instance);
+        }
+
         /// <summary>
         /// Sets the size of the screen rectangle.
         /// </summary>
@@ -228,40 +312,6 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Updates all the game objects in this scene.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public virtual void Update(GameTime gameTime)
-        {
-            for (int i = 0; i < repeatFunctions.Count; i++)
-            {
-                FunctionCall c = repeatFunctions[i];
-                c.Timer -= Time.Instance.DeltaTime;
-
-                if (c.Timer <= 0)
-                {
-                    c.Action.Invoke();
-                    if (c.isRepeating)
-                    {
-                        c.Timer = c.Interval;
-                    }
-                    else
-                    {
-                        repeatFunctions.RemoveAt(i--);
-                    }
-                }
-            }
-
-            foreach (GameObject obj in objects.Values)
-            {
-                if (obj.IsActive)
-                {
-                    obj.Update(gameTime);
-                }
-            }
-        }
-
-        /// <summary>
         /// Calls draw on each of the objects in the scene.
         /// </summary>
         public virtual void Draw()
@@ -272,6 +322,22 @@ namespace SpyceLibrary
                 {
                     obj.Draw();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Draws the user interface of the scene.
+        /// </summary>
+        protected void DrawUI()
+        {
+            if (uiState != UIState.Closed)
+            {
+                for (int i = 0; i < uiStack.Count; i++)
+                {
+                    uiStack[i].Draw(initializer.SpriteBatch);
+                }
+
+                uiStack[^1].DrawTitle(initializer.SpriteBatch);
             }
         }
         #endregion

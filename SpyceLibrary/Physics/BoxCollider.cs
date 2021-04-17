@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SpyceLibrary.Physics
 {
+    /// <summary>
+    /// Represents a rectangular hitbox.
+    /// </summary>
     public class BoxCollider : GameComponent
     {
         #region Fields

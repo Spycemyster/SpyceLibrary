@@ -53,6 +53,15 @@ namespace SpyceLibrary
         {
             get { return gameTime; }
         }
+
+        /// <summary>
+        /// The time multiplier of the calculated delta time.
+        /// </summary>
+        public float Timestep
+        {
+            get { return timestep; }
+            set { timestep = value; }
+        }
         private GameTime gameTime;
         private float timestep;
         private double deltaTime;
