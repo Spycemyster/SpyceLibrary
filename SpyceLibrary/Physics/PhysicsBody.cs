@@ -49,6 +49,7 @@ namespace SpyceLibrary.Physics
         {
             get { return collider; }
         }
+
         private BoxCollider collider;
         #endregion
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using SpyceLibrary.UI;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpyceLibrary.Scenes
 {
@@ -82,6 +83,8 @@ namespace SpyceLibrary.Scenes
 
             GameObject player = CreateTestPlayer();
             AddObject(player);
+
+            #region Don't look...
             //GameObject obj1 = CreateBlankSprite(25, 25);
             //obj1.RelativeTransform.SetPosition(50, 50);
             //GameObject obj2 = CreateBlankSprite(25, 25);
@@ -92,11 +95,12 @@ namespace SpyceLibrary.Scenes
             //AddObject(obj1);
             //AddObject(obj2);
             //AddObject(obj3);
+            #endregion
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
-                obj.RelativeTransform.SetPosition(random.Next(0, 1000), random.Next(0, 1000));
+                obj.RelativeTransform.SetPosition(random.Next(0, 10000), random.Next(0, 10000));
                 AddObject(obj);
             }
 
@@ -129,6 +133,7 @@ namespace SpyceLibrary.Scenes
             obj.AddComponent(collider);
             collider.SetBounds(new Point(width, height));
             collider.SetOffset(new Point(0, 0));
+            obj["type"] = "BlankSprite";
             return obj;
         }
          
@@ -139,12 +144,14 @@ namespace SpyceLibrary.Scenes
             sp.SetSize(10, 10);
             sp.SetTexturePath("System/blank");
             obj.AddComponent(sp);
-            obj.AddComponent(new PhysicsBody());
+            PhysicsBody body = new PhysicsBody();
+            obj.AddComponent(body);
             obj.AddComponent(new TestComponent());
             BoxCollider collider = new BoxCollider();
             collider.SetBounds(new Point(10, 10));
             collider.SetOffset(new Point(0, 0));
             obj.AddComponent(collider);
+            obj["type"] = "Player";
 
             return obj;
         }
@@ -176,6 +183,28 @@ namespace SpyceLibrary.Scenes
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
             physicsEngine.Update(gameTime);
             SetScreenRectangleLocation((int)mainCamera.Position.X, (int)mainCamera.Position.Y);
+            CheckInput();
+        }
+
+        private void CheckInput()
+        {
+            if (InputManager.Instance.IsKeyDown(Keys.Q))
+            {
+                GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
+                obj.RelativeTransform.SetPosition(random.Next(0, 1000), random.Next(0, 1000));
+                AddObject(obj);
+            }
+            else if (InputManager.Instance.IsKeyDown(Keys.E))
+            {
+                foreach (GameObject o in GameObjects.Values)
+                {
+                    if ((string)o["type"] == "BlankSprite")
+                    {
+                        RemoveObject(o.ID);
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -188,7 +217,7 @@ namespace SpyceLibrary.Scenes
 
             base.Draw();
 
-            physicsEngine.Draw(mainCamera);
+            //physicsEngine.Draw(mainCamera);
 
             spriteBatch.End();
 

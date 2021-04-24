@@ -113,8 +113,8 @@ namespace SpyceLibrary.Physics
         {
             timer += Time.Instance.DeltaTime;
 
-            Vector2 velocity = new Vector2((float)Math.Cos(timer) * x, (float)Math.Sin(timer) * y);
-            body.Velocity += velocity * 10;
+            Vector2 velocity = new Vector2((float)Math.Cos(timer * 2) * x, (float)Math.Sin(timer * 2) * y);
+            //body.Velocity += velocity * 10;
         }
         #endregion
     }

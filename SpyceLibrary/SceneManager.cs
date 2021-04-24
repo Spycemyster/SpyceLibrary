@@ -34,6 +34,21 @@ namespace SpyceLibrary
         #endregion
 
         #region Events
+        /// <summary>
+        /// The handler for frame events of the game.
+        /// </summary>
+        /// <param name="frame"></param>
+        public delegate void FrameEvent(Rectangle frame);
+
+        /// <summary>
+        /// When the frame is resized.
+        /// </summary>
+        public FrameEvent OnResize;
+
+        /// <summary>
+        /// When the game frame is moved.
+        /// </summary>
+        public FrameEvent OnMove;
         #endregion
 
         #region Constructor
@@ -67,6 +82,7 @@ namespace SpyceLibrary
         private GraphicsDevice device;
         private GraphicsDeviceManager graphics;
         private GameWindow window;
+        private Point previousWindowPosition;
         #endregion
 
         #region Methods
@@ -108,6 +124,8 @@ namespace SpyceLibrary
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.ApplyChanges();
+
+            OnResize?.Invoke(window.ClientBounds);
         }
 
         /// <summary>
@@ -126,6 +144,8 @@ namespace SpyceLibrary
             this.device = device;
             this.graphics = graphics;
             this.window = window;
+
+            previousWindowPosition = window.Position;
         }
 
         /// <summary>
@@ -135,6 +155,12 @@ namespace SpyceLibrary
         public void Update(GameTime gameTime)
         {
             currentScene?.Update(gameTime);
+
+            if (previousWindowPosition != window.Position)
+            {
+                OnMove?.Invoke(window.ClientBounds);
+                previousWindowPosition = window.Position;
+            }
         }
 
         /// <summary>

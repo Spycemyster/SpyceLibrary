@@ -327,8 +327,10 @@ namespace SpyceLibrary.Debugging
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, $"# of GameObjects: {GetCurrentSceneObjectCount()}",
-                new Vector2(8, 8), Color.White);
+            int num = GetCurrentSceneObjectCount();
+            string text = $"# of GameObjects: {num}";
+            spriteBatch.DrawString(font, text, new Vector2(10, 10), Color.Black * 0.5f);
+            spriteBatch.DrawString(font, text, new Vector2(8, 8), Color.White);
         }
         #endregion
     }

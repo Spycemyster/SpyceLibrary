@@ -288,7 +288,13 @@ namespace SpyceLibrary
         /// <param name="id"></param>
         public virtual bool RemoveObject(Guid id)
         {
-            return objects.Remove(id);
+            if (objects.ContainsKey(id))
+            {
+                GameObject o = objects[id];
+                o.Destroy();
+                return objects.Remove(id);
+            }
+            return false;
         }
 
         /// <summary>

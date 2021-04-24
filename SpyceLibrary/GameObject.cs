@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,6 +84,7 @@ namespace SpyceLibrary
         private readonly List<GameObject> children;
         private bool isActive;
         private GameObject parent;
+        private Initializer initializer;
         private Transform relativeTransform;
         private Guid id;
         #endregion
@@ -151,6 +153,7 @@ namespace SpyceLibrary
             {
                 c.Load(init, this);
             }
+            initializer = init;
         }
 
         /// <summary>
@@ -325,6 +328,35 @@ namespace SpyceLibrary
                 raw += $"\t{components[i]}\n";
             }
             return raw;
+        }
+
+
+        /// <summary>
+        /// Generates a circle texture.
+        /// </summary>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        protected Texture2D GetCircleTexture(int radius)
+        {
+            Texture2D circle = new Texture2D(initializer.Graphics, radius * 2, radius * 2);
+            Color[] data = new Color[radius * radius * 4];
+            for (int y = 0; y < radius; y++)
+            {
+                for (int x = 0; x < radius; x++)
+                {
+                    float dist = (float)Math.Sqrt(Math.Pow(radius - y, 2) + Math.Pow(radius - x, 2));
+                    if (dist <= radius)
+                    {
+                        data[y * radius + x % radius] = Color.White;
+                    }
+                    else
+                    {
+                        data[y * radius + x % radius] = Color.Transparent;
+                    }
+                }
+            }
+
+            return circle;
         }
 
 

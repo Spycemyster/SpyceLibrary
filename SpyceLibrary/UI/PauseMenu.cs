@@ -14,6 +14,7 @@ namespace SpyceLibrary.UI
     {
         #region Fields
         private UIButton quitBtn, resumeBtn;
+        private ConfirmMenu conf;
         #endregion
 
         #region Constructor
@@ -48,7 +49,7 @@ namespace SpyceLibrary.UI
                 TextColor = Color.White,
             };
             quitBtn.Position = GetMiddlePosition(quitBtn.Size.ToVector2() - new Vector2(0, 50)).ToPoint();
-            quitBtn.OnClick += closeGame;
+            quitBtn.OnClick += confirmClose;
             resumeBtn = new UIButton(font, initializer.Content.Load<Texture2D>("System/blank"), "Resume")
             {
                 Size = new Point(100, 30),
@@ -57,6 +58,20 @@ namespace SpyceLibrary.UI
             };
             resumeBtn.Position = GetMiddlePosition(resumeBtn.Size.ToVector2() + new Vector2(0, 50)).ToPoint();
             resumeBtn.OnClick += resumeClick;
+            conf = new ConfirmMenu(Scene);
+            conf.Initialize(initializer);
+        }
+
+        private void confirmClose(UIComponent component)
+        {
+            Scene.PushUI(conf);
+            conf.YesButton.OnClick += closeGame;
+            conf.NoButton.OnClick += closeConfirm;
+        }
+
+        private void closeConfirm(UIComponent component)
+        {
+            conf.Close(); 
         }
 
         private void closeGame(UIComponent component)

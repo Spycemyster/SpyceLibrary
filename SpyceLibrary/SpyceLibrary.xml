@@ -1148,6 +1148,22 @@
             Static access to the singleton scene manager object.
             </summary>
         </member>
+        <member name="T:SpyceLibrary.SceneManager.FrameEvent">
+            <summary>
+            The handler for frame events of the game.
+            </summary>
+            <param name="frame"></param>
+        </member>
+        <member name="F:SpyceLibrary.SceneManager.OnResize">
+            <summary>
+            When the frame is resized.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.SceneManager.OnMove">
+            <summary>
+            When the game frame is moved.
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.SceneManager.CurrentScene">
             <summary>
             The scene that is currently being drawn and updated.
@@ -1280,6 +1296,26 @@
             Creates a new instance of the Animated Sprite.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Sprites.AnimatedSprite.LoadAnimationData(System.String,System.String)">
+            <summary>
+            Loads the animation data from the given path.
+            </summary>
+            <param name="path"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.AnimatedSprite.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the state of the animated sprite.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.AnimatedSprite.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the textures for the animated sprite.
+            </summary>
+            <param name="init"></param>
+            <param name="holder"></param>
+        </member>
         <member name="T:SpyceLibrary.Sprites.SpriteAnimation">
             <summary>
             Represents an individual animation for a spritesheet.
@@ -1294,6 +1330,12 @@
             <summary>
             The current frame being displayed.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.SpriteAnimation.Save(System.String)">
+            <summary>
+            Saves the frame data to the path.
+            </summary>
+            <param name="path"></param>
         </member>
         <member name="M:SpyceLibrary.Sprites.SpriteAnimation.GetFullTime">
             <summary>
@@ -1328,6 +1370,11 @@
             The amount of time is spent on this individual frame.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.Sprites.FrameData.TexturePath">
+            <summary>
+            The path of the texture.
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.Sprites.FrameData.Texture">
             <summary>
             The texture that the frame is located on. Each frame data holds a refernce to its
@@ -1348,6 +1395,12 @@
             <summary>
             Creates a new instance of the game component.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetSourceRectangle(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Sets the source rectangle for the sprite.
+            </summary>
+            <param name="sourceRect"></param>
         </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.SetDrawOrder(System.UInt32)">
             <summary>
@@ -1484,6 +1537,17 @@
             </summary>
             <param name="x"></param>
             <param name="y"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.ConfirmMenu">
+            <summary>
+            A menu that confirms yes or no.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.#ctor(SpyceLibrary.Scene)">
+            <summary>
+            Creates a new instance of the confirm menu.
+            </summary>
+            <param name="currentScene"></param>
         </member>
         <member name="M:SpyceLibrary.UI.HUD.#ctor(SpyceLibrary.Scene)">
             <summary>

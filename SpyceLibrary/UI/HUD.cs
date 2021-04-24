@@ -24,6 +24,7 @@ namespace SpyceLibrary.UI
         /// </summary>
         public override void Close()
         {
+            base.Close();
             Scene.SetState(UIState.Gameplay);
         }
 

@@ -2,21 +2,71 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace SpyceLibrary.Sprites
 {
     /// <summary>
     /// A spritesheet based sprite.
     /// </summary>
-    public class AnimatedSprite : Sprite
+    public class AnimatedSprite : Sprite, IUpdated
     {
+        #region Fields
+        private Initializer initializer;
+        private Dictionary<string, SpriteAnimation> animations;
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Creates a new instance of the Animated Sprite.
         /// </summary>
         public AnimatedSprite()
         {
+            animations = new Dictionary<string, SpriteAnimation>();
         }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Loads the animation data from the given path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="name"></param>
+        public void LoadAnimationData(string path, string name)
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(FrameData[]));
+            StreamReader reader = new StreamReader(path);
+            reader.ReadToEnd();
+            SpriteAnimation animation = new SpriteAnimation();
+            FrameData[] data = (FrameData[])ser.Deserialize(reader);
+            reader.Close();
+
+            animation.FrameData = data;
+            animations.Add(name, animation);
+        }
+
+        /// <summary>
+        /// Updates the state of the animated sprite.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void Update(GameTime gameTime)
+        {
+
+        }
+
+        /// <summary>
+        /// Loads the textures for the animated sprite.
+        /// </summary>
+        /// <param name="init"></param>
+        /// <param name="holder"></param>
+        public override void Load(Initializer init, GameObject holder)
+        {
+            base.Load(init, holder);
+            initializer = init;
+        }
+        #endregion
     }
 
     /// <summary>
@@ -42,6 +92,19 @@ namespace SpyceLibrary.Sprites
             set;
         }
         private float timer;
+
+        /// <summary>
+        /// Saves the frame data to the path.
+        /// </summary>
+        /// <param name="path"></param>
+        public void Save(string path)
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(FrameData[]));
+            TextWriter writer = new StreamWriter(path);
+            ser.Serialize(writer, FrameData);
+
+            writer.Close();
+        }
 
         /// <summary>
         /// Calculates the total time it takes to complete a full animation cycle.
@@ -108,9 +171,19 @@ namespace SpyceLibrary.Sprites
         }
 
         /// <summary>
+        /// The path of the texture.
+        /// </summary>
+        public string TexturePath
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The texture that the frame is located on. Each frame data holds a refernce to its
         /// texture to allow for animations to potentially consist of different files.
         /// </summary>
+        [XmlIgnore]
         public Texture2D Texture
         {
             get;

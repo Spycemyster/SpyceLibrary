@@ -61,6 +61,15 @@ namespace SpyceLibrary.Physics
             ReaddQuadBody(body);
         }
 
+        //private void CapBodySpeed(PhysicsBody body)
+        //{
+        //    Vector2 vel = body.Velocity;
+        //    int x = (body.Velocity.X > 0) ? 1 : -1;
+        //    int y = (body.Velocity.Y > 0) ? 1 : -1;
+        //    vel = new Vector2(x * Math.Min(body.MaxAxisSpeed, Math.Abs(vel.X)), y * Math.Min(body.MaxAxisSpeed, Math.Abs(vel.Y)));
+        //    body.Velocity = vel;
+        //}
+
         /// <summary>
         /// Updates the state of each physics engine.
         /// </summary>
@@ -72,22 +81,48 @@ namespace SpyceLibrary.Physics
                 if (body.Velocity != Vector2.Zero)
                 {
                     UnregisterQuadBody(body);
+                    //CapBodySpeed(body);
                     Vector2 vel = body.Velocity * Time.Instance.DeltaTime;
                     Vector2 velX = new Vector2(vel.X, 0);
                     Vector2 velY = new Vector2(0, vel.Y);
-                    if (body.IsCollidable && CanExistHere(body, body.Position + velX)
-                        || !CanExistHere(body, body.Position))
+                    bool collideX = false;
+                    bool collideY = false;
+                    if (body.IsCollidable)
                     {
-                        body.Position += velX;
-                        //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
+                        if (CanExistHere(body, body.Position + velX) || !CanExistHere(body, body.Position))
+                        {
+                            body.Position += velX;
+                            //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
+                        }
+                        else
+                        {
+                            collideX = true;
+                        }
+                        if (CanExistHere(body, body.Position + velY) || !CanExistHere(body, body.Position))
+                        {
+                            body.Position += velY;
+                            //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
+                        }
+                        else
+                        {
+                            collideY = true;
+                        }
                     }
-                    if (body.IsCollidable && CanExistHere(body, body.Position + velY)
-                        || !CanExistHere(body, body.Position))
+                    else
                     {
-                        body.Position += velY;
-                        //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
+                        body.Position += vel;
                     }
                     body.Velocity = Vector2.Zero;
+                    //Vector2 v = body.Velocity;
+                    //if (collideY)
+                    //{
+                    //    v.Y = 0;
+                    //}
+                    //if (collideX)
+                    //{
+                    //    v.X = 0;
+                    //}
+                    //body.Velocity = v;
                     ReaddQuadBody(body);
 
                 }

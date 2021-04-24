@@ -5,6 +5,9 @@
 
 - [AnimatedSprite](#T-SpyceLibrary-Sprites-AnimatedSprite 'SpyceLibrary.Sprites.AnimatedSprite')
   - [#ctor()](#M-SpyceLibrary-Sprites-AnimatedSprite-#ctor 'SpyceLibrary.Sprites.AnimatedSprite.#ctor')
+  - [Load(init,holder)](#M-SpyceLibrary-Sprites-AnimatedSprite-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject- 'SpyceLibrary.Sprites.AnimatedSprite.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)')
+  - [LoadAnimationData(path,name)](#M-SpyceLibrary-Sprites-AnimatedSprite-LoadAnimationData-System-String,System-String- 'SpyceLibrary.Sprites.AnimatedSprite.LoadAnimationData(System.String,System.String)')
+  - [Update(gameTime)](#M-SpyceLibrary-Sprites-AnimatedSprite-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Sprites.AnimatedSprite.Update(Microsoft.Xna.Framework.GameTime)')
 - [BoxCollider](#T-SpyceLibrary-Physics-BoxCollider 'SpyceLibrary.Physics.BoxCollider')
   - [#ctor()](#M-SpyceLibrary-Physics-BoxCollider-#ctor 'SpyceLibrary.Physics.BoxCollider.#ctor')
   - [Offset](#P-SpyceLibrary-Physics-BoxCollider-Offset 'SpyceLibrary.Physics.BoxCollider.Offset')
@@ -25,6 +28,8 @@
   - [Initialize(initializer)](#M-SpyceLibrary-Debugging-Commands-CommandHandler-Initialize-SpyceLibrary-Initializer- 'SpyceLibrary.Debugging.Commands.CommandHandler.Initialize(SpyceLibrary.Initializer)')
   - [ParseCommand(sender,command)](#M-SpyceLibrary-Debugging-Commands-CommandHandler-ParseCommand-System-String,System-String- 'SpyceLibrary.Debugging.Commands.CommandHandler.ParseCommand(System.String,System.String)')
 - [ComponentEvent](#T-SpyceLibrary-GameComponent-ComponentEvent 'SpyceLibrary.GameComponent.ComponentEvent')
+- [ConfirmMenu](#T-SpyceLibrary-UI-ConfirmMenu 'SpyceLibrary.UI.ConfirmMenu')
+  - [#ctor(currentScene)](#M-SpyceLibrary-UI-ConfirmMenu-#ctor-SpyceLibrary-Scene- 'SpyceLibrary.UI.ConfirmMenu.#ctor(SpyceLibrary.Scene)')
 - [Debug](#T-SpyceLibrary-Debugging-Debug 'SpyceLibrary.Debugging.Debug')
   - [LOGS_FILE_EXTENSION](#F-SpyceLibrary-Debugging-Debug-LOGS_FILE_EXTENSION 'SpyceLibrary.Debugging.Debug.LOGS_FILE_EXTENSION')
   - [LOGS_FOLDER](#F-SpyceLibrary-Debugging-Debug-LOGS_FOLDER 'SpyceLibrary.Debugging.Debug.LOGS_FOLDER')
@@ -87,7 +92,9 @@
 - [FrameData](#T-SpyceLibrary-Sprites-FrameData 'SpyceLibrary.Sprites.FrameData')
   - [Position](#P-SpyceLibrary-Sprites-FrameData-Position 'SpyceLibrary.Sprites.FrameData.Position')
   - [Texture](#P-SpyceLibrary-Sprites-FrameData-Texture 'SpyceLibrary.Sprites.FrameData.Texture')
+  - [TexturePath](#P-SpyceLibrary-Sprites-FrameData-TexturePath 'SpyceLibrary.Sprites.FrameData.TexturePath')
   - [Time](#P-SpyceLibrary-Sprites-FrameData-Time 'SpyceLibrary.Sprites.FrameData.Time')
+- [FrameEvent](#T-SpyceLibrary-SceneManager-FrameEvent 'SpyceLibrary.SceneManager.FrameEvent')
 - [GameComponent](#T-SpyceLibrary-GameComponent 'SpyceLibrary.GameComponent')
   - [#ctor()](#M-SpyceLibrary-GameComponent-#ctor 'SpyceLibrary.GameComponent.#ctor')
   - [OnDestroy](#F-SpyceLibrary-GameComponent-OnDestroy 'SpyceLibrary.GameComponent.OnDestroy')
@@ -227,6 +234,8 @@
   - [Unload()](#M-SpyceLibrary-Scene-Unload 'SpyceLibrary.Scene.Unload')
   - [Update(gameTime)](#M-SpyceLibrary-Scene-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Scene.Update(Microsoft.Xna.Framework.GameTime)')
 - [SceneManager](#T-SpyceLibrary-SceneManager 'SpyceLibrary.SceneManager')
+  - [OnMove](#F-SpyceLibrary-SceneManager-OnMove 'SpyceLibrary.SceneManager.OnMove')
+  - [OnResize](#F-SpyceLibrary-SceneManager-OnResize 'SpyceLibrary.SceneManager.OnResize')
   - [CurrentScene](#P-SpyceLibrary-SceneManager-CurrentScene 'SpyceLibrary.SceneManager.CurrentScene')
   - [CurrentSceneType](#P-SpyceLibrary-SceneManager-CurrentSceneType 'SpyceLibrary.SceneManager.CurrentSceneType')
   - [Instance](#P-SpyceLibrary-SceneManager-Instance 'SpyceLibrary.SceneManager.Instance')
@@ -250,11 +259,13 @@
   - [SetOffset(offset)](#M-SpyceLibrary-Sprites-Sprite-SetOffset-Microsoft-Xna-Framework-Vector2- 'SpyceLibrary.Sprites.Sprite.SetOffset(Microsoft.Xna.Framework.Vector2)')
   - [SetSize(size)](#M-SpyceLibrary-Sprites-Sprite-SetSize-Microsoft-Xna-Framework-Point- 'SpyceLibrary.Sprites.Sprite.SetSize(Microsoft.Xna.Framework.Point)')
   - [SetSize(width,height)](#M-SpyceLibrary-Sprites-Sprite-SetSize-System-Int32,System-Int32- 'SpyceLibrary.Sprites.Sprite.SetSize(System.Int32,System.Int32)')
+  - [SetSourceRectangle(sourceRect)](#M-SpyceLibrary-Sprites-Sprite-SetSourceRectangle-Microsoft-Xna-Framework-Rectangle- 'SpyceLibrary.Sprites.Sprite.SetSourceRectangle(Microsoft.Xna.Framework.Rectangle)')
   - [SetTexturePath(path)](#M-SpyceLibrary-Sprites-Sprite-SetTexturePath-System-String- 'SpyceLibrary.Sprites.Sprite.SetTexturePath(System.String)')
 - [SpriteAnimation](#T-SpyceLibrary-Sprites-SpriteAnimation 'SpyceLibrary.Sprites.SpriteAnimation')
   - [CurrentFrame](#P-SpyceLibrary-Sprites-SpriteAnimation-CurrentFrame 'SpyceLibrary.Sprites.SpriteAnimation.CurrentFrame')
   - [FrameData](#P-SpyceLibrary-Sprites-SpriteAnimation-FrameData 'SpyceLibrary.Sprites.SpriteAnimation.FrameData')
   - [GetFullTime()](#M-SpyceLibrary-Sprites-SpriteAnimation-GetFullTime 'SpyceLibrary.Sprites.SpriteAnimation.GetFullTime')
+  - [Save(path)](#M-SpyceLibrary-Sprites-SpriteAnimation-Save-System-String- 'SpyceLibrary.Sprites.SpriteAnimation.Save(System.String)')
   - [SetCurrentFrame(frame)](#M-SpyceLibrary-Sprites-SpriteAnimation-SetCurrentFrame-System-Int32- 'SpyceLibrary.Sprites.SpriteAnimation.SetCurrentFrame(System.Int32)')
   - [Update(gameTime)](#M-SpyceLibrary-Sprites-SpriteAnimation-Update-Microsoft-Xna-Framework-GameTime- 'SpyceLibrary.Sprites.SpriteAnimation.Update(Microsoft.Xna.Framework.GameTime)')
 - [TestComponent](#T-SpyceLibrary-Physics-TestComponent 'SpyceLibrary.Physics.TestComponent')
@@ -338,6 +349,47 @@ Creates a new instance of the Animated Sprite.
 ##### Parameters
 
 This constructor has no parameters.
+
+<a name='M-SpyceLibrary-Sprites-AnimatedSprite-Load-SpyceLibrary-Initializer,SpyceLibrary-GameObject-'></a>
+### Load(init,holder) `method`
+
+##### Summary
+
+Loads the textures for the animated sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| init | [SpyceLibrary.Initializer](#T-SpyceLibrary-Initializer 'SpyceLibrary.Initializer') |  |
+| holder | [SpyceLibrary.GameObject](#T-SpyceLibrary-GameObject 'SpyceLibrary.GameObject') |  |
+
+<a name='M-SpyceLibrary-Sprites-AnimatedSprite-LoadAnimationData-System-String,System-String-'></a>
+### LoadAnimationData(path,name) `method`
+
+##### Summary
+
+Loads the animation data from the given path.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| name | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-SpyceLibrary-Sprites-AnimatedSprite-Update-Microsoft-Xna-Framework-GameTime-'></a>
+### Update(gameTime) `method`
+
+##### Summary
+
+Updates the state of the animated sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| gameTime | [Microsoft.Xna.Framework.GameTime](#T-Microsoft-Xna-Framework-GameTime 'Microsoft.Xna.Framework.GameTime') |  |
 
 <a name='T-SpyceLibrary-Physics-BoxCollider'></a>
 ## BoxCollider `type`
@@ -569,6 +621,30 @@ Delegate for handling events related to UI components.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | component | [T:SpyceLibrary.GameComponent.ComponentEvent](#T-T-SpyceLibrary-GameComponent-ComponentEvent 'T:SpyceLibrary.GameComponent.ComponentEvent') |  |
+
+<a name='T-SpyceLibrary-UI-ConfirmMenu'></a>
+## ConfirmMenu `type`
+
+##### Namespace
+
+SpyceLibrary.UI
+
+##### Summary
+
+A menu that confirms yes or no.
+
+<a name='M-SpyceLibrary-UI-ConfirmMenu-#ctor-SpyceLibrary-Scene-'></a>
+### #ctor(currentScene) `constructor`
+
+##### Summary
+
+Creates a new instance of the confirm menu.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| currentScene | [SpyceLibrary.Scene](#T-SpyceLibrary-Scene 'SpyceLibrary.Scene') |  |
 
 <a name='T-SpyceLibrary-Debugging-Debug'></a>
 ## Debug `type`
@@ -1347,12 +1423,36 @@ The position of the frame data on the texture file.
 The texture that the frame is located on. Each frame data holds a refernce to its
 texture to allow for animations to potentially consist of different files.
 
+<a name='P-SpyceLibrary-Sprites-FrameData-TexturePath'></a>
+### TexturePath `property`
+
+##### Summary
+
+The path of the texture.
+
 <a name='P-SpyceLibrary-Sprites-FrameData-Time'></a>
 ### Time `property`
 
 ##### Summary
 
 The amount of time is spent on this individual frame.
+
+<a name='T-SpyceLibrary-SceneManager-FrameEvent'></a>
+## FrameEvent `type`
+
+##### Namespace
+
+SpyceLibrary.SceneManager
+
+##### Summary
+
+The handler for frame events of the game.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| frame | [T:SpyceLibrary.SceneManager.FrameEvent](#T-T-SpyceLibrary-SceneManager-FrameEvent 'T:SpyceLibrary.SceneManager.FrameEvent') |  |
 
 <a name='T-SpyceLibrary-GameComponent'></a>
 ## GameComponent `type`
@@ -2996,6 +3096,20 @@ SpyceLibrary
 A singleton object that handles various screen states. This has functionality that allows for
 smooth transitions between different screen states.
 
+<a name='F-SpyceLibrary-SceneManager-OnMove'></a>
+### OnMove `constants`
+
+##### Summary
+
+When the game frame is moved.
+
+<a name='F-SpyceLibrary-SceneManager-OnResize'></a>
+### OnResize `constants`
+
+##### Summary
+
+When the frame is resized.
+
 <a name='P-SpyceLibrary-SceneManager-CurrentScene'></a>
 ### CurrentScene `property`
 
@@ -3279,6 +3393,19 @@ Sets the drawn dimension of the sprite.
 | width | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
 | height | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') |  |
 
+<a name='M-SpyceLibrary-Sprites-Sprite-SetSourceRectangle-Microsoft-Xna-Framework-Rectangle-'></a>
+### SetSourceRectangle(sourceRect) `method`
+
+##### Summary
+
+Sets the source rectangle for the sprite.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sourceRect | [Microsoft.Xna.Framework.Rectangle](#T-Microsoft-Xna-Framework-Rectangle 'Microsoft.Xna.Framework.Rectangle') |  |
+
 <a name='M-SpyceLibrary-Sprites-Sprite-SetTexturePath-System-String-'></a>
 ### SetTexturePath(path) `method`
 
@@ -3331,6 +3458,19 @@ Calculates the total time it takes to complete a full animation cycle.
 ##### Parameters
 
 This method has no parameters.
+
+<a name='M-SpyceLibrary-Sprites-SpriteAnimation-Save-System-String-'></a>
+### Save(path) `method`
+
+##### Summary
+
+Saves the frame data to the path.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
 <a name='M-SpyceLibrary-Sprites-SpriteAnimation-SetCurrentFrame-System-Int32-'></a>
 ### SetCurrentFrame(frame) `method`

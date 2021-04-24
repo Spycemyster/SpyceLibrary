@@ -22,6 +22,7 @@ namespace SpyceLibrary.Sprites
         private Texture2D texture;
         private string texturePath;
         private Point size;
+        private Rectangle sourceRectangle;
         private SpriteBatch spriteBatch;
         private Vector2 offset;
         private uint drawOrder;
@@ -37,6 +38,15 @@ namespace SpyceLibrary.Sprites
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Sets the source rectangle for the sprite.
+        /// </summary>
+        /// <param name="sourceRect"></param>
+        public void SetSourceRectangle(Rectangle sourceRect)
+        {
+            sourceRectangle = sourceRect;
+        }
+
         /// <summary>
         /// Sets the draw order for the sprite.
         /// </summary>
@@ -92,7 +102,7 @@ namespace SpyceLibrary.Sprites
             base.Load(init, holder);
             spriteBatch = init.SpriteBatch;
             texture = init.Content.Load<Texture2D>(texturePath);
-            //size = new Point(texture.Width, texture.Height);
+            sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
         }
 
         /// <summary>
@@ -104,8 +114,8 @@ namespace SpyceLibrary.Sprites
             if (GetDrawRectangle().Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
             {
                 Transform tr = Holder.GetTransform();
-                spriteBatch.Draw(texture, rect, null, Color.White, tr.Rotation,
-                    Vector2.Zero, SpriteEffects.None, DrawOrder());
+                spriteBatch.Draw(texture, rect, sourceRectangle, Color.White, tr.Rotation,
+                    Vector2.Zero, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
             }
         }
 

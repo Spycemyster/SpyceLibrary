@@ -125,7 +125,7 @@ namespace SpyceLibrary.UI
         /// <param name="color"></param>
         public virtual void SetTitle(string text, Color color)
         {
-            this.title = text;
+            title = text;
             this.color = color;
         }
 
