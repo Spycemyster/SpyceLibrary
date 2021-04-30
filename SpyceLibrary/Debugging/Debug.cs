@@ -145,6 +145,36 @@ namespace SpyceLibrary.Debugging
         }
 
         /// <summary>
+        /// Asserts that the given statement is true. Displays the frame if it isn't.
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <param name="errorMsg"></param>
+        /// <param name="sender"></param>
+        public void Assert(bool statement, string errorMsg, string sender = SENDER)
+        {
+            if (!statement)
+            {
+                StackTrace stackTrace = new StackTrace();
+                WriteLine(sender, $"Assertion failed at frame {stackTrace.GetFrame(1)}. Throwing error: {errorMsg}",
+                    ConsoleColor.Red, ConsoleColor.Red);
+            }
+        }
+
+        /// <summary>
+        /// Asserts that the given statement is true. Throws an error if it isn't.
+        /// </summary>
+        public void AssertStrict(bool statement, string errorMsg, string sender = SENDER)
+        {
+            if (!statement)
+            {
+                StackTrace stackTrace = new StackTrace();
+                WriteLine(sender, $"Strict assertion failed at frame {stackTrace.GetFrame(1)}. Throwing error: {errorMsg}",
+                    ConsoleColor.Red, ConsoleColor.Red);
+                throw new Exception(errorMsg);
+            }
+        }
+
+        /// <summary>
         /// Writes a new line to the debug log.
         /// </summary>
         /// <param name="sender"></param>
