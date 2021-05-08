@@ -9,14 +9,29 @@
             Handles matrix camera transformations.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Camera.Position">
+        <member name="P:SpyceLibrary.Camera.TopLeft">
+            <summary>
+            Top left corner of the screen.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Camera.Center">
             <summary>
             The position of the camera.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Camera.Zoom">
+            <summary>
+            Sets the zoom value of the camera.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Camera.#ctor">
             <summary>
             Creates a new instance of the camera.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Camera.UpdateViewportSize">
+            <summary>
+            Updates the viewport size to match the screen size.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Camera.FixViewOn(SpyceLibrary.GameObject)">
@@ -25,22 +40,17 @@
             </summary>
             <param name="obj"></param>
         </member>
-        <member name="M:SpyceLibrary.Camera.SetViewOffsetPercent(Microsoft.Xna.Framework.Vector2)">
-            <summary>
-            Sets the percentage for how offset the camera is relative to the screen.
-            </summary>
-            <param name="pOffset"></param>
-        </member>
-        <member name="M:SpyceLibrary.Camera.SetOffset(Microsoft.Xna.Framework.Vector2)">
-            <summary>
-            Sets the offset of the camera.
-            </summary>
-            <param name="offset"></param>
-        </member>
         <member name="M:SpyceLibrary.Camera.GetTransformedMatrix">
             <summary>
             Gets the transformed viewport matrix.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Camera.ScreenToWorldCoordinates(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Maps screen coordinates to the matrix transformation.
+            </summary>
+            <param name="screen"></param>
             <returns></returns>
         </member>
         <member name="T:SpyceLibrary.Debugging.Commands.CommandHandler">
@@ -222,6 +232,19 @@
             Clears all the logs.
             </summary>
             <param name="sender"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Debug.Assert(System.Boolean,System.String,System.String)">
+            <summary>
+            Asserts that the given statement is true. Displays the frame if it isn't.
+            </summary>
+            <param name="statement"></param>
+            <param name="errorMsg"></param>
+            <param name="sender"></param>
+        </member>
+        <member name="M:SpyceLibrary.Debugging.Debug.AssertStrict(System.Boolean,System.String,System.String)">
+            <summary>
+            Asserts that the given statement is true. Throws an error if it isn't.
+            </summary>
         </member>
         <member name="M:SpyceLibrary.Debugging.Debug.WriteLine(System.String,System.String,System.ConsoleColor,System.ConsoleColor)">
             <summary>
@@ -602,6 +625,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:SpyceLibrary.GameObject.GetCircleTexture(System.Int32)">
+            <summary>
+            Generates a circle texture.
+            </summary>
+            <param name="radius"></param>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.GameObject.IsDirectChild(SpyceLibrary.GameObject,SpyceLibrary.GameObject)">
             <summary>
             Checks if the first element is the direct parent of the second element.
@@ -866,6 +896,11 @@
             generic collider type.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.Physics.PhysicsBody.Engine">
+            <summary>
+            The physics engine of the body.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Physics.PhysicsBody.#ctor">
             <summary>
             Creates a new instance of the physics body.
@@ -878,6 +913,19 @@
             <param name="init"></param>
             <param name="holder"></param>
         </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsBody.Register(SpyceLibrary.Physics.PhysicsEngine)">
+            <summary>
+            Registers the engine with this body.
+            </summary>
+            <param name="engine"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsBody.GetBodiesWithin(System.Single)">
+            <summary>
+            Gets all the physics bodies within a set distance.
+            </summary>
+            <param name="distance"></param>
+            <returns></returns>
+        </member>
         <member name="T:SpyceLibrary.Physics.PhysicsEngine">
             <summary>
             Updates physical objects within the game world.
@@ -885,7 +933,7 @@
         </member>
         <member name="F:SpyceLibrary.Physics.PhysicsEngine.QUAD_SIZE">
             <summary>
-            The size of each theoretical quad.
+            The size of each quad.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Physics.PhysicsEngine.#ctor">
@@ -898,6 +946,14 @@
             Initializes the physics engine.
             </summary>
             <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.PhysicsEngine.GetBodiesWithin(Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>
+            Gets all the bodies within a certain distance from the given point.
+            </summary>
+            <param name="position"></param>
+            <param name="distance"></param>
+            <returns></returns>
         </member>
         <member name="M:SpyceLibrary.Physics.PhysicsEngine.RegisterBody(SpyceLibrary.Physics.PhysicsBody)">
             <summary>
@@ -1014,6 +1070,11 @@
         <member name="P:SpyceLibrary.Scene.ScreenRectangle">
             <summary>
             The rectangle of the screen.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Scene.UIs">
+            <summary>
+            Stack of UI panels.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Scene.#ctor">
@@ -1173,6 +1234,12 @@
             <summary>
             The type of the current scene.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.SceneManager.GetScreenViewport">
+            <summary>
+            The screen viewport.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:SpyceLibrary.SceneManager.RegisterScene(System.Type,System.String)">
             <summary>
@@ -1642,6 +1709,11 @@
             <param name="regionSize"></param>
             <param name="objSize"></param>
             <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
+            <summary>
+            Creates a new instance of the UI button.
+            </summary>
         </member>
         <member name="T:SpyceLibrary.UI.UIScreen">
             <summary>

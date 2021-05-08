@@ -155,7 +155,8 @@ namespace SpyceLibrary.Debugging
             if (!statement)
             {
                 StackTrace stackTrace = new StackTrace();
-                WriteLine(sender, $"Assertion failed at frame {stackTrace.GetFrame(1)}. Throwing error: {errorMsg}",
+                StackFrame frame = stackTrace.GetFrame(1);
+                WriteLine(sender, $"Assertion failed at '{frame.GetMethod()}': {errorMsg}",
                     ConsoleColor.Red, ConsoleColor.Red);
             }
         }

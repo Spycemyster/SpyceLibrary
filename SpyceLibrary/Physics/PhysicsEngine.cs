@@ -13,9 +13,9 @@ namespace SpyceLibrary.Physics
     {
         #region Fields
         /// <summary>
-        /// The size of each theoretical quad.
+        /// The size of each quad.
         /// </summary>
-        public const int QUAD_SIZE = 64;
+        public const int QUAD_SIZE = 100;
         private readonly Dictionary<GameObject, PhysicsBody> bodies;
         private readonly Dictionary<Point, List<PhysicsBody>> bodyQuad;
         private Initializer initializer;
@@ -49,6 +49,46 @@ namespace SpyceLibrary.Physics
         }
 
         /// <summary>
+        /// Gets all the bodies within a certain distance from the given point.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        public List<PhysicsBody> GetBodiesWithin(Vector2 position, float distance)
+        {
+            List<PhysicsBody> boundBodies = new List<PhysicsBody>();
+            int xStart = (int)Math.Floor((position.X - distance) / QUAD_SIZE);
+            int yStart = (int)Math.Floor((position.Y - distance) / QUAD_SIZE);
+            int xEnd = (int)Math.Ceiling((position.X + distance) / QUAD_SIZE);
+            int yEnd = (int)Math.Ceiling((position.Y + distance) / QUAD_SIZE);
+
+            for (int x = xStart; x < xEnd; x++)
+            {
+                for (int y = yStart; y < yEnd; y++)
+                {
+                    Point p = new Point(x, y);
+                    bodyQuad.TryGetValue(p, out List<PhysicsBody> pBodies);
+
+                    if (pBodies != null)
+                    {
+                        foreach (PhysicsBody b in pBodies)
+                        {
+                            Vector2 bPos = b.Position;
+                            Vector2 bDim = b.Collider.Size.ToVector2();
+                            if ((bPos - position).Length() <= distance 
+                                || (bPos + bDim).Length() <= distance)
+                            {
+                                boundBodies.AddRange(pBodies);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return boundBodies;
+        }
+
+        /// <summary>
         /// Registers the body to the engine.
         /// </summary>
         /// <param name="body"></param>
@@ -57,18 +97,10 @@ namespace SpyceLibrary.Physics
             if (body == null)
                 return;
             bodies.Add(body.Holder, body);
+            body.Register(this);
             body.OnDestroy += OnBodyRemoved;
             ReaddQuadBody(body);
         }
-
-        //private void CapBodySpeed(PhysicsBody body)
-        //{
-        //    Vector2 vel = body.Velocity;
-        //    int x = (body.Velocity.X > 0) ? 1 : -1;
-        //    int y = (body.Velocity.Y > 0) ? 1 : -1;
-        //    vel = new Vector2(x * Math.Min(body.MaxAxisSpeed, Math.Abs(vel.X)), y * Math.Min(body.MaxAxisSpeed, Math.Abs(vel.Y)));
-        //    body.Velocity = vel;
-        //}
 
         /// <summary>
         /// Updates the state of each physics engine.
@@ -164,10 +196,10 @@ namespace SpyceLibrary.Physics
         public void Draw(Camera camera)
         {
             Point windowSize = SceneManager.Instance.GetWindowSize();
-            int startY = (int)(camera.Position.Y / QUAD_SIZE) - 1;
-            int startX = (int)(camera.Position.X / QUAD_SIZE) - 1;
-            int endY = (int)((camera.Position.Y + windowSize.Y) / QUAD_SIZE);
-            int endX = (int)((camera.Position.X + windowSize.X) / QUAD_SIZE);
+            int startY = (int)(camera.Center.Y / QUAD_SIZE) - 1;
+            int startX = (int)(camera.Center.X / QUAD_SIZE) - 1;
+            int endY = (int)((camera.Center.Y + windowSize.Y) / QUAD_SIZE);
+            int endX = (int)((camera.Center.X + windowSize.X) / QUAD_SIZE);
             for (int y = startY; y <= endY; y++)
             {
                 for (int x = startX; x <= endX; x++)

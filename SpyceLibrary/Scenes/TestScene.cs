@@ -5,9 +5,6 @@ using SpyceLibrary.Physics;
 using SpyceLibrary.Sprites;
 using SpyceLibrary.Debugging;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using SpyceLibrary.UI;
 using Microsoft.Xna.Framework.Input;
 
@@ -82,6 +79,7 @@ namespace SpyceLibrary.Scenes
             PushUI(new HUD(this));
 
             GameObject player = CreateTestPlayer();
+            player["Camera"] = mainCamera;
             AddObject(player);
 
             #region Don't look...
@@ -105,7 +103,6 @@ namespace SpyceLibrary.Scenes
             }
 
             mainCamera.FixViewOn(player);
-            mainCamera.SetViewOffsetPercent(new Vector2(0.5f, 0.5f));
         }
 
         /// <summary>
@@ -125,8 +122,10 @@ namespace SpyceLibrary.Scenes
             sp.SetSize(new Point(width, height));
             sp.SetTexturePath("System/blank");
             obj.AddComponent(sp);
-            PhysicsBody body = new PhysicsBody();
-            body.IsCollidable = true;
+            PhysicsBody body = new PhysicsBody
+            {
+                IsCollidable = true
+            };
             obj.AddComponent(body);
             obj.AddComponent(new TestComponent2());
             BoxCollider collider = new BoxCollider();
@@ -182,7 +181,7 @@ namespace SpyceLibrary.Scenes
             double fps = Math.Round(1.0 / Time.Instance.RawDeltaTime);
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
             physicsEngine.Update(gameTime);
-            SetScreenRectangleLocation((int)mainCamera.Position.X, (int)mainCamera.Position.Y);
+            SetScreenRectangleLocation((int)mainCamera.TopLeft.X, (int)mainCamera.TopLeft.Y);
             CheckInput();
         }
 

@@ -13,22 +13,36 @@ namespace SpyceLibrary
     {
         #region Fields
         /// <summary>
+        /// Top left corner of the screen.
+        /// </summary>
+        public Vector2 TopLeft
+        {
+            get { return Center - SceneManager.Instance.GetWindowSize().ToVector2() / 2; }
+        }
+
+        /// <summary>
         /// The position of the camera.
         /// </summary>
-        public Vector2 Position
+        public Vector2 Center
         {
             get 
             {
-                Point windowSize = SceneManager.Instance.GetWindowSize();
-                return (viewedObject != null) ?
-                    viewedObject.GetTransform().Position + offset - windowSize.ToVector2() * percentOffset 
-                    : offset - windowSize.ToVector2() * percentOffset;
+                return (viewedObject == null) ? Vector2.Zero : viewedObject.GetTransform().Position;
             }
+        }
+
+        /// <summary>
+        /// Sets the zoom value of the camera.
+        /// </summary>
+        public float Zoom
+        {
+            get { return zoom; }
+            set { zoom = value; }
         }
 
         private Viewport viewport;
         private GameObject viewedObject;
-        private Vector2 offset, percentOffset;
+        private float zoom;
         #endregion
 
         #region Constructor
@@ -37,11 +51,19 @@ namespace SpyceLibrary
         /// </summary>
         public Camera()
         {
-            offset = Vector2.Zero;
+            zoom = 1;
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Updates the viewport size to match the screen size.
+        /// </summary>
+        public void UpdateViewportSize()
+        {
+            viewport = SceneManager.Instance.GetScreenViewport();
+        }
+
         /// <summary>
         /// Fixes the view on the object.
         /// </summary>
@@ -52,31 +74,28 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Sets the percentage for how offset the camera is relative to the screen.
-        /// </summary>
-        /// <param name="pOffset"></param>
-        public void SetViewOffsetPercent(Vector2 pOffset)
-        {
-            percentOffset = pOffset;
-        }
-
-        /// <summary>
-        /// Sets the offset of the camera.
-        /// </summary>
-        /// <param name="offset"></param>
-        public void SetOffset(Vector2 offset)
-        {
-            this.offset = offset;
-        }
-
-        /// <summary>
         /// Gets the transformed viewport matrix.
         /// </summary>
         /// <returns></returns>
         public Matrix GetTransformedMatrix()
         {
-            return Matrix.CreateTranslation(-(int)(Position.X - viewport.Width / 2),
-                -(int)(Position.Y - viewport.Height / 2), 0);
+            UpdateViewportSize();
+            return Matrix.CreateTranslation(-(int)(Center.X), -(int)(Center.Y), 0) 
+            //return Matrix.CreateTranslation(0, 0, 0)
+                * Matrix.CreateScale(new Vector3(zoom, zoom, 0))
+                * Matrix.CreateTranslation(new Vector3(viewport.Width / 2, viewport.Height / 2, 0));
+        }
+
+        /// <summary>
+        /// Maps screen coordinates to the matrix transformation.
+        /// </summary>
+        /// <param name="screen"></param>
+        /// <returns></returns>
+        public Vector2 ScreenToWorldCoordinates(Vector2 screen)
+        {
+            Matrix inverse = Matrix.Invert(GetTransformedMatrix());
+
+            return Vector2.Transform(screen, inverse);
         }
         #endregion
     }

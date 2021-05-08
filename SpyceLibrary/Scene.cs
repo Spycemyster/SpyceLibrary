@@ -31,6 +31,9 @@ namespace SpyceLibrary
             get { return screenRect; }
         }
 
+        /// <summary>
+        /// Stack of UI panels.
+        /// </summary>
         public List<UIScreen> UIs
         {
             get { return uiStack; }

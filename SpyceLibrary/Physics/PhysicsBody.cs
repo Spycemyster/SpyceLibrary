@@ -50,6 +50,15 @@ namespace SpyceLibrary.Physics
             get { return collider; }
         }
 
+        /// <summary>
+        /// The physics engine of the body.
+        /// </summary>
+        protected PhysicsEngine Engine
+        {
+            get { return engine; }
+        }
+        private PhysicsEngine engine;
+
         private BoxCollider collider;
         #endregion
 
@@ -73,6 +82,25 @@ namespace SpyceLibrary.Physics
         {
             base.Load(init, holder);
             collider = RequireComponent<BoxCollider>();
+        }
+
+        /// <summary>
+        /// Registers the engine with this body.
+        /// </summary>
+        /// <param name="engine"></param>
+        public void Register(PhysicsEngine engine)
+        {
+            this.engine = engine;
+        }
+
+        /// <summary>
+        /// Gets all the physics bodies within a set distance.
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        public List<PhysicsBody> GetBodiesWithin(float distance)
+        {
+            return engine.GetBodiesWithin(Holder.GetTransform().Position, distance);
         }
         #endregion
     }

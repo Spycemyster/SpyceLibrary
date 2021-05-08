@@ -66,6 +66,17 @@ namespace SpyceLibrary.Physics
                 velocity.Normalize();
                 body.Velocity = velocity * speed;
             }
+
+            if (InputManager.Instance.IsKeyDown(Keys.PageDown))
+            {
+                Camera cam = (Camera)Holder["Camera"];
+                cam.Zoom -= 0.01f;
+            }
+            else if (InputManager.Instance.IsKeyDown(Keys.PageUp))
+            {
+                Camera cam = (Camera)Holder["Camera"];
+                cam.Zoom += 0.01f;
+            }
         }
 
         /// <summary>
@@ -74,6 +85,14 @@ namespace SpyceLibrary.Physics
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            List<PhysicsBody> bodies = body.GetBodiesWithin(100);
+            foreach (PhysicsBody body in bodies)
+            {
+                if (body != this.body)
+                {
+                    SceneManager.Instance.CurrentScene.RemoveObject(body.Holder.ID);
+                }
+            }
         }
         #endregion
     }

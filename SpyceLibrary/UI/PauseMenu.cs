@@ -14,6 +14,7 @@ namespace SpyceLibrary.UI
     {
         #region Fields
         private UIButton quitBtn, resumeBtn;
+        //private UITextBox testTextBox;
         private ConfirmMenu conf;
         #endregion
 
@@ -60,6 +61,15 @@ namespace SpyceLibrary.UI
             resumeBtn.OnClick += resumeClick;
             conf = new ConfirmMenu(Scene);
             conf.Initialize(initializer);
+
+            //testTextBox = new UITextBox(font, initializer.Content.Load<Texture2D>("System/blank"), "")
+            //{
+            //    Size = new Point(100, 30),
+            //    BackgroundColor = Color.Black,
+            //    TextColor = Color.White,
+            //};
+
+            //testTextBox.Position = GetMiddlePosition(testTextBox.Size.ToVector2() + new Vector2(0, 100)).ToPoint();
         }
 
         private void confirmClose(UIComponent component)
@@ -97,6 +107,7 @@ namespace SpyceLibrary.UI
 
             resumeBtn.ProcessInput(input);
             quitBtn.ProcessInput(input);
+            //testTextBox.ProcessInput(input);
 
             if (input.IsKeyJustPressed(Keys.Escape))
             {
@@ -114,6 +125,7 @@ namespace SpyceLibrary.UI
 
             resumeBtn.Update(gameTime);
             quitBtn.Update(gameTime);
+            //testTextBox.Update(gameTime);
             Time.Instance.Timestep = 0f;
         }
 
@@ -127,6 +139,7 @@ namespace SpyceLibrary.UI
 
             resumeBtn.Draw(spriteBatch);
             quitBtn.Draw(spriteBatch);
+            //testTextBox.Draw(spriteBatch);
             spriteBatch.DrawString(font, title, titlePos, color);
         }
         #endregion

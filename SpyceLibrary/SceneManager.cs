@@ -87,6 +87,15 @@ namespace SpyceLibrary
 
         #region Methods
         /// <summary>
+        /// The screen viewport.
+        /// </summary>
+        /// <returns></returns>
+        public Viewport GetScreenViewport()
+        {
+            return device.Viewport;
+        }
+
+        /// <summary>
         /// Registers a scene with the scene manager.
         /// </summary>
         /// <param name="sceneType"></param>
