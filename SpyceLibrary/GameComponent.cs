@@ -56,6 +56,15 @@ namespace SpyceLibrary
             get { return holder; }
         }
 
+        /// <summary>
+        /// The current scene that is loaded into the scene manager.
+        /// </summary>
+        /// <value></value>
+        public Scene CurrentScene
+        {
+            get { return SceneManager.Instance.CurrentScene; }
+        }
+
         private GameObject holder;
         private bool isEnabled;
         #endregion

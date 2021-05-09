@@ -67,12 +67,12 @@ namespace SpyceLibrary.Physics
                 body.Velocity = velocity * speed;
             }
 
-            if (InputManager.Instance.IsKeyDown(Keys.PageDown))
+            if (InputManager.Instance.IsKeyDown(Keys.Up))
             {
                 Camera cam = (Camera)Holder["Camera"];
                 cam.Zoom -= 0.01f;
             }
-            else if (InputManager.Instance.IsKeyDown(Keys.PageUp))
+            else if (InputManager.Instance.IsKeyDown(Keys.Down))
             {
                 Camera cam = (Camera)Holder["Camera"];
                 cam.Zoom += 0.01f;

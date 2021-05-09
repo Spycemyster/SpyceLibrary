@@ -28,6 +28,7 @@ namespace SpyceLibrary.Scenes
         private Camera mainCamera;
         private PhysicsEngine physicsEngine;
         private Random random;
+        private ParticleEngine particleEngine;
 
         /// <summary>
         /// Width of the window size.
