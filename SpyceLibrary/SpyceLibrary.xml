@@ -403,6 +403,18 @@
             The game object that this component is attached to.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.GameComponent.IsLoaded">
+            <summary>
+            Whether the load function has been called.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.GameComponent.CurrentScene">
+            <summary>
+            The current scene that is loaded into the scene manager.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.GameComponent.#ctor">
             <summary>
             Creates a new instance of the game component.
@@ -531,6 +543,12 @@
             The relative transformation (before applying parent transformations).
             </summary>
         </member>
+        <member name="P:SpyceLibrary.GameObject.Position">
+            <summary>
+            The relative position of the game object.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.GameObject.#ctor">
             <summary>
             Creates a new instance of a game object.
@@ -582,6 +600,13 @@
             <param name="component"></param>
         </member>
         <member name="M:SpyceLibrary.GameObject.GetComponent``1">
+            <summary>
+            Gets the component if it is attached to this game object.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.RequireComponent``1">
             <summary>
             Gets the component if it is attached to this game object.
             </summary>
@@ -1058,13 +1083,13 @@
         </member>
         <member name="T:SpyceLibrary.Scene">
             <summary>
-            A scene represents a set of various game objects interacting. Scenes are indepedent of each other and
-            can be interchangebly loaded using the scene manager.
+            A scene represents a set of various game objects interacting. Scenes are independent of each other and
+            can be interchangeably loaded using the scene manager.
             </summary>
         </member>
         <member name="P:SpyceLibrary.Scene.GameObjects">
             <summary>
-            Refernce to the data structure holding all the game objects in the game.
+            Reference to the data structure holding all the game objects in the game.
             </summary>
         </member>
         <member name="P:SpyceLibrary.Scene.ScreenRectangle">
@@ -1075,6 +1100,17 @@
         <member name="P:SpyceLibrary.Scene.UIs">
             <summary>
             Stack of UI panels.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.Scene.SceneEvent">
+            <summary>
+            Events that occur with a game object.
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="F:SpyceLibrary.Scene.OnObjectAdded">
+            <summary>
+            After an object is added to the scene.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Scene.#ctor">
@@ -1141,7 +1177,7 @@
         </member>
         <member name="M:SpyceLibrary.Scene.RemoveInterval(System.Action)">
             <summary>
-            Removes an existing intervaled function.
+            Removes an existing intervalled function.
             </summary>
             <param name="action"></param>
         </member>
@@ -1336,12 +1372,6 @@
             Unloads the test scene
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Scenes.TestScene.AddObject(SpyceLibrary.GameObject)">
-            <summary>
-            Adds an object to the scene
-            </summary>
-            <param name="obj"></param>
-        </member>
         <member name="M:SpyceLibrary.Scenes.TestScene.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the instance of the game scene.
@@ -1448,6 +1478,93 @@
             texture to allow for animations to potentially consist of different files.
             </summary>
         </member>
+        <member name="T:SpyceLibrary.Sprites.ParticleEmitter`1">
+            <summary>
+            A component that emits various randomly seeded particles.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.ParticleEmitter`1.SpawnRate">
+            <summary>
+            The number of particles to spawn per second.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.ParticleEmitter`1.MaxScale">
+            <summary>
+            The maximum scale for the particles emitted.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.ParticleEmitter`1.MinScale">
+            <summary>
+            The minimum scale for the particles emitted.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.#ctor">
+            <summary>
+            Creates a new instance of a particle emitter.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.Initialize(System.Single,System.Single,System.String[])">
+            <summary>
+            Initializes the particle emitter.
+            </summary>
+            <param name="timeToLive"></param>
+            <param name="particleRate"></param>
+            <param name="paths"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the particle emitter.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="T:SpyceLibrary.Sprites.Particle">
+            <summary>
+            Represents a singular particle within a particle engine.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Sprites.Particle.TTL">
+            <summary>
+            The time left the particle has before it is removed.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.Particle.Sprite">
+            <summary>
+            The sprite drawn for the particle.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Particle.#ctor(System.Single)">
+            <summary>
+            Creates a new instance of the particle.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Particle.SetTexturePath(System.String[])">
+            <summary>
+            Sets the texture paths for the particle.
+            </summary>
+            <param name="paths"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Particle.Load(SpyceLibrary.Initializer)">
+            <summary>
+            Loads the particle.
+            </summary>
+            <param name="init"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Particle.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of the particle.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Particle.GetVelocity">
+            <summary>
+            Gets the velocity of the particle.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SpyceLibrary.Sprites.Sprite">
             <summary>
             Represents a drawable texture to the game object.
@@ -1457,6 +1574,12 @@
             <summary>
             The path of the texture.
             </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.Sprite.Color">
+            <summary>
+            The tinted color for the sprite.
+            </summary>
+            <value></value>
         </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.#ctor">
             <summary>
@@ -1481,24 +1604,30 @@
             </summary>
             <param name="path"></param>
         </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetScale(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the scale of the sprite's drawn texture.
+            </summary>
+            <param name="scale"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetScale(System.Single,System.Single)">
+            <summary>
+            Sets the scale of the sprite's drawn texture.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetScale(System.Single)">
+            <summary>
+            Sets the scale of the sprite's drawn texture.
+            </summary>
+            <param name="scale"></param>
+        </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.SetOffset(Microsoft.Xna.Framework.Vector2)">
             <summary>
             Sets the offset of the sprite.
             </summary>
             <param name="offset"></param>
-        </member>
-        <member name="M:SpyceLibrary.Sprites.Sprite.SetSize(Microsoft.Xna.Framework.Point)">
-            <summary>
-            Sets the drawn dimension of the sprite.
-            </summary>
-            <param name="size"></param>
-        </member>
-        <member name="M:SpyceLibrary.Sprites.Sprite.SetSize(System.Int32,System.Int32)">
-            <summary>
-            Sets the drawn dimension of the sprite.
-            </summary>
-            <param name="width"></param>
-            <param name="height"></param>
         </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
             <summary>

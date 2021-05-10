@@ -117,8 +117,6 @@ namespace SpyceLibrary.Physics
                     Vector2 vel = body.Velocity * Time.Instance.DeltaTime;
                     Vector2 velX = new Vector2(vel.X, 0);
                     Vector2 velY = new Vector2(0, vel.Y);
-                    bool collideX = false;
-                    bool collideY = false;
                     if (body.IsCollidable)
                     {
                         if (CanExistHere(body, body.Position + velX) || !CanExistHere(body, body.Position))
@@ -126,18 +124,10 @@ namespace SpyceLibrary.Physics
                             body.Position += velX;
                             //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
                         }
-                        else
-                        {
-                            collideX = true;
-                        }
                         if (CanExistHere(body, body.Position + velY) || !CanExistHere(body, body.Position))
                         {
                             body.Position += velY;
                             //Debug.Instance.WriteLine(DEBUG_NAME, $"Position: {body.Position}, Velocity: {vel}");
-                        }
-                        else
-                        {
-                            collideY = true;
                         }
                     }
                     else

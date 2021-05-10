@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SpyceLibrary.Debugging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -57,6 +58,15 @@ namespace SpyceLibrary
         }
 
         /// <summary>
+        /// Whether the load function has been called.
+        /// </summary>
+        /// <value></value>
+        public bool IsLoaded 
+        {
+            get { return isLoaded; }
+        }
+
+        /// <summary>
         /// The current scene that is loaded into the scene manager.
         /// </summary>
         /// <value></value>
@@ -64,6 +74,8 @@ namespace SpyceLibrary
         {
             get { return SceneManager.Instance.CurrentScene; }
         }
+
+        private bool isLoaded;
 
         private GameObject holder;
         private bool isEnabled;
@@ -87,15 +99,9 @@ namespace SpyceLibrary
         public T RequireComponent<T>()
         {
             T comp = Holder.GetComponent<T>();
+            Debug.Instance.AssertStrict(comp != null, $"Required component {typeof(T)} could not be found.");
             
-            if (comp == null)
-            {
-                throw new Exception($"Required component {typeof(T)} could not be found.");
-            }
-            else
-            {
-                return comp;
-            }
+            return comp;
         }
         /// <summary>
         /// Performs any final cleanup operations that aren't handled through regular garbage collection.
@@ -103,6 +109,7 @@ namespace SpyceLibrary
         public virtual void Unload()
         {
             OnDestroy?.Invoke(this);
+            isLoaded = false;
         }
 
         /// <summary>
@@ -131,6 +138,7 @@ namespace SpyceLibrary
         public virtual void Load(Initializer init, GameObject holder)
         {
             this.holder = holder;
+            isLoaded = true;
         }
         #endregion
 

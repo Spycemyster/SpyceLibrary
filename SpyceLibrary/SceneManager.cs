@@ -194,8 +194,8 @@ namespace SpyceLibrary
             currentScene = LoadScene(scene);
             return true;
         }
-
-        private Initializer GetInitializer()
+        
+        private Initializer CreateInitializer()
         {
             Initializer init = new Initializer
             {
@@ -218,7 +218,7 @@ namespace SpyceLibrary
             Scene loaded = (Scene)Activator.CreateInstance(scenes[scene]);
 
             // initialize the loaded scene
-            loaded.Initialize(GetInitializer());
+            loaded.Initialize(CreateInitializer());
             return loaded;
         }
         #endregion

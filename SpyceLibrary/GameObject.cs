@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpyceLibrary.Debugging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -75,6 +76,15 @@ namespace SpyceLibrary
         {
             get { return relativeTransform; }
         }
+
+        /// <summary>
+        /// The relative position of the game object.
+        /// </summary>
+        /// <value></value>
+        public Vector2 Position {
+            get { return relativeTransform.Position;}
+            set { relativeTransform.SetPosition(value); }
+        }
         private readonly List<IDrawn> drawnComponents;
         private readonly List<IUpdated> updatedComponents;
         private readonly List<IInput> inputComponents;
@@ -147,7 +157,7 @@ namespace SpyceLibrary
         /// Initializes the game object and loads all necessary assets.
         /// </summary>
         /// <param name="init"></param>
-        public void Load(Initializer init)
+        public virtual void Load(Initializer init)
         {
             foreach (GameComponent c in components)
             {
@@ -223,6 +233,18 @@ namespace SpyceLibrary
         public T GetComponent<T>()
         {
             return (T)(object)components.Find(x => x is T);
+        }
+
+        /// <summary>
+        /// Gets the component if it is attached to this game object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T RequireComponent<T>()
+        {
+            T comp = GetComponent<T>();
+            Debug.Instance.AssertStrict(comp != null, $"Required component {typeof(T)} could not be found.");
+            return comp;
         }
 
         /// <summary>

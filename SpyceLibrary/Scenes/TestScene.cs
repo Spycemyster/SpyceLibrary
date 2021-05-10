@@ -26,19 +26,18 @@ namespace SpyceLibrary.Scenes
         private ContentManager Content;
         private SpriteBatch spriteBatch;
         private Camera mainCamera;
-        private PhysicsEngine physicsEngine;
+        private PhysicsEngine collisionEngine;
         private Random random;
-        private ParticleEngine particleEngine;
 
         /// <summary>
         /// Width of the window size.
         /// </summary>
-        public const int WINDOW_WIDTH = 1244;
+        public const int WINDOW_WIDTH = 1400;
 
         /// <summary>
         /// Height of the window size.
         /// </summary>
-        public const int WINDOW_HEIGHT = 700;
+        public const int WINDOW_HEIGHT = 900;
         #endregion
 
         #region Constructor
@@ -47,6 +46,7 @@ namespace SpyceLibrary.Scenes
         /// </summary>
         public TestScene()
         {
+            OnObjectAdded += OnAddObject;
         }
         #endregion
 
@@ -67,8 +67,8 @@ namespace SpyceLibrary.Scenes
             graphics = initializer.Device;
 
             // engine initialization
-            physicsEngine = new PhysicsEngine();
-            physicsEngine.Initialize(initializer);
+            collisionEngine = new PhysicsEngine();
+            collisionEngine.Initialize(initializer);
 
             // game initialization
             random = new Random();
@@ -80,28 +80,19 @@ namespace SpyceLibrary.Scenes
             PushUI(new HUD(this));
 
             GameObject player = CreateTestPlayer();
+            player.Position = Vector2.Zero;
             player["Camera"] = mainCamera;
             AddObject(player);
 
-            #region Don't look...
-            //GameObject obj1 = CreateBlankSprite(25, 25);
-            //obj1.RelativeTransform.SetPosition(50, 50);
-            //GameObject obj2 = CreateBlankSprite(25, 25);
-            //obj2.RelativeTransform.SetPosition(100, 50);
-            //GameObject obj3 = CreateBlankSprite(25, 100);
-            //obj3.RelativeTransform.SetPosition(75, 80);
-
-            //AddObject(obj1);
-            //AddObject(obj2);
-            //AddObject(obj3);
-            #endregion
-
-            for (int i = 0; i < 10000; i++)
-            {
-                GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
-                obj.RelativeTransform.SetPosition(random.Next(0, 10000), random.Next(0, 10000));
-                AddObject(obj);
-            }
+            GameObject hugo = CreateTestSprite();
+            hugo.Position = new Vector2(100, 100);
+            AddObject(hugo);
+            // for (int i = 0; i < 10000; i++)
+            // {
+            //     GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));
+            //     obj.RelativeTransform.SetPosition(random.Next(0, 10000), random.Next(0, 10000));
+            //     AddObject(obj);
+            // }
 
             mainCamera.FixViewOn(player);
         }
@@ -113,15 +104,24 @@ namespace SpyceLibrary.Scenes
         {
             base.Unload();
 
-            physicsEngine.Clear();
+            collisionEngine.Clear();
+        }
+
+        private GameObject CreateTestSprite() {
+            GameObject obj = new GameObject();
+            Sprite sp = new Sprite();
+            sp.SetTexturePath("Textures/hugo");
+            sp.SetScale(0.5f, 0.5f);
+            obj.AddComponent(sp);
+            return obj;
         }
 
         private GameObject CreateBlankSprite(int width, int height)
         {
             GameObject obj = new GameObject();
             Sprite sp = new Sprite();
-            sp.SetSize(new Point(width, height));
-            sp.SetTexturePath("System/blank");
+            sp.SetTexturePath("Textures/hugo");
+            sp.SetScale(width / 323f, height / 321f);
             obj.AddComponent(sp);
             PhysicsBody body = new PhysicsBody
             {
@@ -141,8 +141,8 @@ namespace SpyceLibrary.Scenes
         {
             GameObject obj = new GameObject();
             Sprite sp = new Sprite();
-            sp.SetSize(10, 10);
             sp.SetTexturePath("System/blank");
+            sp.SetScale(5, 5);
             obj.AddComponent(sp);
             PhysicsBody body = new PhysicsBody();
             obj.AddComponent(body);
@@ -151,25 +151,20 @@ namespace SpyceLibrary.Scenes
             collider.SetBounds(new Point(10, 10));
             collider.SetOffset(new Point(0, 0));
             obj.AddComponent(collider);
+            ParticleEmitter<RainbowParticle> p = new ParticleEmitter<RainbowParticle>();
+            p.Initialize(2f, 2000f, "System/blank");
+            p.MaxScale = 4f;
+            p.MinScale = 2f;
+            obj.AddComponent(p);
             obj["type"] = "Player";
 
             return obj;
         }
 
-        /// <summary>
-        /// Adds an object to the scene
-        /// </summary>
-        /// <param name="obj"></param>
-        public override void AddObject(GameObject obj)
-        {
-            base.AddObject(obj);
-
-            if (obj.GetComponent<PhysicsBody>() != null)
-            {
-                physicsEngine.RegisterBody(obj.GetComponent<PhysicsBody>());
+        private void OnAddObject(GameObject obj) {
+            if (obj.GetComponent<PhysicsBody>() != null) {
+                collisionEngine.RegisterBody(obj.GetComponent<PhysicsBody>());
             }
-
-            //Debug.Instance.WriteLine(NAME, $"Added object of ID: {obj.ID}");
         }
 
         /// <summary>
@@ -181,9 +176,16 @@ namespace SpyceLibrary.Scenes
             base.Update(gameTime);
             double fps = Math.Round(1.0 / Time.Instance.RawDeltaTime);
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
-            physicsEngine.Update(gameTime);
+            collisionEngine.Update(gameTime);
             SetScreenRectangleLocation((int)mainCamera.TopLeft.X, (int)mainCamera.TopLeft.Y);
             CheckInput();
+
+            if (InputManager.Instance.IsKeyDown(Keys.OemOpenBrackets)) {
+                Time.Instance.Timestep -= (float)(1f * Time.Instance.RawDeltaTime);
+            }
+            else if (InputManager.Instance.IsKeyDown(Keys.OemCloseBrackets)) {
+                Time.Instance.Timestep += (float)(1f * Time.Instance.RawDeltaTime);
+            }
         }
 
         private void CheckInput()

@@ -9,14 +9,14 @@ using SpyceLibrary.UI;
 namespace SpyceLibrary
 {
     /// <summary>
-    /// A scene represents a set of various game objects interacting. Scenes are indepedent of each other and
-    /// can be interchangebly loaded using the scene manager.
+    /// A scene represents a set of various game objects interacting. Scenes are independent of each other and
+    /// can be interchangeably loaded using the scene manager.
     /// </summary>
     public class Scene
     {
         #region Fields
         /// <summary>
-        /// Refernce to the data structure holding all the game objects in the game.
+        /// Reference to the data structure holding all the game objects in the game.
         /// </summary>
         public Dictionary<Guid, GameObject> GameObjects
         {
@@ -39,10 +39,22 @@ namespace SpyceLibrary
             get { return uiStack; }
         }
 
+        /// <summary>
+        /// Events that occur with a game object.
+        /// </summary>
+        /// <param name="obj"></param>
+        public delegate void SceneEvent(GameObject obj);
+
+        /// <summary>
+        /// After an object is added to the scene.
+        /// </summary>
+        public SceneEvent OnObjectAdded;
+
         private readonly Dictionary<Guid, GameObject> objects;
         private readonly List<FunctionCall> repeatFunctions;
         private Initializer initializer;
         private List<UIScreen> uiStack;
+        private Queue<GameObject> removeObjects, addObjects;
 
         private UIState uiState;
         private Rectangle screenRect;
@@ -58,6 +70,8 @@ namespace SpyceLibrary
             repeatFunctions = new List<FunctionCall>();
             uiStack = new List<UIScreen>();
             uiState = UIState.Gameplay;
+            removeObjects = new Queue<GameObject>();
+            addObjects = new Queue<GameObject>();
         }
         #endregion
 
@@ -116,6 +130,7 @@ namespace SpyceLibrary
                 }
             }
 
+            // updates the objects
             foreach (GameObject obj in objects.Values)
             {
                 if (obj.IsActive)
@@ -127,6 +142,27 @@ namespace SpyceLibrary
                         obj.ProcessInput(InputManager.Instance);
                     }
                 }
+            }
+            
+            // adds the queued objects
+            while (addObjects.Count > 0) {
+                GameObject obj = addObjects.Dequeue();
+                do
+                {
+                    obj.GenerateNewID();
+                } while (objects.ContainsKey(obj.ID));
+
+                objects.Add(obj.ID, obj);
+                obj.OnDestroy += OnObjectDestruction;
+                obj.Load(initializer);
+                OnObjectAdded?.Invoke(obj);
+            }
+
+            // removes the queued objects
+            while (removeObjects.Count > 0) {
+                GameObject obj = removeObjects.Dequeue();
+                RemoveObject(obj.ID);
+                obj.OnDestroy -= OnObjectDestruction;
             }
 
             foreach (UIScreen ui in uiStack)
@@ -218,7 +254,7 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Removes an existing intervaled function.
+        /// Removes an existing intervalled function.
         /// </summary>
         /// <param name="action"></param>
         public void RemoveInterval(Action action)
@@ -265,14 +301,7 @@ namespace SpyceLibrary
         /// <param name="obj"></param>
         public virtual void AddObject(GameObject obj)
         {
-            do
-            {
-                obj.GenerateNewID();
-            } while (objects.ContainsKey(obj.ID));
-
-            objects.Add(obj.ID, obj);
-            obj.OnDestroy += OnObjectDestruction;
-            obj.Load(initializer);
+            addObjects.Enqueue(obj);
         }
 
         /// <summary>
@@ -281,8 +310,7 @@ namespace SpyceLibrary
         /// <param name="obj"></param>
         private void OnObjectDestruction(GameObject obj)
         {
-            obj.OnDestroy -= OnObjectDestruction;
-            RemoveObject(obj.ID);
+            removeObjects.Enqueue(obj);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpyceLibrary.Debugging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,14 +19,30 @@ namespace SpyceLibrary.Sprites
         public string TexturePath
         {
             get { return texturePath; }
+            set 
+            {
+                Debug.Instance.Assert(!IsLoaded, "Changing the texture path, but the texture was already loaded...");
+                texturePath = value;
+            }
+        }
+
+        /// <summary>
+        /// The tinted color for the sprite.
+        /// </summary>
+        /// <value></value>
+        public Color Color 
+        {
+            get;
+            set;
         }
         private Texture2D texture;
         private string texturePath;
         private Point size;
         private Rectangle sourceRectangle;
         private SpriteBatch spriteBatch;
-        private Vector2 offset;
+        private Vector2 offset, scale;
         private uint drawOrder;
+        private bool hasSetSourceRectangle;
         #endregion
 
         #region Constructor
@@ -34,6 +51,9 @@ namespace SpyceLibrary.Sprites
         /// </summary>
         public Sprite()
         {
+            hasSetSourceRectangle = false;
+            scale = Vector2.Zero;
+            Color = Color.White;
         }
         #endregion
 
@@ -45,6 +65,7 @@ namespace SpyceLibrary.Sprites
         public void SetSourceRectangle(Rectangle sourceRect)
         {
             sourceRectangle = sourceRect;
+            hasSetSourceRectangle = true;
         }
 
         /// <summary>
@@ -65,31 +86,40 @@ namespace SpyceLibrary.Sprites
         }
 
         /// <summary>
+        /// Sets the scale of the sprite's drawn texture.
+        /// </summary>
+        /// <param name="scale"></param>
+        public void SetScale(Vector2 scale)
+        {
+            this.scale = scale;
+        }
+
+        /// <summary>
+        /// Sets the scale of the sprite's drawn texture.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SetScale(float x, float y) 
+        {
+            SetScale(new Vector2(x, y));
+        }
+
+        /// <summary>
+        /// Sets the scale of the sprite's drawn texture.
+        /// </summary>
+        /// <param name="scale"></param>
+        public void SetScale(float scale) 
+        {
+            SetScale(scale, scale);
+        }
+
+        /// <summary>
         /// Sets the offset of the sprite.
         /// </summary>
         /// <param name="offset"></param>
         public void SetOffset(Vector2 offset)
         {
             this.offset = offset;
-        }
-
-        /// <summary>
-        /// Sets the drawn dimension of the sprite.
-        /// </summary>
-        /// <param name="size"></param>
-        public void SetSize(Point size)
-        {
-            this.size = size;
-        }
-
-        /// <summary>
-        /// Sets the drawn dimension of the sprite.
-        /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        public void SetSize(int width, int height)
-        {
-            SetSize(new Point(width, height));
         }
 
         /// <summary>
@@ -102,7 +132,10 @@ namespace SpyceLibrary.Sprites
             base.Load(init, holder);
             spriteBatch = init.SpriteBatch;
             texture = init.Content.Load<Texture2D>(texturePath);
-            sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+            size = new Point(texture.Width, texture.Height);
+            if (!hasSetSourceRectangle) {
+                sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+            }
         }
 
         /// <summary>
@@ -114,7 +147,7 @@ namespace SpyceLibrary.Sprites
             if (GetDrawRectangle().Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
             {
                 Transform tr = Holder.GetTransform();
-                spriteBatch.Draw(texture, rect, sourceRectangle, Color.White, tr.Rotation,
+                spriteBatch.Draw(texture, rect, sourceRectangle, Color, tr.Rotation,
                     Vector2.Zero, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
             }
         }
@@ -127,7 +160,7 @@ namespace SpyceLibrary.Sprites
         {
             Transform tr = Holder.GetTransform();
             return new Rectangle((int)(tr.Position.X + offset.X), (int)(tr.Position.Y + offset.Y),
-                (int)(size.X * tr.Scale.X), (int)(size.Y * tr.Scale.Y));
+                (int)(size.X * tr.Scale.X * scale.Y), (int)(size.Y * tr.Scale.Y * scale.Y));
         }
 
         /// <summary>

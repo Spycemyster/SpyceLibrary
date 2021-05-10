@@ -12,6 +12,7 @@ namespace SpyceLibrary
     /// </summary>
     public class Engine : Game
     {
+        
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private const string DEBUG_NAME = "SYSTEM";
@@ -60,8 +61,6 @@ namespace SpyceLibrary
         protected override void Update(GameTime gameTime)
         {
             Debug.Instance.StartUpdateTick();
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
 
             SceneManager.Instance.Update(gameTime);
             Time.Instance.Update(gameTime);

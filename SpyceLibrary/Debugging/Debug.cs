@@ -359,7 +359,7 @@ namespace SpyceLibrary.Debugging
         public void Draw(SpriteBatch spriteBatch)
         {
             int num = GetCurrentSceneObjectCount();
-            string text = $"# of GameObjects: {num}";
+            string text = $"# of GameObjects: {num}\nTimestep: {Time.Instance.Timestep:0.00}";
             spriteBatch.DrawString(font, text, new Vector2(10, 10), Color.Black * 0.5f);
             spriteBatch.DrawString(font, text, new Vector2(8, 8), Color.White);
         }
