@@ -967,199 +967,29 @@
             </summary>
             <param name="offset"></param>
         </member>
-        <member name="T:SpyceLibrary.Physics.BoxCollider">
+        <member name="T:SpyceLibrary.Physics.Collider">
             <summary>
-            Represents a rectangular hitbox.
+            A solid collider for physics bodies.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Physics.BoxCollider.Size">
+        <member name="M:SpyceLibrary.Physics.Collider.Intersects(SpyceLibrary.Physics.Collider)">
             <summary>
-            The size of the collider.
+            Checks if this collider intersects with the given collider.
             </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.BoxCollider.Offset">
-            <summary>
-            The offset of the collider.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.#ctor">
-            <summary>
-            Creates a new instance of the collider.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.ConstructRectangleAt(Microsoft.Xna.Framework.Vector2)">
-            <summary>
-            Constructs a rectangle at the given position.
-            </summary>
-            <param name="position"></param>
+            <param name="collider"></param>
             <returns></returns>
         </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.SetOffset(Microsoft.Xna.Framework.Point)">
+        <member name="M:SpyceLibrary.Physics.Collider.TopLeftQuad">
             <summary>
-            Sets the offset of the collision rectangle.
+            The top left position of the quad for the collider.
             </summary>
-            <param name="offset"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.SetBounds(Microsoft.Xna.Framework.Point)">
-            <summary>
-            Sets the size of the collision rectangle.
-            </summary>
-            <param name="size"></param>
-        </member>
-        <member name="T:SpyceLibrary.Physics.CircleCollider">
-            <summary>
-            A solid collider that has the shape of a circle.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.CircleCollider.Radius">
-            <summary>
-            The radius of the circle.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:SpyceLibrary.Physics.CircleCollider.Position">
-            <summary>
-            Position of the circle.
-            </summary>
-            <value></value>
-        </member>
-        <member name="M:SpyceLibrary.Physics.CircleCollider.#ctor">
-            <summary>
-            Creates a new instance of the Circle Collider.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.CircleCollider.Intersects(SpyceLibrary.Physics.CircleCollider)">
-            <summary>
-            Checks if this circle is colliding with the other.
-            </summary>
-            <param name="circle"></param>
             <returns></returns>
         </member>
-        <member name="M:SpyceLibrary.Physics.CircleCollider.SetOffset(Microsoft.Xna.Framework.Vector2)">
+        <member name="M:SpyceLibrary.Physics.Collider.BottomRightQuad">
             <summary>
-            Sets the offset for the circle collider.
+            The bottom right quad position of the collider.
             </summary>
-            <param name="offset"></param>
-        </member>
-        <member name="T:SpyceLibrary.Physics.PhysicsBody">
-            <summary>
-            A member of the physics engine. This represents a physical object within the game world
-            that has physics-based behaviors and interactions with other physical objects.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Position">
-            <summary>
-            Position of the physics body.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Velocity">
-            <summary>
-            The velocity of the body for this tick.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.IsCollidable">
-            <summary>
-            Whether this object should be collided with in the collision detection.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Collider">
-            <summary>
-            The rectangular collision rectangle of the physics body. TODO: Change to a more
-            generic collider type.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Engine">
-            <summary>
-            The physics engine of the body.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.#ctor">
-            <summary>
-            Creates a new instance of the physics body.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
-            <summary>
-            Initializes the physics body.
-            </summary>
-            <param name="init"></param>
-            <param name="holder"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.Register(SpyceLibrary.Physics.PhysicsEngine)">
-            <summary>
-            Registers the engine with this body.
-            </summary>
-            <param name="engine"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.GetBodiesWithin(System.Single)">
-            <summary>
-            Gets all the physics bodies within a set distance.
-            </summary>
-            <param name="distance"></param>
             <returns></returns>
-        </member>
-        <member name="T:SpyceLibrary.Physics.PhysicsEngine">
-            <summary>
-            Updates physical objects within the game world.
-            </summary>
-        </member>
-        <member name="F:SpyceLibrary.Physics.PhysicsEngine.QUAD_SIZE">
-            <summary>
-            The size of each quad.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.#ctor">
-            <summary>
-            Creates a new instance of the physics engine.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Initialize(SpyceLibrary.Initializer)">
-            <summary>
-            Initializes the physics engine.
-            </summary>
-            <param name="initializer"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.GetBodiesWithin(Microsoft.Xna.Framework.Vector2,System.Single)">
-            <summary>
-            Gets all the bodies within a certain distance from the given point.
-            </summary>
-            <param name="position"></param>
-            <param name="distance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.RegisterBody(SpyceLibrary.Physics.PhysicsBody)">
-            <summary>
-            Registers the body to the engine.
-            </summary>
-            <param name="body"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates the state of each physics engine.
-            </summary>
-            <param name="gameTime"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Clear">
-            <summary>
-            Clears all the bodies from the physics engine.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Draw(SpyceLibrary.Camera)">
-            <summary>
-            Debug Purposes. Draws a half opacity rectangle for all the physics bodies in the world.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.UnregisterQuadBody(SpyceLibrary.Physics.PhysicsBody)">
-            <summary>
-            Unregister the body with the quad map.
-            </summary>
-            <param name="body"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.ReaddQuadBody(SpyceLibrary.Physics.PhysicsBody)">
-            <summary>
-            Registers the quad bodies of this body into the quad map.
-            </summary>
-            <param name="body"></param>
         </member>
         <member name="T:SpyceLibrary.Physics.TestComponent">
             <summary>

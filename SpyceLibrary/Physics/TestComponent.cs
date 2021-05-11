@@ -12,7 +12,6 @@ namespace SpyceLibrary.Physics
     public class TestComponent : GameComponent, IUpdated, IInput
     {
         #region Fields
-        private PhysicsBody body;
         #endregion
 
         #region Constructor
@@ -33,8 +32,6 @@ namespace SpyceLibrary.Physics
         public override void Load(Initializer init, GameObject holder)
         {
             base.Load(init, holder);
-
-            body = RequireComponent<PhysicsBody>();
         }
 
         /// <summary>
@@ -64,7 +61,7 @@ namespace SpyceLibrary.Physics
             if (velocity.Length() > 0)
             {
                 velocity.Normalize();
-                body.Velocity = velocity * speed;
+                velocity *= speed * Time.Instance.DeltaTime;
             }
 
             if (InputManager.Instance.IsKeyDown(Keys.Up))
@@ -77,6 +74,8 @@ namespace SpyceLibrary.Physics
                 Camera cam = (Camera)Holder["Camera"];
                 cam.Zoom += 0.01f;
             }
+
+            Holder.Position += velocity;
         }
 
         /// <summary>
@@ -85,14 +84,6 @@ namespace SpyceLibrary.Physics
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-            List<PhysicsBody> bodies = body.GetBodiesWithin(100);
-            foreach (PhysicsBody body in bodies)
-            {
-                if (body != this.body)
-                {
-                    SceneManager.Instance.CurrentScene.RemoveObject(body.Holder.ID);
-                }
-            }
         }
         #endregion
     }
@@ -103,7 +94,6 @@ namespace SpyceLibrary.Physics
     public class TestComponent2 : GameComponent, IUpdated
     {
         #region Fields
-        private PhysicsBody body;
         private float timer;
         private Random rand;
         private float x, y;
@@ -118,7 +108,6 @@ namespace SpyceLibrary.Physics
         public override void Load(Initializer init, GameObject holder)
         {
             base.Load(init, holder);
-            body = RequireComponent<PhysicsBody>();
             rand = new Random();
             x = (float)(rand.NextDouble() * 100) + 1;
             y = (float)(rand.NextDouble() * 100) + 1;
