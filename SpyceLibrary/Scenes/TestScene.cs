@@ -7,6 +7,7 @@ using SpyceLibrary.Debugging;
 using System;
 using SpyceLibrary.UI;
 using Microsoft.Xna.Framework.Input;
+using SpyceLibrary.Lighting;
 
 namespace SpyceLibrary.Scenes
 {
@@ -27,12 +28,14 @@ namespace SpyceLibrary.Scenes
         private SpriteBatch spriteBatch;
         private Camera mainCamera;
         private PhysicsEngine collisionEngine;
+        private LightEngine lightEngine;
         private Random random;
+        private RenderTarget2D lightTarget, mainTarget;
 
         /// <summary>
         /// Width of the window size.
         /// </summary>
-        public const int WINDOW_WIDTH = 1400;
+        public const int WINDOW_WIDTH = 1600;
 
         /// <summary>
         /// Height of the window size.
@@ -65,10 +68,7 @@ namespace SpyceLibrary.Scenes
             Content = initializer.Content;
             spriteBatch = initializer.SpriteBatch;
             graphics = initializer.Device;
-
-            // engine initialization
-            collisionEngine = new PhysicsEngine();
-            collisionEngine.Initialize(initializer);
+            BackgroundColor = new Color(0, 0, 10);
 
             // game initialization
             random = new Random();
@@ -76,6 +76,14 @@ namespace SpyceLibrary.Scenes
             SceneManager.Instance.SetFrameDimension(WINDOW_WIDTH, WINDOW_HEIGHT);
             SetScreenRectangleBounds(WINDOW_WIDTH, WINDOW_HEIGHT);
             SetInterval(PrintTickSpeed, 3, 3);
+            lightTarget = new RenderTarget2D(initializer.Graphics, ScreenRectangle.Width, ScreenRectangle.Height);
+            mainTarget = new RenderTarget2D(initializer.Graphics, ScreenRectangle.Width, ScreenRectangle.Height);
+
+            // engine initialization
+            collisionEngine = new PhysicsEngine();
+            collisionEngine.Initialize(initializer);
+            lightEngine = new LightEngine(0.5f, 1f);
+            lightEngine.Initialize(initializer, mainCamera);
 
             PushUI(new HUD(this));
 
@@ -111,7 +119,7 @@ namespace SpyceLibrary.Scenes
             GameObject obj = new GameObject();
             Sprite sp = new Sprite();
             sp.SetTexturePath("Textures/hugo");
-            sp.SetScale(0.5f, 0.5f);
+            sp.SetScale(3);
             obj.AddComponent(sp);
             return obj;
         }
@@ -151,10 +159,12 @@ namespace SpyceLibrary.Scenes
             collider.SetBounds(new Point(10, 10));
             collider.SetOffset(new Point(0, 0));
             obj.AddComponent(collider);
+            LightSource source = new LightSource(1, 100f);
+            obj.AddComponent(source);
             ParticleEmitter<RainbowParticle> p = new ParticleEmitter<RainbowParticle>();
-            p.Initialize(2f, 2000f, "System/blank");
-            p.MaxScale = 4f;
-            p.MinScale = 2f;
+            p.Initialize(4f, 10f, "Textures/henry", "Textures/hugo", "Textures/image1");
+            p.MaxScale = 0.2f;
+            p.MinScale = 0.1f;
             obj.AddComponent(p);
             obj["type"] = "Player";
 
@@ -164,6 +174,9 @@ namespace SpyceLibrary.Scenes
         private void OnAddObject(GameObject obj) {
             if (obj.GetComponent<PhysicsBody>() != null) {
                 collisionEngine.RegisterBody(obj.GetComponent<PhysicsBody>());
+            }
+            if (obj.GetComponent<LightSource>() != null) {
+                lightEngine.RegisterSource(obj.GetComponent<LightSource>());
             }
         }
 
@@ -214,15 +227,33 @@ namespace SpyceLibrary.Scenes
         /// </summary>
         public override void Draw()
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            // draw light sources
+            GraphicsDevice.SetRenderTarget(lightTarget);
+            GraphicsDevice.Clear(Color.Black);
+
+            // draws the light sources in the game
+            spriteBatch.Begin(sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp,
+                blendState: BlendState.Additive, transformMatrix:mainCamera.GetTransformedMatrix());
+            lightEngine.Draw();
+            lightEngine.DrawLightSources();
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(mainTarget);
+            // draw main scene
+            GraphicsDevice.Clear(BackgroundColor);
             spriteBatch.Begin(transformMatrix: mainCamera.GetTransformedMatrix());
 
             base.Draw();
 
-            //physicsEngine.Draw(mainCamera);
-
+            spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(BackgroundColor);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            lightEngine.Apply(lightTarget);
+            spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
             spriteBatch.End();
 
+            // draw UI
             spriteBatch.Begin();
             DrawUI();
             Debug.Instance.Draw(spriteBatch);

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using SpyceLibrary.Debugging;
+using SpyceLibrary.Lighting;
 
 namespace SpyceLibrary.Sprites 
 {
@@ -131,7 +132,7 @@ namespace SpyceLibrary.Sprites
             TTL = timeToLive;
             random = new Random();
             double direction = random.NextDouble() * 2 * Math.PI;
-            velocity = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction)) * 100f;
+            velocity = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction)) * 200f;
         }
 
         /// <summary>
@@ -153,6 +154,9 @@ namespace SpyceLibrary.Sprites
             sprite.TexturePath = texturePaths[random.Next(texturePaths.Length)];
             sprite.SetScale((float)random.NextDouble() * (MaxScale - MinScale) + MinScale);
             AddComponent(sprite);
+
+            LightSource source = new LightSource(0.1f, 100f);
+            AddComponent(source);
             base.Load(init);
         }
 
@@ -188,8 +192,8 @@ namespace SpyceLibrary.Sprites
         public RainbowParticle(float timeToLive) : base(timeToLive) {
             random = new Random();
             this.timeToLive = timeToLive;
-            //color = new Color(random.Next(255), random.Next(255), random.Next(255));
-            color = new Color(random.Next(10), random.Next(10), random.Next(200, 255));
+            color = new Color(random.Next(255), random.Next(255), random.Next(255));
+            //color = new Color(random.Next(10), random.Next(10), random.Next(200, 255));
         }
 
         public override void Update(GameTime gameTime)
@@ -198,7 +202,7 @@ namespace SpyceLibrary.Sprites
             
             Color tColor = new Color(color.R, color.G, color.B) * (TTL / timeToLive);
             Sprite.Color = tColor;
-            gravity += new Vector2(0, 5f) * Time.Instance.DeltaTime;
+            gravity += new Vector2(0, 100f) * Time.Instance.DeltaTime;
         }
 
 

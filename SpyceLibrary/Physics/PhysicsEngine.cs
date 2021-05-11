@@ -135,20 +135,14 @@ namespace SpyceLibrary.Physics
                         body.Position += vel;
                     }
                     body.Velocity = Vector2.Zero;
-                    //Vector2 v = body.Velocity;
-                    //if (collideY)
-                    //{
-                    //    v.Y = 0;
-                    //}
-                    //if (collideX)
-                    //{
-                    //    v.X = 0;
-                    //}
-                    //body.Velocity = v;
                     ReaddQuadBody(body);
 
                 }
             }
+        }
+
+        private void ResolveCollision(PhysicsBody a, PhysicsBody b) {
+
         }
 
         private void OnBodyRemoved(GameComponent component)
@@ -216,7 +210,7 @@ namespace SpyceLibrary.Physics
         }
 
         /// <summary>
-        /// Unregisters the bod with the quad map.
+        /// Unregister the body with the quad map.
         /// </summary>
         /// <param name="body"></param>
         private void UnregisterQuadBody(PhysicsBody body)

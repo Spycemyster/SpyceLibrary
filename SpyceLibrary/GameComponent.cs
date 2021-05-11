@@ -166,6 +166,13 @@ namespace SpyceLibrary
         /// The maximum number of layers to be drawn on.
         /// </summary>
         public const float MAX_DRAW_ORDER = 5f;
+        
+        /// <summary>
+        /// Draw order for particles
+        /// </summary>
+        public const uint PARTICLE_DRAWORDER = BACKGROUND_DRAWORDER + BACKGROUND_LAYERS;
+        public const uint BACKGROUND_LAYERS = 10;
+        public const uint BACKGROUND_DRAWORDER = 0;
 
         /// <summary>
         /// The draw order of the game component.

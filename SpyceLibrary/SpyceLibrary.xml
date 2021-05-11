@@ -464,6 +464,11 @@
             The maximum number of layers to be drawn on.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.IDrawn.PARTICLE_DRAWORDER">
+            <summary>
+            Draw order for particles
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.IDrawn.DrawOrder">
             <summary>
             The draw order of the game component.
@@ -855,6 +860,94 @@
             The middle mouse button
             </summary>
         </member>
+        <member name="T:SpyceLibrary.Lighting.LightEngine">
+            <summary>
+            Applies lighting effects of various light sources in the game
+            world.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Lighting.LightEngine.LIGHTMASK_RESOLUTION">
+            <summary>
+            The resolution of the light mask texture.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a new instance of the light engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Unload">
+            <summary>
+            Frees up the generated resources.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.GenerateLightMask(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Int32)">
+            <summary>
+            Generates a light mask based on the given parameters.
+            </summary>
+            <param name="graphics"></param>
+            <param name="resolution"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.RegisterSource(SpyceLibrary.Lighting.LightSource)">
+            <summary>
+            Registers the source with the engine.
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.UnregisterSource(SpyceLibrary.GameObject)">
+            <summary>
+            Unregisters the source attached to the body.
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Draw">
+            <summary>
+            Draws the black background
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.DrawLightSources">
+            <summary>
+            Draws each light source of the engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.GetDrawRectangle">
+            <summary>
+            Gets the screen rectangle at the 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Intensity">
+            <summary>
+            The intensity of the light source (1 is max, 0 is completely dark)
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Radius">
+            <summary>
+            The radius of the light source's reach.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Position">
+            <summary>
+            The center of the light source.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightSource.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a new instance of a light source.
+            </summary>
+            <param name="intensity"></param>
+            <param name="radius"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightSource.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset of the light source relative to the holder's position.
+            </summary>
+            <param name="offset"></param>
+        </member>
         <member name="T:SpyceLibrary.Physics.BoxCollider">
             <summary>
             Represents a rectangular hitbox.
@@ -893,6 +986,35 @@
             Sets the size of the collision rectangle.
             </summary>
             <param name="size"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.CircleCollider">
+            <summary>
+            A solid collider that has the shape of a circle.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Physics.CircleCollider.Radius">
+            <summary>
+            The radius of the circle.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Physics.CircleCollider.Position">
+            <summary>
+            Position of the circle.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CircleCollider.#ctor">
+            <summary>
+            Creates a new instance of the Circle Collider.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CircleCollider.Intersects(SpyceLibrary.Physics.CircleCollider)">
+            <summary>
+            Checks if this circle is colliding with the other.
+            </summary>
+            <param name="circle"></param>
+            <returns></returns>
         </member>
         <member name="T:SpyceLibrary.Physics.PhysicsBody">
             <summary>
@@ -1004,7 +1126,7 @@
         </member>
         <member name="M:SpyceLibrary.Physics.PhysicsEngine.UnregisterQuadBody(SpyceLibrary.Physics.PhysicsBody)">
             <summary>
-            Unregisters the bod with the quad map.
+            Unregister the body with the quad map.
             </summary>
             <param name="body"></param>
         </member>
@@ -1111,6 +1233,11 @@
         <member name="F:SpyceLibrary.Scene.OnObjectAdded">
             <summary>
             After an object is added to the scene.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Scene.BackgroundColor">
+            <summary>
+            The color of the scene's background.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Scene.#ctor">
@@ -1663,10 +1790,27 @@
             Singleton instance of the time.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.Time.TARGET_FRAMERATE">
+            <summary>
+            The targetted minimum framerate of the game.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Time.MAX_SMOOTH_DELTA">
+            <summary>
+            The maximum timestep for each update cycle.
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.Time.DeltaTime">
+            <summary>
+            The amount of elapsed time from the last update call, but within the bounds of the max smooth delta. This is
+            to prevent game freezes from messing too much with the physics.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Time.TrueDeltaTime">
             <summary>
             The amount of elapsed time from the last update call.
             </summary>
+            <value></value>
         </member>
         <member name="P:SpyceLibrary.Time.RawDeltaTime">
             <summary>
