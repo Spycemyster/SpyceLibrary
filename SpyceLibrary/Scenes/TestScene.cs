@@ -30,6 +30,7 @@ namespace SpyceLibrary.Scenes
         private PhysicsEngine collisionEngine;
         private LightEngine lightEngine;
         private Random random;
+        private Texture2D blank;
         private RenderTarget2D lightTarget, mainTarget;
 
         /// <summary>
@@ -68,6 +69,7 @@ namespace SpyceLibrary.Scenes
             Content = initializer.Content;
             spriteBatch = initializer.SpriteBatch;
             graphics = initializer.Device;
+            blank = Content.Load<Texture2D>("System/blank");
             BackgroundColor = new Color(0, 0, 10);
 
             // game initialization
@@ -162,7 +164,7 @@ namespace SpyceLibrary.Scenes
             LightSource source = new LightSource(1, 100f);
             obj.AddComponent(source);
             ParticleEmitter<RainbowParticle> p = new ParticleEmitter<RainbowParticle>();
-            p.Initialize(4f, 10f, "Textures/henry", "Textures/hugo", "Textures/image1");
+            p.Initialize(4f, 100f, "Textures/henry", "Textures/hugo", "Textures/image1");
             p.MaxScale = 0.2f;
             p.MinScale = 0.1f;
             obj.AddComponent(p);
@@ -242,7 +244,7 @@ namespace SpyceLibrary.Scenes
             // draw main scene
             GraphicsDevice.Clear(BackgroundColor);
             spriteBatch.Begin(transformMatrix: mainCamera.GetTransformedMatrix());
-
+            spriteBatch.Draw(blank, mainCamera.TopLeft, Color.Black);
             base.Draw();
 
             spriteBatch.End();

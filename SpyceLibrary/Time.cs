@@ -33,7 +33,7 @@ namespace SpyceLibrary
         /// <summary>
         /// The targetted minimum framerate of the game.
         /// </summary>
-        public const int TARGET_FRAMERATE = 60;
+        public const int TARGET_FRAMERATE = 30;
 
         /// <summary>
         /// The maximum timestep for each update cycle.

@@ -12,9 +12,36 @@ namespace SpyceLibrary.UI.UIComponents
     public class UIComponent : IUpdated, IInput
     {
         #region Events
+        /// <summary>
+        /// An event that has to do with user interface components.
+        /// </summary>
+        /// <param name="component"></param>
         public delegate void UIEvent(UIComponent component);
-        public UIEvent OnClick, Hovering, OnEnter, OnLeave;
 
+        /// <summary>
+        /// When the component is clicked on.
+        /// </summary>
+        public UIEvent OnClick;
+
+        /// <summary>
+        /// When the user hovers their mouse over the component.
+        /// </summary>
+        public UIEvent Hovering;
+
+        /// <summary>
+        /// When the user's mouse just hovers over the component.
+        /// </summary>
+        public UIEvent OnEnter;
+
+        /// <summary>
+        /// When the user's mouse just leaves the component.
+        /// </summary>
+        public UIEvent OnLeave;
+
+        /// <summary>
+        /// The size of the component.
+        /// </summary>
+        /// <value></value>
         public virtual Point Size
         {
             get { return size; }
@@ -23,6 +50,11 @@ namespace SpyceLibrary.UI.UIComponents
                 size = value;
             }
         }
+
+        /// <summary>
+        /// The position of the component.
+        /// </summary>
+        /// <value></value>
         public virtual Point Position
         {
             get { return position; }
@@ -32,8 +64,19 @@ namespace SpyceLibrary.UI.UIComponents
             }
         }
 
+        /// <summary>
+        /// The text drawn for the ui component.
+        /// </summary>
         protected string text;
+
+        /// <summary>
+        /// The font of the text drawn for the ui component.
+        /// </summary>
         protected SpriteFont font;
+
+        /// <summary>
+        /// The texture of the component.
+        /// </summary>
         protected Texture2D texture;
         private Point size, position;
         private Point prevMousePosition;
@@ -80,20 +123,36 @@ namespace SpyceLibrary.UI.UIComponents
             return regionSize / 2 - objSize / 2;
         }
 
+        /// <summary>
+        /// The draw rectangle for the ui component.
+        /// </summary>
+        /// <returns></returns>
         public Rectangle GetRectangle()
         {
             return new Rectangle(position, size);
         }
 
+        /// <summary>
+        /// Updates the behavior of the ui component.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public virtual void Update(GameTime gameTime)
         {
         }
 
+        /// <summary>
+        /// Draws the component to the screen.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
 
         }
 
+        /// <summary>
+        /// Processes user input with respect to the component.
+        /// </summary>
+        /// <param name="input"></param>
         public virtual void ProcessInput(InputManager input)
         {
             Point currentPosition = input.GetMousePosition();

@@ -37,7 +37,6 @@ namespace SpyceLibrary.Sprites
         }
         private Texture2D texture;
         private string texturePath;
-        private Point size;
         private Rectangle sourceRectangle;
         private SpriteBatch spriteBatch;
         private Vector2 offset, scale;
@@ -132,7 +131,6 @@ namespace SpyceLibrary.Sprites
             base.Load(init, holder);
             spriteBatch = init.SpriteBatch;
             texture = init.Content.Load<Texture2D>(texturePath);
-            size = new Point(texture.Width, texture.Height);
             if (!hasSetSourceRectangle) {
                 sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             }
@@ -144,7 +142,7 @@ namespace SpyceLibrary.Sprites
         public virtual void Draw()
         {
             Rectangle rect = GetDrawRectangle();
-            if (GetDrawRectangle().Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
+            if (rect.Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
             {
                 Transform tr = Holder.GetTransform();
                 spriteBatch.Draw(texture, rect, sourceRectangle, Color, tr.Rotation,
@@ -159,8 +157,9 @@ namespace SpyceLibrary.Sprites
         public Rectangle GetDrawRectangle()
         {
             Transform tr = Holder.GetTransform();
-            return new Rectangle((int)(tr.Position.X + offset.X), (int)(tr.Position.Y + offset.Y),
-                (int)(size.X * tr.Scale.X * scale.Y), (int)(size.Y * tr.Scale.Y * scale.Y));
+            Point size = new Point((int)(texture.Width * tr.Scale.X * scale.X), (int)(texture.Height * tr.Scale.Y * scale.Y));
+            return new Rectangle((int)(tr.Position.X + offset.X - size.X / 2), (int)(tr.Position.Y + offset.Y - size.Y / 2),
+                size.X, size.Y);
         }
 
         /// <summary>

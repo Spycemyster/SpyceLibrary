@@ -41,12 +41,21 @@ namespace SpyceLibrary.Lighting
             lightMask.Dispose();
         }
 
+        /// <summary>
+        /// Applies the light effect to the scene.
+        /// </summary>
+        /// <param name="lightTarget"></param>
         public void Apply(RenderTarget2D lightTarget)
         {
             lightEffect.Parameters["lightMask"].SetValue(lightTarget);
             lightEffect.CurrentTechnique.Passes[0].Apply();
         }
 
+        /// <summary>
+        /// Initializes the light engine and its resources.
+        /// </summary>
+        /// <param name="initializer"></param>
+        /// <param name="camera"></param>
         public void Initialize(Initializer initializer, Camera camera)
         {
             spriteBatch = initializer.SpriteBatch;
@@ -128,6 +137,10 @@ namespace SpyceLibrary.Lighting
             }
         }
 
+        /// <summary>
+        /// The draw order of the light engine.
+        /// </summary>
+        /// <returns></returns>
         public uint DrawOrder()
         {
             return 0;

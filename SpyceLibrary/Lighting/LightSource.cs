@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpyceLibrary.Lighting
 {
+    /// <summary>
+    /// Represents a source of light.
+    /// </summary>
     public class LightSource : GameComponent
     {
         /// <summary>
@@ -34,9 +37,7 @@ namespace SpyceLibrary.Lighting
         {
             get { return Holder.Position + offset; }
         }
-        private Texture2D texture;
         private float intensity, radius;
-        private SpriteBatch spriteBatch;
         private Vector2 offset;
         
         #region Constructor

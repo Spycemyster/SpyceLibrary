@@ -464,11 +464,6 @@
             The maximum number of layers to be drawn on.
             </summary>
         </member>
-        <member name="F:SpyceLibrary.IDrawn.PARTICLE_DRAWORDER">
-            <summary>
-            Draw order for particles
-            </summary>
-        </member>
         <member name="M:SpyceLibrary.IDrawn.DrawOrder">
             <summary>
             The draw order of the game component.
@@ -881,6 +876,19 @@
             Frees up the generated resources.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Apply(Microsoft.Xna.Framework.Graphics.RenderTarget2D)">
+            <summary>
+            Applies the light effect to the scene.
+            </summary>
+            <param name="lightTarget"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Initialize(SpyceLibrary.Initializer,SpyceLibrary.Camera)">
+            <summary>
+            Initializes the light engine and its resources.
+            </summary>
+            <param name="initializer"></param>
+            <param name="camera"></param>
+        </member>
         <member name="M:SpyceLibrary.Lighting.LightEngine.GenerateLightMask(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Int32)">
             <summary>
             Generates a light mask based on the given parameters.
@@ -911,11 +919,22 @@
             Draws each light source of the engine.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.DrawOrder">
+            <summary>
+            The draw order of the light engine.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.Lighting.LightEngine.GetDrawRectangle">
             <summary>
             Gets the screen rectangle at the 
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Lighting.LightSource">
+            <summary>
+            Represents a source of light.
+            </summary>
         </member>
         <member name="P:SpyceLibrary.Lighting.LightSource.Intensity">
             <summary>
@@ -1015,6 +1034,12 @@
             </summary>
             <param name="circle"></param>
             <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CircleCollider.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset for the circle collider.
+            </summary>
+            <param name="offset"></param>
         </member>
         <member name="T:SpyceLibrary.Physics.PhysicsBody">
             <summary>
@@ -1641,6 +1666,16 @@
             <param name="particleRate"></param>
             <param name="paths"></param>
         </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.ContinueEmitting">
+            <summary>
+            Continues emitting particles.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.StopEmitting">
+            <summary>
+            Stops emitting particles.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the particle emitter.
@@ -1652,6 +1687,12 @@
             Represents a singular particle within a particle engine.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.Sprites.Particle.Scale">
+            <summary>
+            The scale of the particle.
+            </summary>
+            <value></value>
+        </member>
         <member name="F:SpyceLibrary.Sprites.Particle.TTL">
             <summary>
             The time left the particle has before it is removed.
@@ -1662,6 +1703,17 @@
             The sprite drawn for the particle.
             </summary>
             <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.Particle.TimeToLive">
+            <summary>
+            The total time the particle has before being removed.
+            </summary>
+            <value></value>
+        </member>
+        <member name="F:SpyceLibrary.Sprites.Particle.Color">
+            <summary>
+            The color of the particle.
+            </summary>
         </member>
         <member name="M:SpyceLibrary.Sprites.Particle.#ctor(System.Single)">
             <summary>
@@ -1690,6 +1742,18 @@
             <summary>
             Gets the velocity of the particle.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Sprites.RainbowParticle">
+            <summary>
+            Randomly colored particles.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.RainbowParticle.#ctor(System.Single)">
+            <summary>
+            Creates a new instance of the rainbow particle.
+            </summary>
+            <param name="timeToLive"></param>
             <returns></returns>
         </member>
         <member name="T:SpyceLibrary.Sprites.Sprite">
@@ -1883,11 +1947,50 @@
             A menu that confirms yes or no.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.UI.ConfirmMenu.YesButton">
+            <summary>
+            Button for confirmation
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.ConfirmMenu.NoButton">
+            <summary>
+            Button for confirmation
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.UI.ConfirmMenu.#ctor(SpyceLibrary.Scene)">
             <summary>
             Creates a new instance of the confirm menu.
             </summary>
             <param name="currentScene"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the confirmation menu.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of each UI component.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes the input of the 
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the confirmation menu to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.HUD">
+            <summary>
+            The heads up display user interface.
+            </summary>
         </member>
         <member name="M:SpyceLibrary.UI.HUD.#ctor(SpyceLibrary.Scene)">
             <summary>
@@ -1924,6 +2027,11 @@
             </summary>
             <param name="input"></param>
         </member>
+        <member name="T:SpyceLibrary.UI.PauseMenu">
+            <summary>
+            The user interface that handles pausing.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.UI.PauseMenu.#ctor(SpyceLibrary.Scene)">
             <summary>
             Creates a new instance of the pause menu.
@@ -1935,6 +2043,17 @@
             Initializes the pause menu.
             </summary>
             <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.Close">
+            <summary>
+            Closes the menu.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input.
+            </summary>
+            <param name="input"></param>
         </member>
         <member name="M:SpyceLibrary.UI.PauseMenu.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
@@ -1948,14 +2067,108 @@
             </summary>
             <param name="spriteBatch"></param>
         </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UIButton">
+            <summary>
+            A button that can be clicked by the user.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.BackgroundColor">
+            <summary>
+            The color of the button's background.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.TextColor">
+            <summary>
+            The color of the text.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.Size">
+            <summary>
+            The size of the button.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.Position">
+            <summary>
+            The position of the button.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.UI.UIComponents.UIButton.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
             <summary>
             Creates a new instance of the UI button.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIButton.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIButton.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the button to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
         <member name="T:SpyceLibrary.UI.UIComponents.UIComponent">
             <summary>
             Abstract class of a user interface component.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UIComponent.UIEvent">
+            <summary>
+            An event that has to do with user interface components.
+            </summary>
+            <param name="component"></param>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.OnClick">
+            <summary>
+            When the component is clicked on.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.Hovering">
+            <summary>
+            When the user hovers their mouse over the component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.OnEnter">
+            <summary>
+            When the user's mouse just hovers over the component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.OnLeave">
+            <summary>
+            When the user's mouse just leaves the component.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIComponent.Size">
+            <summary>
+            The size of the component.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIComponent.Position">
+            <summary>
+            The position of the component.
+            </summary>
+            <value></value>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.text">
+            <summary>
+            The text drawn for the ui component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.font">
+            <summary>
+            The font of the text drawn for the ui component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.texture">
+            <summary>
+            The texture of the component.
             </summary>
         </member>
         <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
@@ -1983,10 +2196,81 @@
             <param name="objSize"></param>
             <returns></returns>
         </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.GetRectangle">
+            <summary>
+            The draw rectangle for the ui component.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of the ui component.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the component to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input with respect to the component.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UITextBox">
+            <summary>
+            A component that allows the user to type in text.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.BackgroundColor">
+            <summary>
+            The color of the textbox's background.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.TextColor">
+            <summary>
+            The color of the text in the textbox.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.Size">
+            <summary>
+            The size of the ui textbox.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.Position">
+            <summary>
+            The position of the textbox.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
             <summary>
             Creates a new instance of the UI button.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of the textbox.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input and checks for when the user types.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the textbox to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
         </member>
         <member name="T:SpyceLibrary.UI.UIScreen">
             <summary>
@@ -2010,8 +2294,14 @@
         </member>
         <member name="F:SpyceLibrary.UI.UIScreen.font">
             <summary>
-            
+            The font of the text drawn to this screen.
             </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIScreen.Scene">
+            <summary>
+            The scene that this screen is drawn and attached to.
+            </summary>
+            <value></value>
         </member>
         <member name="M:SpyceLibrary.UI.UIScreen.#ctor(SpyceLibrary.Scene)">
             <summary>

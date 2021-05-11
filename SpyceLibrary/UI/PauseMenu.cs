@@ -10,6 +10,9 @@ using static SpyceLibrary.Scene;
 
 namespace SpyceLibrary.UI
 {
+    /// <summary>
+    /// The user interface that handles pausing.
+    /// </summary>
     public class PauseMenu : UIScreen
     {
         #region Fields
@@ -94,6 +97,9 @@ namespace SpyceLibrary.UI
             Close();
         }
 
+        /// <summary>
+        /// Closes the menu.
+        /// </summary>
         public override void Close()
         {
             base.Close();
@@ -101,6 +107,10 @@ namespace SpyceLibrary.UI
             Time.Instance.Timestep = 1;
         }
 
+        /// <summary>
+        /// Processes user input.
+        /// </summary>
+        /// <param name="input"></param>
         public override void ProcessInput(InputManager input)
         {
             base.ProcessInput(input);

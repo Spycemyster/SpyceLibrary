@@ -46,6 +46,10 @@ namespace SpyceLibrary.Physics
                     + (circle.Position.Y + Position.Y) * (circle.Position.Y + Position.Y);
         }
 
+        /// <summary>
+        /// Sets the offset for the circle collider.
+        /// </summary>
+        /// <param name="offset"></param>
         public void SetOffset(Vector2 offset) {
             this.offset = offset;
         }

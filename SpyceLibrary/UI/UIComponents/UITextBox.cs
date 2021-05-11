@@ -8,15 +8,26 @@ using System.Text;
 
 namespace SpyceLibrary.UI.UIComponents
 {
+    /// <summary>
+    /// A component that allows the user to type in text.
+    /// </summary>
     public class UITextBox : UIComponent
     {
         #region Fields
+        /// <summary>
+        /// The color of the textbox's background.
+        /// </summary>
+        /// <value></value>
         public Color BackgroundColor
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The color of the text in the textbox.
+        /// </summary>
+        /// <value></value>
         public Color TextColor
         {
             get;
@@ -25,6 +36,11 @@ namespace SpyceLibrary.UI.UIComponents
 
 
         private Vector2 textPosition;
+
+        /// <summary>
+        /// The size of the ui textbox.
+        /// </summary>
+        /// <value></value>
         public override Point Size
         {
             get
@@ -37,6 +53,11 @@ namespace SpyceLibrary.UI.UIComponents
                 UpdateTextPosition();
             }
         }
+
+        /// <summary>
+        /// The position of the textbox.
+        /// </summary>
+        /// <value></value>
         public override Point Position
         {
             get
@@ -86,6 +107,11 @@ namespace SpyceLibrary.UI.UIComponents
         {
             textPosition = Position.ToVector2() + GetMiddlePosition(Size.ToVector2(), font.MeasureString(text));
         }
+
+        /// <summary>
+        /// Updates the behavior of the textbox.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -98,6 +124,11 @@ namespace SpyceLibrary.UI.UIComponents
                 timer = 0f;
             }
         }
+
+        /// <summary>
+        /// Processes user input and checks for when the user types.
+        /// </summary>
+        /// <param name="input"></param>
         public override void ProcessInput(InputManager input)
         {
             bool spamText = timer > 0.5f;
@@ -133,6 +164,10 @@ namespace SpyceLibrary.UI.UIComponents
 
         }
 
+        /// <summary>
+        /// Draws the textbox to the screen.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);

@@ -16,6 +16,10 @@ namespace SpyceLibrary.UI
         private Texture2D blank;
         private Rectangle panelRect;
         private Point rectSize;
+
+        /// <summary>
+        /// Button for confirmation
+        /// </summary>
         public UIButton YesButton, NoButton;
         /// <summary>
         /// Creates a new instance of the confirm menu.
@@ -25,6 +29,10 @@ namespace SpyceLibrary.UI
         {
         }
 
+        /// <summary>
+        /// Initializes the confirmation menu.
+        /// </summary>
+        /// <param name="initializer"></param>
         public override void Initialize(Initializer initializer)
         {
             base.Initialize(initializer);
@@ -50,7 +58,11 @@ namespace SpyceLibrary.UI
             };
             NoButton.Position = (GetMiddlePosition(NoButton.Size.ToVector2()) + new Vector2(-60, 50)).ToPoint();
         }
-
+        
+        /// <summary>
+        /// Updates the behavior of each UI component.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -58,6 +70,10 @@ namespace SpyceLibrary.UI
             NoButton.Update(gameTime);
         }
 
+        /// <summary>
+        /// Processes the input of the 
+        /// </summary>
+        /// <param name="input"></param>
         public override void ProcessInput(InputManager input)
         {
             base.ProcessInput(input);
@@ -70,6 +86,10 @@ namespace SpyceLibrary.UI
             }
         }
 
+        /// <summary>
+        /// Draws the confirmation menu to the screen.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
