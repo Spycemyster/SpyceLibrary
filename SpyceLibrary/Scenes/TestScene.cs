@@ -84,8 +84,6 @@ namespace SpyceLibrary.Scenes
             mainTarget = new RenderTarget2D(initializer.Graphics, ScreenRectangle.Width, ScreenRectangle.Height);
 
             // engine initialization
-            // collisionEngine = new PhysicsEngine();
-            // collisionEngine.Initialize(initializer);
             lightEngine = new LightEngine(1f, 1f);
             lightEngine.Initialize(initializer, mainCamera);
             collisionEngine = new CollisionEngine();
@@ -260,6 +258,12 @@ namespace SpyceLibrary.Scenes
             base.Draw();
             collisionEngine.DrawHashQuads(spriteBatch);
             
+            spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(BackgroundColor);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            lightEngine.Apply(lightTarget);
+            spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
             spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(BackgroundColor);

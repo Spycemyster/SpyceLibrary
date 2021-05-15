@@ -86,7 +86,6 @@ namespace SpyceLibrary.Lighting
                     int index = y * resolution + x;
                     float r = (float)Math.Sqrt(px * px + py * py);
                     float opacity = (r <= resolution / 2) ? (float)Math.Pow((resolution / 2 - r) / resolution * 2, 2) : 0f;
-                    //maskData[index] = Color.White * opacity;
                     maskData[index] = new Color(opacity, opacity, opacity);
                 }
             }

@@ -875,6 +875,7 @@
             </summary>
         </member>
         <member name="T:SpyceLibrary.Lighting.LightEngine">
+<<<<<<< HEAD
             <summary>
             Applies lighting effects of various light sources in the game
             world.
@@ -995,10 +996,26 @@
         <member name="T:SpyceLibrary.Physics.BoxCollider">
             <summary>
             A rectangular collider.
+=======
+            <summary>
+            Applies lighting effects of various light sources in the game
+            world.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.#ctor">
+        <member name="F:SpyceLibrary.Lighting.LightEngine.LIGHTMASK_RESOLUTION">
             <summary>
+            The resolution of the light mask texture.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a new instance of the light engine.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Unload">
+            <summary>
+<<<<<<< HEAD
             Creates a new instance of the box collider.
             </summary>
         </member>
@@ -1023,9 +1040,13 @@
         <member name="M:SpyceLibrary.Physics.BoxCollider.GetCollisionRectangle(Microsoft.Xna.Framework.Vector2)">
             <summary>
             Constructs a collision rectangle at the holder's position.
+=======
+            Frees up the generated resources.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
             <returns></returns>
         </member>
+<<<<<<< HEAD
         <member name="M:SpyceLibrary.Physics.BoxCollider.GetCollidingWith(Microsoft.Xna.Framework.Vector2@)">
             <summary>
             Gets a set of all colliders that this collider is colliding with at any given position.
@@ -1059,18 +1080,42 @@
         <member name="F:SpyceLibrary.Physics.BoxColliderArgs.ThisCollider">
             <summary>
             This box collider
+=======
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Apply(Microsoft.Xna.Framework.Graphics.RenderTarget2D)">
+            <summary>
+            Applies the light effect to the scene.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
+            <param name="lightTarget"></param>
         </member>
+<<<<<<< HEAD
         <member name="F:SpyceLibrary.Physics.BoxColliderArgs.ThatCollider">
             <summary>
             The collider that intersects with this box collider.
+=======
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Initialize(SpyceLibrary.Initializer,SpyceLibrary.Camera)">
+            <summary>
+            Initializes the light engine and its resources.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
+            <param name="initializer"></param>
+            <param name="camera"></param>
         </member>
+<<<<<<< HEAD
         <member name="T:SpyceLibrary.Physics.ColliderArgs">
             <summary>
             The arguments passed for collision data
+=======
+        <member name="M:SpyceLibrary.Lighting.LightEngine.GenerateLightMask(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Int32)">
+            <summary>
+            Generates a light mask based on the given parameters.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
+            <param name="graphics"></param>
+            <param name="resolution"></param>
+            <returns></returns>
         </member>
+<<<<<<< HEAD
         <member name="P:SpyceLibrary.Physics.ColliderArgs.PreviousPosition">
             <summary>
             The previous position of the collider
@@ -1080,8 +1125,21 @@
         <member name="T:SpyceLibrary.Physics.Collider">
             <summary>
             A solid collider for physics bodies.
+=======
+        <member name="M:SpyceLibrary.Lighting.LightEngine.RegisterSource(SpyceLibrary.Lighting.LightSource)">
+            <summary>
+            Registers the source with the engine.
             </summary>
+            <param name="source"></param>
         </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.UnregisterSource(SpyceLibrary.GameObject)">
+            <summary>
+            Unregisters the source attached to the body.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
+            </summary>
+            <param name="obj"></param>
+        </member>
+<<<<<<< HEAD
         <member name="F:SpyceLibrary.Physics.Collider.QUAD_SIZE">
             <summary>
             The size of a quadrant
@@ -1105,10 +1163,14 @@
         <member name="M:SpyceLibrary.Physics.Collider.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
             <summary>
             Loads the collider.
+=======
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Draw">
+            <summary>
+            Draws the black background
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
-            <param name="init"></param>
-            <param name="holder"></param>
         </member>
+<<<<<<< HEAD
         <member name="M:SpyceLibrary.Physics.Collider.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Checks if the object has moved.
@@ -1137,10 +1199,33 @@
         <member name="M:SpyceLibrary.Physics.Collider.InvokeOnEnter(System.Object,System.EventArgs)">
             <summary>
             Invokes the onEnter event.
+=======
+        <member name="M:SpyceLibrary.Lighting.LightEngine.DrawLightSources">
+            <summary>
+            Draws each light source of the engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.DrawOrder">
+            <summary>
+            The draw order of the light engine.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.GetDrawRectangle">
+            <summary>
+            Gets the screen rectangle at the 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Lighting.LightSource">
+            <summary>
+            Represents a source of light.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
             <param name="sender"></param>
             <param name="args"></param>
         </member>
+<<<<<<< HEAD
         <member name="M:SpyceLibrary.Physics.Collider.QuadPoints(Microsoft.Xna.Framework.Vector2)">
             <summary>
             The top left and bottom right points of the collider.
@@ -1222,14 +1307,59 @@
         <member name="M:SpyceLibrary.Physics.CollisionEngine.Load(Microsoft.Xna.Framework.Content.ContentManager)">
             <summary>
             Loads the texture for the collision engine.
+=======
+        <member name="P:SpyceLibrary.Lighting.LightSource.Intensity">
+            <summary>
+            The intensity of the light source (1 is max, 0 is completely dark)
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Radius">
+            <summary>
+            The radius of the light source's reach.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Position">
+            <summary>
+            The center of the light source.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightSource.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a new instance of a light source.
+            </summary>
+            <param name="intensity"></param>
+            <param name="radius"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightSource.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset of the light source relative to the holder's position.
+            </summary>
+            <param name="offset"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.Collider">
+            <summary>
+            A solid collider for physics bodies.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
             <param name="content"></param>
         </member>
+<<<<<<< HEAD
         <member name="T:SpyceLibrary.Physics.TestDummy">
             <summary>
             A test dummy object.
+=======
+        <member name="M:SpyceLibrary.Physics.Collider.Intersects(SpyceLibrary.Physics.Collider)">
+            <summary>
+            Checks if this collider intersects with the given collider.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             </summary>
+            <param name="collider"></param>
+            <returns></returns>
         </member>
+<<<<<<< HEAD
         <member name="T:SpyceLibrary.Physics.TestPlayer">
             <summary>
             A test object that tests various components.
@@ -1250,6 +1380,19 @@
             <summary>
             Draws the test object to the screen.
             </summary>
+=======
+        <member name="M:SpyceLibrary.Physics.Collider.TopLeftQuad">
+            <summary>
+            The top left position of the quad for the collider.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.BottomRightQuad">
+            <summary>
+            The bottom right quad position of the collider.
+            </summary>
+            <returns></returns>
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
         </member>
         <member name="T:SpyceLibrary.Physics.TestComponent">
             <summary>
@@ -1777,6 +1920,12 @@
             Represents a singular particle within a particle engine.
             </summary>
         </member>
+        <member name="P:SpyceLibrary.Sprites.Particle.Scale">
+            <summary>
+            The scale of the particle.
+            </summary>
+            <value></value>
+        </member>
         <member name="F:SpyceLibrary.Sprites.Particle.TTL">
             <summary>
             The time left the particle has before it is removed.
@@ -1799,11 +1948,14 @@
             The color of the particle.
             </summary>
         </member>
+<<<<<<< HEAD
         <member name="P:SpyceLibrary.Sprites.Particle.LightColor">
             <summary>
             The color of the light emitted from this particle.
             </summary>
         </member>
+=======
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
         <member name="M:SpyceLibrary.Sprites.Particle.#ctor(System.Single)">
             <summary>
             Creates a new instance of the particle.
@@ -1839,7 +1991,11 @@
             </summary>
         </member>
         <member name="M:SpyceLibrary.Sprites.RainbowParticle.#ctor(System.Single)">
+<<<<<<< HEAD
             <summary> 
+=======
+            <summary>
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
             Creates a new instance of the rainbow particle.
             </summary>
             <param name="timeToLive"></param>
@@ -2403,7 +2559,16 @@
         <member name="F:SpyceLibrary.UI.UIScreen.font">
             <summary>
             The font of the text drawn to this screen.
+<<<<<<< HEAD
+=======
             </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIScreen.Scene">
+            <summary>
+            The scene that this screen is drawn and attached to.
+>>>>>>> 7581571048d4e3e29dd6f4a83058730882328ba7
+            </summary>
+            <value></value>
         </member>
         <member name="P:SpyceLibrary.UI.UIScreen.Scene">
             <summary>

@@ -90,9 +90,7 @@ namespace SpyceLibrary.Physics
     /// </summary>
     public class TestComponent : GameComponent, IUpdated, IInput
     {
-        #region Fields
         private Collider collider;
-        #endregion
 
         #region Constructor
         /// <summary>

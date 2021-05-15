@@ -50,7 +50,6 @@ namespace SpyceLibrary.Lighting
         }
         private float intensity, radius;
         private Vector2 offset;
-
         #region Constructor
         /// <summary>
         /// Creates a new instance of a light source.
@@ -62,6 +61,7 @@ namespace SpyceLibrary.Lighting
             this.intensity = intensity;
             this.radius = radius;
             this.offset = Vector2.Zero;
+            
             LightColor = Color.White;
         }
 
