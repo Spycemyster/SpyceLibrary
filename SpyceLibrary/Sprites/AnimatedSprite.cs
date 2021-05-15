@@ -180,7 +180,7 @@ namespace SpyceLibrary.Sprites
         }
 
         /// <summary>
-        /// The texture that the frame is located on. Each frame data holds a refernce to its
+        /// The texture that the frame is located on. Each frame data holds a reference to its
         /// texture to allow for animations to potentially consist of different files.
         /// </summary>
         [XmlIgnore]
