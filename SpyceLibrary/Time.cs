@@ -31,11 +31,30 @@ namespace SpyceLibrary
 
         #region Fields
         /// <summary>
-        /// The amount of elapsed time from the last update call.
+        /// The targetted minimum framerate of the game.
+        /// </summary>
+        public const int TARGET_FRAMERATE = 30;
+
+        /// <summary>
+        /// The maximum timestep for each update cycle.
+        /// </summary>
+        public const float MAX_SMOOTH_DELTA = 1f / TARGET_FRAMERATE;
+
+        /// <summary>
+        /// The amount of elapsed time from the last update call, but within the bounds of the max smooth delta. This is
+        /// to prevent game freezes from messing too much with the physics.
         /// </summary>
         public float DeltaTime
         {
-            get { return (float)(RawDeltaTime * timestep); }
+            get { return Math.Min(MAX_SMOOTH_DELTA, TrueDeltaTime); }
+        }
+
+        /// <summary>
+        /// The amount of elapsed time from the last update call.
+        /// </summary>
+        /// <value></value>
+        public float TrueDeltaTime {
+            get { return Math.Min(MAX_SMOOTH_DELTA, (float)(RawDeltaTime * timestep)); }
         }
 
         /// <summary>

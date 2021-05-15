@@ -7,6 +7,7 @@ using SpyceLibrary.Debugging;
 using System;
 using SpyceLibrary.UI;
 using Microsoft.Xna.Framework.Input;
+using SpyceLibrary.Lighting;
 
 namespace SpyceLibrary.Scenes
 {
@@ -26,13 +27,17 @@ namespace SpyceLibrary.Scenes
         private ContentManager Content;
         private SpriteBatch spriteBatch;
         private Camera mainCamera;
-        private PhysicsEngine collisionEngine;
+        // private PhysicsEngine collisionEngine;
+        private LightEngine lightEngine;
+        private CollisionEngine collisionEngine;
         private Random random;
+        private Texture2D blank;
+        private RenderTarget2D lightTarget, mainTarget;
 
         /// <summary>
         /// Width of the window size.
         /// </summary>
-        public const int WINDOW_WIDTH = 1400;
+        public const int WINDOW_WIDTH = 1600;
 
         /// <summary>
         /// Height of the window size.
@@ -65,10 +70,9 @@ namespace SpyceLibrary.Scenes
             Content = initializer.Content;
             spriteBatch = initializer.SpriteBatch;
             graphics = initializer.Device;
-
-            // engine initialization
-            collisionEngine = new PhysicsEngine();
-            collisionEngine.Initialize(initializer);
+            blank = Content.Load<Texture2D>("System/blank");
+            //BackgroundColor = new Color(25, 5, 100);
+            BackgroundColor = Color.CornflowerBlue;
 
             // game initialization
             random = new Random();
@@ -76,17 +80,37 @@ namespace SpyceLibrary.Scenes
             SceneManager.Instance.SetFrameDimension(WINDOW_WIDTH, WINDOW_HEIGHT);
             SetScreenRectangleBounds(WINDOW_WIDTH, WINDOW_HEIGHT);
             SetInterval(PrintTickSpeed, 3, 3);
+            lightTarget = new RenderTarget2D(initializer.Graphics, ScreenRectangle.Width, ScreenRectangle.Height);
+            mainTarget = new RenderTarget2D(initializer.Graphics, ScreenRectangle.Width, ScreenRectangle.Height);
+
+            // engine initialization
+            // collisionEngine = new PhysicsEngine();
+            // collisionEngine.Initialize(initializer);
+            lightEngine = new LightEngine(1f, 1f);
+            lightEngine.Initialize(initializer, mainCamera);
+            collisionEngine = new CollisionEngine();
+            collisionEngine.Load(initializer.Content);
 
             PushUI(new HUD(this));
 
-            GameObject player = CreateTestPlayer();
-            player.Position = Vector2.Zero;
-            player["Camera"] = mainCamera;
+            // GameObject player = CreateTestPlayer();
+            // player.Position = Vector2.Zero;
+            // player["Camera"] = mainCamera;
+            TestPlayer player = new TestPlayer(250, 250);
             AddObject(player);
 
-            GameObject hugo = CreateTestSprite();
-            hugo.Position = new Vector2(100, 100);
-            AddObject(hugo);
+            for (int i = 0; i < 100; i++)
+            {
+                TestDummy dummy = new TestDummy();
+                AddObject(dummy);
+                float x = (float)(random.NextDouble() * 1000) + 200;
+                float y = (float)(random.NextDouble() * 1000) + 200;
+                dummy.Position = new Vector2(x, y);
+            }
+
+            // GameObject hugo = CreateTestSprite();
+            // hugo.Position = new Vector2(100, 100);
+            // AddObject(hugo);
             // for (int i = 0; i < 10000; i++)
             // {
             //     GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));
@@ -104,14 +128,15 @@ namespace SpyceLibrary.Scenes
         {
             base.Unload();
 
-            collisionEngine.Clear();
+            lightEngine.Unload();
+            // collisionEngine.Clear();
         }
 
         private GameObject CreateTestSprite() {
             GameObject obj = new GameObject();
             Sprite sp = new Sprite();
             sp.SetTexturePath("Textures/hugo");
-            sp.SetScale(0.5f, 0.5f);
+            sp.SetScale(3);
             obj.AddComponent(sp);
             return obj;
         }
@@ -123,16 +148,16 @@ namespace SpyceLibrary.Scenes
             sp.SetTexturePath("Textures/hugo");
             sp.SetScale(width / 323f, height / 321f);
             obj.AddComponent(sp);
-            PhysicsBody body = new PhysicsBody
-            {
-                IsCollidable = true
-            };
-            obj.AddComponent(body);
-            obj.AddComponent(new TestComponent2());
-            BoxCollider collider = new BoxCollider();
-            obj.AddComponent(collider);
-            collider.SetBounds(new Point(width, height));
-            collider.SetOffset(new Point(0, 0));
+            // PhysicsBody body = new PhysicsBody
+            // {
+            //     IsCollidable = true
+            // };
+            // obj.AddComponent(body);
+            // obj.AddComponent(new TestComponent2());
+            // BoxCollider collider = new BoxCollider();
+            // obj.AddComponent(collider);
+            // collider.SetBounds(new Point(width, height));
+            // collider.SetOffset(new Point(0, 0));
             obj["type"] = "BlankSprite";
             return obj;
         }
@@ -144,17 +169,14 @@ namespace SpyceLibrary.Scenes
             sp.SetTexturePath("System/blank");
             sp.SetScale(5, 5);
             obj.AddComponent(sp);
-            PhysicsBody body = new PhysicsBody();
-            obj.AddComponent(body);
             obj.AddComponent(new TestComponent());
-            BoxCollider collider = new BoxCollider();
-            collider.SetBounds(new Point(10, 10));
-            collider.SetOffset(new Point(0, 0));
-            obj.AddComponent(collider);
+            LightSource source = new LightSource(0.2f, 10f);
+            obj.AddComponent(source);
             ParticleEmitter<RainbowParticle> p = new ParticleEmitter<RainbowParticle>();
-            p.Initialize(2f, 2000f, "System/blank");
-            p.MaxScale = 4f;
-            p.MinScale = 2f;
+            // p.Initialize(4f, 10f, "Textures/henry", "Textures/hugo", "Textures/image1");
+            p.Initialize(2f, 75f, "System/blank");
+            p.MaxScale = 5f;
+            p.MinScale = 4f;
             obj.AddComponent(p);
             obj["type"] = "Player";
 
@@ -162,8 +184,14 @@ namespace SpyceLibrary.Scenes
         }
 
         private void OnAddObject(GameObject obj) {
-            if (obj.GetComponent<PhysicsBody>() != null) {
-                collisionEngine.RegisterBody(obj.GetComponent<PhysicsBody>());
+            // if (obj.GetComponent<PhysicsBody>() != null) {
+            //     collisionEngine.RegisterBody(obj.GetComponent<PhysicsBody>());
+            // }
+            if (obj.GetComponent<LightSource>() != null) {
+                lightEngine.RegisterSource(obj.GetComponent<LightSource>());
+            }
+            if (obj.GetComponent<Collider>() != null) {
+                collisionEngine.Registerbody(obj);
             }
         }
 
@@ -176,7 +204,7 @@ namespace SpyceLibrary.Scenes
             base.Update(gameTime);
             double fps = Math.Round(1.0 / Time.Instance.RawDeltaTime);
             Window.Title = $"{Debug.Instance.TickSpeed} ms, {(int)fps} fps";
-            collisionEngine.Update(gameTime);
+            // collisionEngine.Update(gameTime);
             SetScreenRectangleLocation((int)mainCamera.TopLeft.X, (int)mainCamera.TopLeft.Y);
             CheckInput();
 
@@ -193,7 +221,7 @@ namespace SpyceLibrary.Scenes
             if (InputManager.Instance.IsKeyDown(Keys.Q))
             {
                 GameObject obj = CreateBlankSprite(random.Next(10, 100), random.Next(10, 100));//CreateBlankSprite(100, 100);
-                obj.RelativeTransform.SetPosition(random.Next(0, 1000), random.Next(0, 1000));
+                obj.Position = new Vector2(random.Next(0, 1000), random.Next(0, 1000));
                 AddObject(obj);
             }
             else if (InputManager.Instance.IsKeyDown(Keys.E))
@@ -214,15 +242,33 @@ namespace SpyceLibrary.Scenes
         /// </summary>
         public override void Draw()
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(transformMatrix: mainCamera.GetTransformedMatrix());
+            // draw light sources
+            GraphicsDevice.SetRenderTarget(lightTarget);
+            GraphicsDevice.Clear(Color.Black);
 
-            base.Draw();
-
-            //physicsEngine.Draw(mainCamera);
-
+            // draws the light sources in the game
+            spriteBatch.Begin(sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp,
+                blendState: BlendState.Additive, transformMatrix:mainCamera.GetTransformedMatrix());
+            lightEngine.Draw();
+            lightEngine.DrawLightSources();
             spriteBatch.End();
 
+            GraphicsDevice.SetRenderTarget(mainTarget);
+            // draw main scene
+            spriteBatch.Begin(transformMatrix: mainCamera.GetTransformedMatrix());
+            spriteBatch.Draw(blank, new Rectangle(mainCamera.TopLeft.ToPoint(), SceneManager.Instance.GetWindowSize()), BackgroundColor);
+            base.Draw();
+            collisionEngine.DrawHashQuads(spriteBatch);
+            
+            spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(BackgroundColor);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            lightEngine.Apply(lightTarget);
+            spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            // draw UI
             spriteBatch.Begin();
             DrawUI();
             Debug.Instance.Draw(spriteBatch);

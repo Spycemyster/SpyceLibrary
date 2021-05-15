@@ -37,12 +37,12 @@ namespace SpyceLibrary.Sprites
         }
         private Texture2D texture;
         private string texturePath;
-        private Point size;
         private Rectangle sourceRectangle;
         private SpriteBatch spriteBatch;
         private Vector2 offset, scale;
         private uint drawOrder;
-        private bool hasSetSourceRectangle;
+        private bool hasSetSourceRectangle, hasSetSize;
+        private Point size;
         #endregion
 
         #region Constructor
@@ -52,8 +52,10 @@ namespace SpyceLibrary.Sprites
         public Sprite()
         {
             hasSetSourceRectangle = false;
-            scale = Vector2.Zero;
+            hasSetSize = false;
+            scale = Vector2.One;
             Color = Color.White;
+            size = Point.Zero;
         }
         #endregion
 
@@ -86,6 +88,28 @@ namespace SpyceLibrary.Sprites
         }
 
         /// <summary>
+        /// Sets the size of the sprite before applying scaling. By default it is the size of the texture.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void SetSize(int width, int height)
+        {
+            SetSize( new Point(width, height) );
+        }
+
+        /// <summary>
+        /// Sets the size of the sprite before applying scaling. By default it is the size of the texture.
+        /// </summary>
+        /// <param name="size"></param>
+        public void SetSize(Point size)
+        {
+            this.size = size;
+
+            // flag
+            hasSetSize = true;
+        }
+
+        /// <summary>
         /// Sets the scale of the sprite's drawn texture.
         /// </summary>
         /// <param name="scale"></param>
@@ -101,7 +125,7 @@ namespace SpyceLibrary.Sprites
         /// <param name="y"></param>
         public void SetScale(float x, float y) 
         {
-            SetScale(new Vector2(x, y));
+            SetScale( new Vector2(x, y) );
         }
 
         /// <summary>
@@ -132,8 +156,12 @@ namespace SpyceLibrary.Sprites
             base.Load(init, holder);
             spriteBatch = init.SpriteBatch;
             texture = init.Content.Load<Texture2D>(texturePath);
-            size = new Point(texture.Width, texture.Height);
-            if (!hasSetSourceRectangle) {
+            if (!hasSetSize)
+            {
+                size = texture.Bounds.Size;
+            }
+            if (!hasSetSourceRectangle) 
+            {
                 sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             }
         }
@@ -144,12 +172,20 @@ namespace SpyceLibrary.Sprites
         public virtual void Draw()
         {
             Rectangle rect = GetDrawRectangle();
-            if (GetDrawRectangle().Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
+            if (rect.Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
             {
-                Transform tr = Holder.GetTransform();
-                spriteBatch.Draw(texture, rect, sourceRectangle, Color, tr.Rotation,
+                spriteBatch.Draw(texture, rect, sourceRectangle, Color, Holder.Rotation,
                     Vector2.Zero, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
             }
+        }
+
+        /// <summary>
+        /// Gets the size of the drawn sprite.
+        /// </summary>
+        /// <returns></returns>
+        public Point GetSize()
+        {
+            return new Point((int)(size.X * Holder.Scale.X * scale.X), (int)(size.Y * Holder.Scale.Y * scale.Y));
         }
 
         /// <summary>
@@ -158,9 +194,9 @@ namespace SpyceLibrary.Sprites
         /// <returns></returns>
         public Rectangle GetDrawRectangle()
         {
-            Transform tr = Holder.GetTransform();
-            return new Rectangle((int)(tr.Position.X + offset.X), (int)(tr.Position.Y + offset.Y),
-                (int)(size.X * tr.Scale.X * scale.Y), (int)(size.Y * tr.Scale.Y * scale.Y));
+            Point size = GetSize();
+            return new Rectangle((int)(Holder.Position.X + offset.X - size.X / 2), (int)(Holder.Position.Y + offset.Y - size.Y / 2),
+                size.X, size.Y);
         }
 
         /// <summary>

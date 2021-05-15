@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpyceLibrary.Debugging;
 using System;
@@ -18,7 +19,7 @@ namespace SpyceLibrary
         /// Delegate handler for game object events.
         /// </summary>
         /// <param name="obj"></param>
-        public delegate void GameObjectEvent(GameObject obj);
+        public delegate void GameObjectEvent(in GameObject obj);
 
         /// <summary>
         /// When the object is enabled.
@@ -70,20 +71,51 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// The relative transformation (before applying parent transformations).
-        /// </summary>
-        public Transform RelativeTransform
-        {
-            get { return relativeTransform; }
-        }
-
-        /// <summary>
         /// The relative position of the game object.
         /// </summary>
         /// <value></value>
-        public Vector2 Position {
-            get { return relativeTransform.Position;}
-            set { relativeTransform.SetPosition(value); }
+        public Vector2 Position 
+        {
+            get { return relativeTransform.Position + ((parent != null) ? parent.Position : Vector2.Zero); }
+            set { relativeTransform.Position = value - ((parent != null) ? parent.Position : Vector2.Zero); }
+        }
+
+        /// <summary>
+        /// The scale of the game object.
+        /// </summary>
+        /// <value></value>
+        public Vector2 Scale 
+        {
+            get { return relativeTransform.Scale * ((parent != null) ? parent.Scale : Vector2.One); }
+            set { relativeTransform.Scale = value / ((parent != null) ? parent.Scale : Vector2.One); }
+        }
+
+        /// <summary>
+        /// The rotation of the game object.
+        /// </summary>
+        /// <value></value>
+        public float Rotation 
+        {
+            get { return relativeTransform.Rotation + ((parent != null) ? parent.Rotation : 0); }
+            set { relativeTransform.Rotation = value - ((parent != null) ? parent.Rotation : 0); }
+        }
+
+        /// <summary>
+        /// The spritebatch for the game.
+        /// </summary>
+        /// <value></value>
+        protected SpriteBatch spriteBatch
+        {
+            get { return initializer.SpriteBatch; }
+        }
+
+        /// <summary>
+        /// The content manager for the current scene.
+        /// </summary>
+        /// <value></value>
+        protected ContentManager content
+        {
+            get { return initializer.Content; }
         }
         private readonly List<IDrawn> drawnComponents;
         private readonly List<IUpdated> updatedComponents;
@@ -118,6 +150,14 @@ namespace SpyceLibrary
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Moves the game object's relative position by the given delta.
+        /// </summary>
+        public void Translate(Vector2 delta)
+        {
+            relativeTransform.Position += delta;
+        }
+
         /// <summary>
         /// Frees up the memory in the game object and its components.
         /// </summary>
@@ -226,13 +266,23 @@ namespace SpyceLibrary
         }
 
         /// <summary>
-        /// Gets the component if it is attached to this game object.
+        /// Gets the first component if it is attached to this game object.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public T GetComponent<T>()
         {
             return (T)(object)components.Find(x => x is T);
+        }
+
+        /// <summary>
+        /// Gets all components if they are attached to this game object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> GetComponents<T>()
+        {
+            return (List<T>)(object)components.FindAll(x => x is T).ConvertAll(x => (T)(object)x);
         }
 
         /// <summary>
@@ -245,31 +295,6 @@ namespace SpyceLibrary
             T comp = GetComponent<T>();
             Debug.Instance.AssertStrict(comp != null, $"Required component {typeof(T)} could not be found.");
             return comp;
-        }
-
-        /// <summary>
-        /// Sets the relative transform of the game object.
-        /// </summary>
-        /// <param name="transform"></param>
-        public void SetRelativeTransform(Transform transform)
-        {
-            relativeTransform = transform;
-        }
-
-        /// <summary>
-        /// Gets the relative to world transform of the game object.
-        /// </summary>
-        /// <returns></returns>
-        public Transform GetTransform()
-        {
-            Transform parentTransform = (parent == null) ? Transform.Identity : parent.relativeTransform;
-            Transform tr = new Transform
-            {
-                Position = relativeTransform.Position + parentTransform.Position,
-                Scale = relativeTransform.Scale * parentTransform.Scale,
-                Rotation = relativeTransform.Rotation + parentTransform.Rotation
-            };
-            return tr;
         }
 
         /// <summary>

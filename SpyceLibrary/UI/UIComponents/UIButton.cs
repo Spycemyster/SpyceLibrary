@@ -6,23 +6,36 @@ using System.Text;
 
 namespace SpyceLibrary.UI.UIComponents
 {
+    /// <summary>
+    /// A button that can be clicked by the user.
+    /// </summary>
     public class UIButton : UIComponent
     {
         #region Fields
+        /// <summary>
+        /// The color of the button's background.
+        /// </summary>
+        /// <value></value>
         public Color BackgroundColor
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The color of the text.
+        /// </summary>
+        /// <value></value>
         public Color TextColor
         {
             get;
             set;
         }
 
-
-        private Vector2 textPosition;
+        /// <summary>
+        /// The size of the button.
+        /// </summary>
+        /// <value></value>
         public override Point Size
         {
             get
@@ -35,6 +48,11 @@ namespace SpyceLibrary.UI.UIComponents
                 UpdateTextPosition();
             }
         }
+
+        /// <summary>
+        /// The position of the button.
+        /// </summary>
+        /// <value></value>
         public override Point Position
         {
             get
@@ -48,6 +66,7 @@ namespace SpyceLibrary.UI.UIComponents
             }
         }
 
+        private Vector2 textPosition;
         private float opacity;
         #endregion
 
@@ -78,11 +97,20 @@ namespace SpyceLibrary.UI.UIComponents
         {
             textPosition = Position.ToVector2() + GetMiddlePosition(Size.ToVector2(), font.MeasureString(text));
         }
+
+        /// <summary>
+        /// Processes user input.
+        /// </summary>
+        /// <param name="input"></param>
         public override void ProcessInput(InputManager input)
         {
             base.ProcessInput(input);
         }
 
+        /// <summary>
+        /// Draws the button to the screen.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);

@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpyceLibrary.UI
 {
+    /// <summary>
+    /// The heads up display user interface.
+    /// </summary>
     public class HUD : UIScreen
     {
 

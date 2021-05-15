@@ -538,20 +538,44 @@
             All game objects are childed to this game object.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.GameObject.RelativeTransform">
-            <summary>
-            The relative transformation (before applying parent transformations).
-            </summary>
-        </member>
         <member name="P:SpyceLibrary.GameObject.Position">
             <summary>
             The relative position of the game object.
             </summary>
             <value></value>
         </member>
+        <member name="P:SpyceLibrary.GameObject.Scale">
+            <summary>
+            The scale of the game object.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.Rotation">
+            <summary>
+            The rotation of the game object.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.spriteBatch">
+            <summary>
+            The spritebatch for the game.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.GameObject.content">
+            <summary>
+            The content manager for the current scene.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.GameObject.#ctor">
             <summary>
             Creates a new instance of a game object.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.Translate(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Moves the game object's relative position by the given delta.
             </summary>
         </member>
         <member name="M:SpyceLibrary.GameObject.Destroy">
@@ -601,7 +625,14 @@
         </member>
         <member name="M:SpyceLibrary.GameObject.GetComponent``1">
             <summary>
-            Gets the component if it is attached to this game object.
+            Gets the first component if it is attached to this game object.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.GameObject.GetComponents``1">
+            <summary>
+            Gets all components if they are attached to this game object.
             </summary>
             <typeparam name="T"></typeparam>
             <returns></returns>
@@ -611,18 +642,6 @@
             Gets the component if it is attached to this game object.
             </summary>
             <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:SpyceLibrary.GameObject.SetRelativeTransform(SpyceLibrary.Transform)">
-            <summary>
-            Sets the relative transform of the game object.
-            </summary>
-            <param name="transform"></param>
-        </member>
-        <member name="M:SpyceLibrary.GameObject.GetTransform">
-            <summary>
-            Gets the relative to world transform of the game object.
-            </summary>
             <returns></returns>
         </member>
         <member name="M:SpyceLibrary.GameObject.SetActive(System.Boolean)">
@@ -855,164 +874,382 @@
             The middle mouse button
             </summary>
         </member>
+        <member name="T:SpyceLibrary.Lighting.LightEngine">
+            <summary>
+            Applies lighting effects of various light sources in the game
+            world.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Lighting.LightEngine.LIGHTMASK_RESOLUTION">
+            <summary>
+            The resolution of the light mask texture.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a new instance of the light engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Unload">
+            <summary>
+            Frees up the generated resources.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Apply(Microsoft.Xna.Framework.Graphics.RenderTarget2D@)">
+            <summary>
+            Applies the light effect to the scene.
+            </summary>
+            <param name="lightTarget"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Initialize(SpyceLibrary.Initializer,SpyceLibrary.Camera)">
+            <summary>
+            Initializes the light engine and its resources.
+            </summary>
+            <param name="initializer"></param>
+            <param name="camera"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.GenerateLightMask(Microsoft.Xna.Framework.Graphics.GraphicsDevice@,System.Int32)">
+            <summary>
+            Generates a light mask based on the given parameters.
+            </summary>
+            <param name="graphics"></param>
+            <param name="resolution"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.RegisterSource(SpyceLibrary.Lighting.LightSource@)">
+            <summary>
+            Registers the source with the engine.
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.UnregisterSource(SpyceLibrary.GameObject@)">
+            <summary>
+            Unregisters the source attached to the body.
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.Draw">
+            <summary>
+            Draws the black background
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.DrawLightSources">
+            <summary>
+            Draws each light source of the engine.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.DrawOrder">
+            <summary>
+            The draw order of the light engine.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightEngine.GetDrawRectangle">
+            <summary>
+            Gets the screen rectangle at the 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Lighting.LightSource">
+            <summary>
+            Represents a source of light.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Intensity">
+            <summary>
+            The intensity of the light source (1 is max, 0 is completely dark)
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Radius">
+            <summary>
+            The radius of the light source's reach.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.Position">
+            <summary>
+            The center of the light source.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Lighting.LightSource.LightColor">
+            <summary>
+            The color of the emitted light.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightSource.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a new instance of a light source.
+            </summary>
+            <param name="intensity"></param>
+            <param name="radius"></param>
+        </member>
+        <member name="M:SpyceLibrary.Lighting.LightSource.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset of the light source relative to the holder's position.
+            </summary>
+            <param name="offset"></param>
+        </member>
         <member name="T:SpyceLibrary.Physics.BoxCollider">
             <summary>
-            Represents a rectangular hitbox.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.BoxCollider.Size">
-            <summary>
-            The size of the collider.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.BoxCollider.Offset">
-            <summary>
-            The offset of the collider.
+            A rectangular collider.
             </summary>
         </member>
         <member name="M:SpyceLibrary.Physics.BoxCollider.#ctor">
             <summary>
-            Creates a new instance of the collider.
+            Creates a new instance of the box collider.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.ConstructRectangleAt(Microsoft.Xna.Framework.Vector2)">
+        <member name="M:SpyceLibrary.Physics.BoxCollider.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
-            Constructs a rectangle at the given position.
+            Updates the logic of the box collider.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.SetSize(System.Int32,System.Int32)">
+            <summary>
+            Sets the size of the box collider.
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.SetOffset(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the offset of the box collider.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.GetCollisionRectangle(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Constructs a collision rectangle at the holder's position.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.BoxCollider.GetCollidingWith(Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Gets a set of all colliders that this collider is colliding with at any given position.
             </summary>
             <param name="position"></param>
             <returns></returns>
         </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.SetOffset(Microsoft.Xna.Framework.Point)">
+        <member name="M:SpyceLibrary.Physics.BoxCollider.QuadPoints(Microsoft.Xna.Framework.Vector2)">
             <summary>
-            Sets the offset of the collision rectangle.
+            The top left and bottom right points of the collider.
             </summary>
-            <param name="offset"></param>
+            <returns></returns>
         </member>
-        <member name="M:SpyceLibrary.Physics.BoxCollider.SetBounds(Microsoft.Xna.Framework.Point)">
+        <member name="M:SpyceLibrary.Physics.BoxCollider.OnIntersectWith(SpyceLibrary.Physics.Collider)">
             <summary>
-            Sets the size of the collision rectangle.
+            Called when the collider intersects another collider.
             </summary>
-            <param name="size"></param>
+            <param name="collider"></param>
         </member>
-        <member name="T:SpyceLibrary.Physics.PhysicsBody">
+        <member name="M:SpyceLibrary.Physics.BoxCollider.RegisterEngine(SpyceLibrary.Physics.CollisionEngine)">
             <summary>
-            A member of the physics engine. This represents a physical object within the game world
-            that has physics-based behaviors and interactions with other physical objects.
+            Registers the engine with this collider.
             </summary>
+            <param name="engine"></param>
         </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Position">
+        <member name="T:SpyceLibrary.Physics.BoxColliderArgs">
             <summary>
-            Position of the physics body.
-            </summary>
-        </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Velocity">
-            <summary>
-            The velocity of the body for this tick.
+            Argument object for box colliders.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.IsCollidable">
+        <member name="F:SpyceLibrary.Physics.BoxColliderArgs.ThisCollider">
             <summary>
-            Whether this object should be collided with in the collision detection.
+            This box collider
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Collider">
+        <member name="F:SpyceLibrary.Physics.BoxColliderArgs.ThatCollider">
             <summary>
-            The rectangular collision rectangle of the physics body. TODO: Change to a more
-            generic collider type.
+            The collider that intersects with this box collider.
             </summary>
         </member>
-        <member name="P:SpyceLibrary.Physics.PhysicsBody.Engine">
+        <member name="T:SpyceLibrary.Physics.ColliderArgs">
             <summary>
-            The physics engine of the body.
+            The arguments passed for collision data
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.#ctor">
+        <member name="P:SpyceLibrary.Physics.ColliderArgs.PreviousPosition">
             <summary>
-            Creates a new instance of the physics body.
+            The previous position of the collider
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:SpyceLibrary.Physics.Collider">
+            <summary>
+            A solid collider for physics bodies.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+        <member name="F:SpyceLibrary.Physics.Collider.QUAD_SIZE">
             <summary>
-            Initializes the physics body.
+            The size of a quadrant
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.Physics.Collider.OnEnter">
+            <summary>
+            When another collider enters this collider.
+            </summary>
+        </member>
+        <member name="E:SpyceLibrary.Physics.Collider.OnMove">
+            <summary>
+            When the absolute position of the game object moves.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.#ctor">
+            <summary>
+            Creates a new instance of the collider.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
+            <summary>
+            Loads the collider.
             </summary>
             <param name="init"></param>
             <param name="holder"></param>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.Register(SpyceLibrary.Physics.PhysicsEngine)">
+        <member name="M:SpyceLibrary.Physics.Collider.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
-            Registers the engine with this body.
-            </summary>
-            <param name="engine"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsBody.GetBodiesWithin(System.Single)">
-            <summary>
-            Gets all the physics bodies within a set distance.
-            </summary>
-            <param name="distance"></param>
-            <returns></returns>
-        </member>
-        <member name="T:SpyceLibrary.Physics.PhysicsEngine">
-            <summary>
-            Updates physical objects within the game world.
-            </summary>
-        </member>
-        <member name="F:SpyceLibrary.Physics.PhysicsEngine.QUAD_SIZE">
-            <summary>
-            The size of each quad.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.#ctor">
-            <summary>
-            Creates a new instance of the physics engine.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Initialize(SpyceLibrary.Initializer)">
-            <summary>
-            Initializes the physics engine.
-            </summary>
-            <param name="initializer"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.GetBodiesWithin(Microsoft.Xna.Framework.Vector2,System.Single)">
-            <summary>
-            Gets all the bodies within a certain distance from the given point.
-            </summary>
-            <param name="position"></param>
-            <param name="distance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.RegisterBody(SpyceLibrary.Physics.PhysicsBody)">
-            <summary>
-            Registers the body to the engine.
-            </summary>
-            <param name="body"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates the state of each physics engine.
+            Checks if the object has moved.
             </summary>
             <param name="gameTime"></param>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Clear">
+        <member name="M:SpyceLibrary.Physics.Collider.SetOffset(Microsoft.Xna.Framework.Vector2)">
             <summary>
-            Clears all the bodies from the physics engine.
+            Sets the offset of the collider.
+            </summary>
+            <param name="point"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.OnIntersectWith(SpyceLibrary.Physics.Collider)">
+            <summary>
+            When this collider intersects with the given collider.
+            </summary>
+            <param name="collider"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.GetCollidingWith(Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Get the colliders that are colliding with this collider at the given position.
+            </summary>
+            <param name="position"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.InvokeOnEnter(System.Object,System.EventArgs)">
+            <summary>
+            Invokes the onEnter event.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.QuadPoints(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            The top left and bottom right points of the collider.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.Collider.RegisterEngine(SpyceLibrary.Physics.CollisionEngine)">
+            <summary>
+            Registers the collision engine with the collider.
+            </summary>
+            <param name="engine"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.CollisionEngine">
+            <summary>
+            Handles efficient collision detection by hashing objects to various spots of the game world.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.Draw(SpyceLibrary.Camera)">
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.#ctor">
             <summary>
-            Debug Purposes. Draws a half opacity rectangle for all the physics bodies in the world.
+            Creates a new instance of a collision engine.
             </summary>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.UnregisterQuadBody(SpyceLibrary.Physics.PhysicsBody)">
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.Registerbody(SpyceLibrary.GameObject@)">
             <summary>
-            Unregisters the bod with the quad map.
+            Registers a body with the collision engine.
             </summary>
-            <param name="body"></param>
+            <param name="obj"></param>
         </member>
-        <member name="M:SpyceLibrary.Physics.PhysicsEngine.ReaddQuadBody(SpyceLibrary.Physics.PhysicsBody)">
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.UnregisterBody(SpyceLibrary.GameObject@)">
             <summary>
-            Registers the quad bodies of this body into the quad map.
+            Unregisters and removes the collider from the engine.
             </summary>
-            <param name="body"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.RemoveBodyFromQuads(SpyceLibrary.GameObject@,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Removes the body from the quads it is assigned to. This should be called before it moves.
+            </summary>
+            <param name="gameObject"></param>
+            <param name="position"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.AddBodyToQuads(SpyceLibrary.GameObject@,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Adds the body from the quads appropriate quads.
+            </summary>
+            <param name="gameObject"></param>
+            <param name="position"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.UpdateObjectQuad(SpyceLibrary.GameObject@,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Updates the state of the given object.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.GetPossibleColliders(SpyceLibrary.GameObject@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Gets a set of possible colliders for the given object at a new position.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.GetPossibleColliders(SpyceLibrary.Physics.Collider@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Gets a set of possible colliders for the given collider at a new position.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.GetPossibleColliders(SpyceLibrary.GameObject@)">
+            <summary>
+            Gets a set of possible colliders for the given game object at it's current position.
+            </summary>
+            <param name="gameObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.DrawHashQuads(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws each non-empty hash quad.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.CollisionEngine.Load(Microsoft.Xna.Framework.Content.ContentManager)">
+            <summary>
+            Loads the texture for the collision engine.
+            </summary>
+            <param name="content"></param>
+        </member>
+        <member name="T:SpyceLibrary.Physics.TestDummy">
+            <summary>
+            A test dummy object.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.Physics.TestPlayer">
+            <summary>
+            A test object that tests various components.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestPlayer.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of a test player.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestPlayer.Load(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the test player.
+            </summary>
+            <param name="init"></param>
+        </member>
+        <member name="M:SpyceLibrary.Physics.TestPlayer.Draw">
+            <summary>
+            Draws the test object to the screen.
+            </summary>
         </member>
         <member name="T:SpyceLibrary.Physics.TestComponent">
             <summary>
@@ -1113,6 +1350,11 @@
             After an object is added to the scene.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.Scene.BackgroundColor">
+            <summary>
+            The color of the scene's background.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Scene.#ctor">
             <summary>
             Creates a new instance of the game scene.
@@ -1200,7 +1442,7 @@
             </summary>
             <param name="obj"></param>
         </member>
-        <member name="M:SpyceLibrary.Scene.OnObjectDestruction(SpyceLibrary.GameObject)">
+        <member name="M:SpyceLibrary.Scene.OnObjectDestruction(SpyceLibrary.GameObject@)">
             <summary>
             When an object is destroyed, it is removed from the scene.
             </summary>
@@ -1514,6 +1756,16 @@
             <param name="particleRate"></param>
             <param name="paths"></param>
         </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.ContinueEmitting">
+            <summary>
+            Continues emitting particles.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.StopEmitting">
+            <summary>
+            Stops emitting particles.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.Sprites.ParticleEmitter`1.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
             Updates the particle emitter.
@@ -1535,6 +1787,22 @@
             The sprite drawn for the particle.
             </summary>
             <value></value>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.Particle.TimeToLive">
+            <summary>
+            The total time the particle has before being removed.
+            </summary>
+            <value></value>
+        </member>
+        <member name="F:SpyceLibrary.Sprites.Particle.Color">
+            <summary>
+            The color of the particle.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Sprites.Particle.LightColor">
+            <summary>
+            The color of the light emitted from this particle.
+            </summary>
         </member>
         <member name="M:SpyceLibrary.Sprites.Particle.#ctor(System.Single)">
             <summary>
@@ -1563,6 +1831,18 @@
             <summary>
             Gets the velocity of the particle.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpyceLibrary.Sprites.RainbowParticle">
+            <summary>
+            Randomly colored particles.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.RainbowParticle.#ctor(System.Single)">
+            <summary> 
+            Creates a new instance of the rainbow particle.
+            </summary>
+            <param name="timeToLive"></param>
             <returns></returns>
         </member>
         <member name="T:SpyceLibrary.Sprites.Sprite">
@@ -1604,6 +1884,19 @@
             </summary>
             <param name="path"></param>
         </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetSize(System.Int32,System.Int32)">
+            <summary>
+            Sets the size of the sprite before applying scaling. By default it is the size of the texture.
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetSize(Microsoft.Xna.Framework.Point)">
+            <summary>
+            Sets the size of the sprite before applying scaling. By default it is the size of the texture.
+            </summary>
+            <param name="size"></param>
+        </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.SetScale(Microsoft.Xna.Framework.Vector2)">
             <summary>
             Sets the scale of the sprite's drawn texture.
@@ -1641,6 +1934,12 @@
             Draws the sprite to the screen.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.GetSize">
+            <summary>
+            Gets the size of the drawn sprite.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.GetDrawRectangle">
             <summary>
             Gets the visible rectangle for the sprite.
@@ -1663,10 +1962,27 @@
             Singleton instance of the time.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.Time.TARGET_FRAMERATE">
+            <summary>
+            The targetted minimum framerate of the game.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.Time.MAX_SMOOTH_DELTA">
+            <summary>
+            The maximum timestep for each update cycle.
+            </summary>
+        </member>
         <member name="P:SpyceLibrary.Time.DeltaTime">
+            <summary>
+            The amount of elapsed time from the last update call, but within the bounds of the max smooth delta. This is
+            to prevent game freezes from messing too much with the physics.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.Time.TrueDeltaTime">
             <summary>
             The amount of elapsed time from the last update call.
             </summary>
+            <value></value>
         </member>
         <member name="P:SpyceLibrary.Time.RawDeltaTime">
             <summary>
@@ -1739,11 +2055,50 @@
             A menu that confirms yes or no.
             </summary>
         </member>
+        <member name="F:SpyceLibrary.UI.ConfirmMenu.YesButton">
+            <summary>
+            Button for confirmation
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.ConfirmMenu.NoButton">
+            <summary>
+            Button for confirmation
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.UI.ConfirmMenu.#ctor(SpyceLibrary.Scene)">
             <summary>
             Creates a new instance of the confirm menu.
             </summary>
             <param name="currentScene"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.Initialize(SpyceLibrary.Initializer)">
+            <summary>
+            Initializes the confirmation menu.
+            </summary>
+            <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of each UI component.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes the input of the 
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.ConfirmMenu.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the confirmation menu to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.HUD">
+            <summary>
+            The heads up display user interface.
+            </summary>
         </member>
         <member name="M:SpyceLibrary.UI.HUD.#ctor(SpyceLibrary.Scene)">
             <summary>
@@ -1780,6 +2135,11 @@
             </summary>
             <param name="input"></param>
         </member>
+        <member name="T:SpyceLibrary.UI.PauseMenu">
+            <summary>
+            The user interface that handles pausing.
+            </summary>
+        </member>
         <member name="M:SpyceLibrary.UI.PauseMenu.#ctor(SpyceLibrary.Scene)">
             <summary>
             Creates a new instance of the pause menu.
@@ -1791,6 +2151,17 @@
             Initializes the pause menu.
             </summary>
             <param name="initializer"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.Close">
+            <summary>
+            Closes the menu.
+            </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.PauseMenu.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input.
+            </summary>
+            <param name="input"></param>
         </member>
         <member name="M:SpyceLibrary.UI.PauseMenu.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
@@ -1804,14 +2175,108 @@
             </summary>
             <param name="spriteBatch"></param>
         </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UIButton">
+            <summary>
+            A button that can be clicked by the user.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.BackgroundColor">
+            <summary>
+            The color of the button's background.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.TextColor">
+            <summary>
+            The color of the text.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.Size">
+            <summary>
+            The size of the button.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIButton.Position">
+            <summary>
+            The position of the button.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.UI.UIComponents.UIButton.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
             <summary>
             Creates a new instance of the UI button.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIButton.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIButton.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the button to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
         <member name="T:SpyceLibrary.UI.UIComponents.UIComponent">
             <summary>
             Abstract class of a user interface component.
+            </summary>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UIComponent.UIEvent">
+            <summary>
+            An event that has to do with user interface components.
+            </summary>
+            <param name="component"></param>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.OnClick">
+            <summary>
+            When the component is clicked on.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.Hovering">
+            <summary>
+            When the user hovers their mouse over the component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.OnEnter">
+            <summary>
+            When the user's mouse just hovers over the component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.OnLeave">
+            <summary>
+            When the user's mouse just leaves the component.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIComponent.Size">
+            <summary>
+            The size of the component.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UIComponent.Position">
+            <summary>
+            The position of the component.
+            </summary>
+            <value></value>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.text">
+            <summary>
+            The text drawn for the ui component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.font">
+            <summary>
+            The font of the text drawn for the ui component.
+            </summary>
+        </member>
+        <member name="F:SpyceLibrary.UI.UIComponents.UIComponent.texture">
+            <summary>
+            The texture of the component.
             </summary>
         </member>
         <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
@@ -1839,10 +2304,81 @@
             <param name="objSize"></param>
             <returns></returns>
         </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.GetRectangle">
+            <summary>
+            The draw rectangle for the ui component.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of the ui component.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the component to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UIComponent.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input with respect to the component.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="T:SpyceLibrary.UI.UIComponents.UITextBox">
+            <summary>
+            A component that allows the user to type in text.
+            </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.BackgroundColor">
+            <summary>
+            The color of the textbox's background.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.TextColor">
+            <summary>
+            The color of the text in the textbox.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.Size">
+            <summary>
+            The size of the ui textbox.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIComponents.UITextBox.Position">
+            <summary>
+            The position of the textbox.
+            </summary>
+            <value></value>
+        </member>
         <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
             <summary>
             Creates a new instance of the UI button.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the behavior of the textbox.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.ProcessInput(SpyceLibrary.InputManager)">
+            <summary>
+            Processes user input and checks for when the user types.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:SpyceLibrary.UI.UIComponents.UITextBox.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the textbox to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
         </member>
         <member name="T:SpyceLibrary.UI.UIScreen">
             <summary>
@@ -1866,8 +2402,14 @@
         </member>
         <member name="F:SpyceLibrary.UI.UIScreen.font">
             <summary>
-            
+            The font of the text drawn to this screen.
             </summary>
+        </member>
+        <member name="P:SpyceLibrary.UI.UIScreen.Scene">
+            <summary>
+            The scene that this screen is drawn and attached to.
+            </summary>
+            <value></value>
         </member>
         <member name="M:SpyceLibrary.UI.UIScreen.#ctor(SpyceLibrary.Scene)">
             <summary>

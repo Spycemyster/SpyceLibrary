@@ -5,6 +5,8 @@ using System.IO;
 using System.Xml.Serialization;
 using SpyceLibrary.Debugging;
 using SpyceLibrary.UI;
+using SpyceLibrary.Lighting;
+using SpyceLibrary.Physics;
 
 namespace SpyceLibrary
 {
@@ -50,12 +52,15 @@ namespace SpyceLibrary
         /// </summary>
         public SceneEvent OnObjectAdded;
 
+        /// <summary>
+        /// The color of the scene's background.
+        /// </summary>
+        protected Color BackgroundColor;
         private readonly Dictionary<Guid, GameObject> objects;
         private readonly List<FunctionCall> repeatFunctions;
         private Initializer initializer;
         private List<UIScreen> uiStack;
         private Queue<GameObject> removeObjects, addObjects;
-
         private UIState uiState;
         private Rectangle screenRect;
         #endregion
@@ -72,6 +77,7 @@ namespace SpyceLibrary
             uiState = UIState.Gameplay;
             removeObjects = new Queue<GameObject>();
             addObjects = new Queue<GameObject>();
+            BackgroundColor = Color.White;
         }
         #endregion
 
@@ -308,7 +314,7 @@ namespace SpyceLibrary
         /// When an object is destroyed, it is removed from the scene.
         /// </summary>
         /// <param name="obj"></param>
-        private void OnObjectDestruction(GameObject obj)
+        private void OnObjectDestruction(in GameObject obj)
         {
             removeObjects.Enqueue(obj);
         }

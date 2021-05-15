@@ -28,9 +28,14 @@ namespace SpyceLibrary.UI
         protected Vector2 titlePos;
 
         /// <summary>
-        /// 
+        /// The font of the text drawn to this screen.
         /// </summary>
         protected SpriteFont font;
+
+        /// <summary>
+        /// The scene that this screen is drawn and attached to.
+        /// </summary>
+        /// <value></value>
         protected Scene Scene 
         {
             get { return currentScene; }

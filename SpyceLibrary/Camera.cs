@@ -27,7 +27,7 @@ namespace SpyceLibrary
         {
             get 
             {
-                return (viewedObject == null) ? Vector2.Zero : viewedObject.GetTransform().Position;
+                return (viewedObject == null) ? Vector2.Zero : viewedObject.Position;
             }
         }
 

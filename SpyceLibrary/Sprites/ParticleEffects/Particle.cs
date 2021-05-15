@@ -1,13 +1,14 @@
 using System;
 using Microsoft.Xna.Framework;
 using SpyceLibrary.Debugging;
+using SpyceLibrary.Lighting;
 
 namespace SpyceLibrary.Sprites 
 {
     /// <summary>
     /// A component that emits various randomly seeded particles.
     /// </summary>
-    public class ParticleEmitter<T> : GameComponent, IUpdated
+    public class ParticleEmitter<T> : GameComponent, IUpdated where T : Particle
     {
         #region Fields
         /// <summary>
@@ -38,9 +39,10 @@ namespace SpyceLibrary.Sprites
             get;
             set;
         }
+        private Random random;
         private float timer, timeToLive, spawnRate;
         private string[] paths;
-        private bool isLoaded;
+        private bool isLoaded, isEmitting;
         #endregion
 
         #region Constructor
@@ -49,8 +51,10 @@ namespace SpyceLibrary.Sprites
         /// </summary>
         public ParticleEmitter() {
             isLoaded = false;
+            isEmitting = true;
             MinScale = 1f;
             MaxScale = 1f;
+            random = new Random();
         }
         #endregion
 
@@ -68,22 +72,42 @@ namespace SpyceLibrary.Sprites
             spawnRate = particleRate;
             isLoaded = true;
         }
+
+        /// <summary>
+        /// Continues emitting particles.
+        /// </summary>
+        public void ContinueEmitting() {
+            isEmitting = true;
+        }
+
+        /// <summary>
+        /// Stops emitting particles.
+        /// </summary>
+        public void StopEmitting() {
+            isEmitting = false;
+        }
+
         /// <summary>
         /// Updates the particle emitter.
         /// </summary>
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            if (!isEmitting) {
+                return;
+            }
             Debug.Instance.AssertStrict(isLoaded, "Particle Emitter not initialized...");
             timer += Time.Instance.DeltaTime;
 
             int numParticles = (int)Math.Round(SpawnRate * timer);
-            if (numParticles > 0) {
-                for (int i = 0; i < numParticles; i++) {
-                    Particle p = (Particle)Activator.CreateInstance(typeof(T), timeToLive);
+            if (numParticles > 0)
+            {
+                for (int i = 0; i < numParticles; i++)
+                {
+                    float scale = (float)(random.NextDouble() * (MaxScale - MinScale) + MinScale);
+                    Particle p = (Particle)Activator.CreateInstance( typeof(T) , timeToLive);
                     p.Position = Holder.Position;
-                    p.MaxScale = MaxScale;
-                    p.MinScale = MinScale;
+                    p.Scale = new Vector2(scale, scale);
                     p.SetTexturePath(paths);
                     CurrentScene.AddObject(p);
                 }
@@ -96,16 +120,8 @@ namespace SpyceLibrary.Sprites
     /// <summary>
     /// Represents a singular particle within a particle engine.
     /// </summary>
-    public class Particle : GameObject {
-        public float MaxScale {
-            get;
-            set;
-        }
-
-        public float MinScale {
-            get;
-            set;
-        }
+    public class Particle : GameObject
+    {
         /// <summary>
         /// The time left the particle has before it is removed.
         /// </summary>
@@ -115,23 +131,56 @@ namespace SpyceLibrary.Sprites
         /// The sprite drawn for the particle.
         /// </summary>
         /// <value></value>
-        protected Sprite Sprite {
-            get {return sprite;}
+        protected Sprite Sprite
+        {
+            get
+            {
+                return sprite;
+            }
+        }
+        
+        /// <summary>
+        /// The total time the particle has before being removed.
+        /// </summary>
+        /// <value></value>
+        protected float TimeToLive 
+        {
+            get {return TIME_TO_LIVE;}
+        }
+        /// <summary>
+        /// The color of the particle.
+        /// </summary>
+        protected Color Color;
+
+        /// <summary>
+        /// The color of the light emitted from this particle.
+        /// </summary>
+        protected Color LightColor
+        {
+            get { return lightSource.LightColor; }
+            set { lightSource.LightColor = value; }
         }
         private Sprite sprite;
+        private LightSource lightSource;
         private string[] texturePaths;
         private Vector2 velocity;
         private Random random;
+        private readonly float TIME_TO_LIVE;
+        private readonly float INITIAL_LIGHT_INTENSITY;
 
         /// <summary>
         /// Creates a new instance of the particle.
         /// </summary>
         public Particle(float timeToLive)
         {
+            TIME_TO_LIVE = timeToLive;
             TTL = timeToLive;
             random = new Random();
             double direction = random.NextDouble() * 2 * Math.PI;
-            velocity = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction)) * 100f;
+            velocity = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction)) * 500f;
+            INITIAL_LIGHT_INTENSITY = 0.8f;
+            lightSource = new LightSource(INITIAL_LIGHT_INTENSITY, 150f);
+            LightColor = Color.White;
         }
 
         /// <summary>
@@ -151,8 +200,10 @@ namespace SpyceLibrary.Sprites
         {
             sprite = new Sprite();
             sprite.TexturePath = texturePaths[random.Next(texturePaths.Length)];
-            sprite.SetScale((float)random.NextDouble() * (MaxScale - MinScale) + MinScale);
+            sprite.SetScale(Scale);
             AddComponent(sprite);
+
+            AddComponent(lightSource);
             base.Load(init);
         }
 
@@ -165,6 +216,12 @@ namespace SpyceLibrary.Sprites
             base.Update(gameTime);
             Position += GetVelocity() * Time.Instance.DeltaTime;
             TTL -= Time.Instance.DeltaTime;
+            
+            // updates the transparency of the particle
+            float percent = (TTL / TIME_TO_LIVE);
+            Color tColor = new Color(Color.R, Color.G, Color.B) * percent;
+            Sprite.Color = tColor;
+            //lightSource.Intensity = INITIAL_LIGHT_INTENSITY * percent;
 
             if (TTL <= 0) {
                 Destroy();
@@ -180,38 +237,23 @@ namespace SpyceLibrary.Sprites
         }
     }
 
-    public class RainbowParticle : Particle {
+    /// <summary>
+    /// Randomly colored particles.
+    /// </summary>
+    public class RainbowParticle : Particle
+    {
         private Random random;
-        private Color color;
         private float timeToLive;
-        private Vector2 gravity;
+        /// <summary> 
+        /// Creates a new instance of the rainbow particle.
+        /// </summary>
+        /// <param name="timeToLive"></param>
+        /// <returns></returns>
         public RainbowParticle(float timeToLive) : base(timeToLive) {
             random = new Random();
             this.timeToLive = timeToLive;
-            //color = new Color(random.Next(255), random.Next(255), random.Next(255));
-            color = new Color(random.Next(10), random.Next(10), random.Next(200, 255));
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            
-            Color tColor = new Color(color.R, color.G, color.B) * (TTL / timeToLive);
-            Sprite.Color = tColor;
-            gravity += new Vector2(0, 5f) * Time.Instance.DeltaTime;
-        }
-
-
-
-        public override Vector2 GetVelocity()
-        {
-            return base.GetVelocity() + gravity;
-        }
-
-        public override void Load(Initializer init)
-        {
-            base.Load(init);
+            Color = new Color(random.Next(255), random.Next(255), random.Next(255));
+            LightColor = Color;
         }
     }
-
 }
