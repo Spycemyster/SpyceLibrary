@@ -159,6 +159,15 @@ namespace SpyceLibrary
         }
 
         /// <summary>
+        /// Sets the relative position for the game object.
+        /// </summary>
+        /// <param name="position"></param>
+        public void SetRelativePosition(Vector2 position)
+        {
+            relativeTransform.Position = position;
+        }
+
+        /// <summary>
         /// Frees up the memory in the game object and its components.
         /// </summary>
         public void Destroy()

@@ -39,9 +39,10 @@ namespace SpyceLibrary.Sprites
         private string texturePath;
         private Rectangle sourceRectangle;
         private SpriteBatch spriteBatch;
-        private Vector2 offset, scale;
+        private Vector2 offset, scale, origin;
         private uint drawOrder;
-        private bool hasSetSourceRectangle, hasSetSize;
+        private int borderSize;
+        private bool hasSetSourceRectangle, hasSetSize, hasSetOrigin, isDrawingBorder;
         private Point size;
         #endregion
 
@@ -51,15 +52,36 @@ namespace SpyceLibrary.Sprites
         /// </summary>
         public Sprite()
         {
-            hasSetSourceRectangle = false;
-            hasSetSize = false;
+            isDrawingBorder = hasSetOrigin = hasSetSize = hasSetSourceRectangle = false;
             scale = Vector2.One;
             Color = Color.White;
+            origin = Vector2.Zero;
             size = Point.Zero;
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Enables or disables the border.
+        /// </summary>
+        /// <param name="enabled"></param>
+        /// <param name="size"></param>
+        public void EnableBorder(bool enabled, int size = 1)
+        {
+            borderSize = size;
+            isDrawingBorder = enabled;
+        }
+
+        /// <summary>
+        /// Sets the origin for the sprite. (By default, it is the center of the loaded texture.)
+        /// </summary>
+        /// <param name="origin"></param>
+        public void SetOrigin(Vector2 origin)
+        {
+            this.origin = origin;
+            hasSetOrigin = true;
+        }
+
         /// <summary>
         /// Sets the source rectangle for the sprite.
         /// </summary>
@@ -164,6 +186,30 @@ namespace SpyceLibrary.Sprites
             {
                 sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             }
+            if (!hasSetOrigin)
+            {
+                origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            }
+        }
+
+        private void DrawBorder()
+        {
+            Rectangle rect = GetDrawRectangle();
+            rect.Offset(-borderSize, -borderSize);
+            spriteBatch.Draw(texture, rect, sourceRectangle, Color.Black, Holder.Rotation,
+                origin, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
+            rect = GetDrawRectangle();
+            rect.Offset(-borderSize, borderSize);
+            spriteBatch.Draw(texture, rect, sourceRectangle, Color.Black, Holder.Rotation,
+                origin, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
+            rect = GetDrawRectangle();
+            rect.Offset(borderSize, -borderSize);
+            spriteBatch.Draw(texture, rect, sourceRectangle, Color.Black, Holder.Rotation,
+                origin, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
+            rect = GetDrawRectangle();
+            rect.Offset(borderSize, borderSize);
+            spriteBatch.Draw(texture, rect, sourceRectangle, Color.Black, Holder.Rotation,
+                origin, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
         }
 
         /// <summary>
@@ -172,11 +218,14 @@ namespace SpyceLibrary.Sprites
         public virtual void Draw()
         {
             Rectangle rect = GetDrawRectangle();
-            if (rect.Intersects(SceneManager.Instance.CurrentScene.ScreenRectangle))
+            
+            if (isDrawingBorder)
             {
-                spriteBatch.Draw(texture, rect, sourceRectangle, Color, Holder.Rotation,
-                    Vector2.Zero, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
+                DrawBorder();
             }
+
+            spriteBatch.Draw(texture, rect, sourceRectangle, Color, Holder.Rotation,
+                origin, SpriteEffects.None, DrawOrder() / IDrawn.MAX_DRAW_ORDER);
         }
 
         /// <summary>
@@ -195,8 +244,7 @@ namespace SpyceLibrary.Sprites
         public Rectangle GetDrawRectangle()
         {
             Point size = GetSize();
-            return new Rectangle((int)(Holder.Position.X + offset.X - size.X / 2), (int)(Holder.Position.Y + offset.Y - size.Y / 2),
-                size.X, size.Y);
+            return new Rectangle((int)(Holder.Position.X + offset.X), (int)(Holder.Position.Y + offset.Y), size.X, size.Y);
         }
 
         /// <summary>
@@ -207,7 +255,6 @@ namespace SpyceLibrary.Sprites
         {
             return drawOrder;
         }
-
         #endregion
     }
 }
