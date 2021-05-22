@@ -87,6 +87,15 @@ namespace SpyceLibrary
 
         #region Methods
         /// <summary>
+        /// The number of registered scenes in the game.
+        /// </summary>
+        /// <returns></returns>
+        public int GetSceneCount()
+        {
+            return scenes.Count;
+        }
+
+        /// <summary>
         /// The screen viewport.
         /// </summary>
         /// <returns></returns>

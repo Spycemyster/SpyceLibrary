@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SpyceLibrary.Scenes;
 using SpyceLibrary.Debugging;
 using System;
 
@@ -48,10 +47,13 @@ namespace SpyceLibrary
                 ConsoleColor.Green, ConsoleColor.Green);
 
             // Register all scenes here
-            SceneManager.Instance.RegisterScene(typeof(TestScene), TestScene.NAME);
+            // SceneManager.Instance.RegisterScene(typeof(TestScene), TestScene.NAME);
 
             // Initial scene loading
-            SceneManager.Instance.ChangeScene(TestScene.NAME);
+            // SceneManager.Instance.ChangeScene(TestScene.NAME);
+
+            Debug.Instance.AssertStrict(SceneManager.Instance.GetSceneCount() > 0, "No scenes are registered.", ToString());
+            Debug.Instance.AssertStrict(SceneManager.Instance.CurrentScene != null, "No loaded scene", ToString());
         }
 
         /// <summary>

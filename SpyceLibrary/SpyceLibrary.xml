@@ -578,6 +578,12 @@
             Moves the game object's relative position by the given delta.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.GameObject.SetRelativePosition(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the relative position for the game object.
+            </summary>
+            <param name="position"></param>
+        </member>
         <member name="M:SpyceLibrary.GameObject.Destroy">
             <summary>
             Frees up the memory in the game object and its components.
@@ -1225,79 +1231,6 @@
             </summary>
             <param name="content"></param>
         </member>
-        <member name="T:SpyceLibrary.Physics.TestDummy">
-            <summary>
-            A test dummy object.
-            </summary>
-        </member>
-        <member name="T:SpyceLibrary.Physics.TestPlayer">
-            <summary>
-            A test object that tests various components.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestPlayer.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Creates a new instance of a test player.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestPlayer.Load(SpyceLibrary.Initializer)">
-            <summary>
-            Initializes the test player.
-            </summary>
-            <param name="init"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestPlayer.Draw">
-            <summary>
-            Draws the test object to the screen.
-            </summary>
-        </member>
-        <member name="T:SpyceLibrary.Physics.TestComponent">
-            <summary>
-            A component for testing means.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestComponent.#ctor">
-            <summary>
-            Creates a new instance of the test component.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestComponent.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
-            <summary>
-            Loads the test component.
-            </summary>
-            <param name="init"></param>
-            <param name="holder"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestComponent.ProcessInput(SpyceLibrary.InputManager)">
-            <summary>
-            Check for user input.
-            </summary>
-            <param name="input"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestComponent.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates the state of the player controller.
-            </summary>
-            <param name="gameTime"></param>
-        </member>
-        <member name="T:SpyceLibrary.Physics.TestComponent2">
-            <summary>
-            A test component (2).
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestComponent2.Load(SpyceLibrary.Initializer,SpyceLibrary.GameObject)">
-            <summary>
-            Loads the assets of the test component.
-            </summary>
-            <param name="init"></param>
-            <param name="holder"></param>
-        </member>
-        <member name="M:SpyceLibrary.Physics.TestComponent2.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates the state of the game.
-            </summary>
-            <param name="gameTime"></param>
-        </member>
         <member name="T:SpyceLibrary.Program">
             <summary>
             Game runner class.
@@ -1513,6 +1446,12 @@
             The type of the current scene.
             </summary>
         </member>
+        <member name="M:SpyceLibrary.SceneManager.GetSceneCount">
+            <summary>
+            The number of registered scenes in the game.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SpyceLibrary.SceneManager.GetScreenViewport">
             <summary>
             The screen viewport.
@@ -1577,53 +1516,6 @@
             </summary>
             <param name="scene"></param>
             <returns></returns>
-        </member>
-        <member name="T:SpyceLibrary.Scenes.TestScene">
-            <summary>
-            This is the scene that will test the various functionality.
-            </summary>
-        </member>
-        <member name="F:SpyceLibrary.Scenes.TestScene.NAME">
-            <summary>
-            The name of this scene.
-            </summary>
-        </member>
-        <member name="F:SpyceLibrary.Scenes.TestScene.WINDOW_WIDTH">
-            <summary>
-            Width of the window size.
-            </summary>
-        </member>
-        <member name="F:SpyceLibrary.Scenes.TestScene.WINDOW_HEIGHT">
-            <summary>
-            Height of the window size.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Scenes.TestScene.#ctor">
-            <summary>
-            Creates a new instance of the game scene.
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Scenes.TestScene.Load(SpyceLibrary.Initializer)">
-            <summary>
-            Loads the scene and initializes it's data members.
-            </summary>
-            <param name="initializer"></param>
-        </member>
-        <member name="M:SpyceLibrary.Scenes.TestScene.Unload">
-            <summary>
-            Unloads the test scene
-            </summary>
-        </member>
-        <member name="M:SpyceLibrary.Scenes.TestScene.Update(Microsoft.Xna.Framework.GameTime)">
-            <summary>
-            Updates the instance of the game scene.
-            </summary>
-            <param name="gameTime"></param>
-        </member>
-        <member name="M:SpyceLibrary.Scenes.TestScene.Draw">
-            <summary>
-            Draws the contents of the game scene to the screen.
-            </summary>
         </member>
         <member name="T:SpyceLibrary.Sprites.AnimatedSprite">
             <summary>
@@ -1716,7 +1608,7 @@
         </member>
         <member name="P:SpyceLibrary.Sprites.FrameData.Texture">
             <summary>
-            The texture that the frame is located on. Each frame data holds a refernce to its
+            The texture that the frame is located on. Each frame data holds a reference to its
             texture to allow for animations to potentially consist of different files.
             </summary>
         </member>
@@ -1865,6 +1757,19 @@
             <summary>
             Creates a new instance of the game component.
             </summary>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.EnableBorder(System.Boolean,System.Int32)">
+            <summary>
+            Enables or disables the border.
+            </summary>
+            <param name="enabled"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:SpyceLibrary.Sprites.Sprite.SetOrigin(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Sets the origin for the sprite. (By default, it is the center of the loaded texture.)
+            </summary>
+            <param name="origin"></param>
         </member>
         <member name="M:SpyceLibrary.Sprites.Sprite.SetSourceRectangle(Microsoft.Xna.Framework.Rectangle)">
             <summary>
